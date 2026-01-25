@@ -1,0 +1,11 @@
+.*
+!.gitignore
+!.gitkeep
+!.dockerignore
+!.husky
+*.log*
+!.env*.example
+*generated*
+dist/
+node_modules/
+!.github/

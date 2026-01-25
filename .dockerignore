@@ -1,0 +1,10 @@
+.*
+*.log*
+
+node_modules/
+dist/
+tests/
+
+Dockerfile
+docker-compose.yml
+README.md

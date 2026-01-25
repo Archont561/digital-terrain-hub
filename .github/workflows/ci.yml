@@ -1,0 +1,70 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    timeout-minutes: 12
+    runs-on: ubuntu-latest
+
+    env:
+      CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
+      PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ vars.PUBLIC_CLERK_PUBLISHABLE_KEY }}
+      TEST_ASTRO_BASE_URL: "http://localhost:4321"
+      TEST_CLERK_AUTH_PLAYWRIGHT_STORAGE_FILE: "clerk/auth.json"
+      TEST_AUTHENTICATED_CLERK_USER_ID: "clerk_test_user_id"
+      TEST_NINJAODM_BASE_MOCK_SERVER_URL: "http://localhost:4010"
+      E2E_CLERK_USER_EMAIL: "astro+clerk_test@test.com"
+      E2E_CLERK_USER_PASSWORD: "test_password_123"
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Check if E2E can run
+        id: e2e
+        shell: bash
+        run: |
+          if [ -n "$CLERK_SECRET_KEY" ] && [ -n "$PUBLIC_CLERK_PUBLISHABLE_KEY" ]; then
+            echo "e2e=true" >> "$GITHUB_OUTPUT"
+            echo "E2E tests ENABLED"
+          else
+            echo "e2e=false" >> "$GITHUB_OUTPUT"
+            echo "E2E tests DISABLED (missing secrets/vars)"
+          fi
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile --all
+
+      # -------------------------
+      # Unit tests
+      # -------------------------
+      - name: Run unit tests
+        run: bun run test:unit
+
+      # -------------------------
+      # Integration tests
+      # -------------------------
+      - name: Run integration tests
+        run: bun run test:integration
+
+      # -------------------------
+      # E2E
+      # -------------------------
+      - name: Install Playwright browsers
+        if: steps.e2e.outputs.e2e == 'true'
+        run: bunx playwright install --with-deps chromium
+
+      - name: Run E2E tests
+        if: steps.e2e.outputs.e2e == 'true'
+        run: bun run test:e2e
+
+      - name: Skip E2E notice
+        if: steps.e2e.outputs.e2e == 'false'
+        run: echo "Skipping E2E tests because required env vars are missing"

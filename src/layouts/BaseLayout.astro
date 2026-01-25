@@ -1,0 +1,61 @@
+---
+import "@/styles/starwind.css";
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<script is:inline>
+			function initTheme() {
+				const colorTheme = localStorage.getItem("colorTheme");
+				if (!colorTheme) {
+				// if no color theme yet, use the users preferences
+				if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+					document.documentElement.classList.add("dark");
+					localStorage.setItem("colorTheme", "dark");
+				} else {
+					document.documentElement.classList.remove("dark");
+					localStorage.setItem("colorTheme", "light");
+				}
+				} else {
+				// assign the theme based on the value in local storage
+				if (colorTheme === "dark") {
+					document.documentElement.classList.add("dark");
+				} else if (colorTheme === "light") {
+					document.documentElement.classList.remove("dark");
+				} else if (colorTheme === "system") {
+					// use system preference
+					const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+					document.documentElement.classList.toggle("dark", prefersDark);
+				}
+				}
+			}
+
+			// runs on initial page load
+			initTheme();
+
+			// runs on view transitions navigation
+			document.addEventListener("astro:after-swap", initTheme);
+		</script>
+
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{Astro.props.title}</title>
+		<slot name="meta"></slot>
+	</head>
+	<body>
+		<slot></slot>
+	</body>
+</html>
+
+<style>
+	html,
+	body {
+		margin: 0;
+		padding: 0;
+		width: 100dvw;
+		height: 100dvh;
+	}
+</style>

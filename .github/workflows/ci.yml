@@ -13,10 +13,10 @@ jobs:
     env:
       CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
       PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ vars.PUBLIC_CLERK_PUBLISHABLE_KEY }}
-      TEST_ASTRO_BASE_URL: "http://localhost:4321"
+      ASTRO_BASE_URL: "http://localhost:4321"
+      NINJAODM_BASE_URL: "http://localhost:4010"
       TEST_CLERK_AUTH_PLAYWRIGHT_STORAGE_FILE: "clerk/auth.json"
       TEST_AUTHENTICATED_CLERK_USER_ID: "clerk_test_user_id"
-      TEST_NINJAODM_BASE_MOCK_SERVER_URL: "http://localhost:4010"
       E2E_CLERK_USER_EMAIL: "astro+clerk_test@test.com"
       E2E_CLERK_USER_PASSWORD: "test_password_123"
 
@@ -28,12 +28,25 @@ jobs:
         id: e2e
         shell: bash
         run: |
-          if [ -n "$CLERK_SECRET_KEY" ] && [ -n "$PUBLIC_CLERK_PUBLISHABLE_KEY" ]; then
+          HAS_SECRETS=true
+          HAS_TESTS=true
+
+          if [ -z "$CLERK_SECRET_KEY" ] || [ -z "$PUBLIC_CLERK_PUBLISHABLE_KEY" ]; then
+            HAS_SECRETS=false
+          fi
+
+          if [ ! -d "./tests/e2e" ] || [ -z "$(ls -A ./tests/e2e 2>/dev/null)" ]; then
+            HAS_TESTS=false
+          fi
+
+          if [ "$HAS_SECRETS" = true ] && [ "$HAS_TESTS" = true ]; then
             echo "e2e=true" >> "$GITHUB_OUTPUT"
             echo "E2E tests ENABLED"
           else
             echo "e2e=false" >> "$GITHUB_OUTPUT"
-            echo "E2E tests DISABLED (missing secrets/vars)"
+            echo "E2E tests DISABLED"
+            echo "  Secrets present: $HAS_SECRETS"
+            echo "  E2E tests found: $HAS_TESTS"
           fi
 
       - name: Setup Bun

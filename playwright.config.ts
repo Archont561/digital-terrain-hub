@@ -20,7 +20,7 @@ export default defineConfig({
   reporter: isCI ? "dot" : "list",
 
   use: {
-    baseURL: process.env.TEST_ASTRO_BASE_URL,
+    baseURL: process.env.ASTRO_BASE_URL,
     trace: isCI ? "retain-on-failure" : "on-first-retry",
     screenshot: "only-on-failure",
     video: isCI ? "retain-on-failure" : "off",
@@ -29,14 +29,21 @@ export default defineConfig({
 
   webServer: {
     command: isCI
-      ? "bun run build && bun run preview --host 0.0.0.0"
-      : "bun run dev-test",
-    url: process.env.TEST_ASTRO_BASE_URL,
+      ? "bun run build && bun run preview"
+      : "bun run astro dev --mode test",
+    url: process.env.ASTRO_BASE_URL,
     reuseExistingServer: !isCI,
-    timeout: 120_000,
+    timeout: 60_000,
   },
 
   projects: [
+    {
+      name: "ui components",
+      testMatch: /.*\/ui\/.*\.spec\.ts/,
+      use: {
+        ...devices["Desktop Chrome"],
+      },
+    },
     {
       name: "public routes",
       testMatch: /.*\/public\/.*\.spec\.ts/,

@@ -16,6 +16,7 @@
     "test:unit": "vitest run ./tests/unit",
     "test:integration": "vitest run ./tests/integration",
     "test:e2e": "sh ./scripts/run-e2e.sh",
+    "generate-ninjaodm-client": "openapi-zod-client ./src/assets/ninjaodm.openapi.json -o ./src/lib/ninjaodm/generated-api.ts",
     "prepare": "husky"
   },
   "dependencies": {

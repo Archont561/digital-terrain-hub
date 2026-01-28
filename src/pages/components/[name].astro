@@ -2,6 +2,7 @@
 import _ from "lodash";
 import { WorkspaceTableRow } from "@/components/ninjaodm/workspaces";
 import { renderComponent } from "@/lib";
+import BaseLayout from "@/layouts/BaseLayout.astro";
 
 if (import.meta.env.MODE != "test") {
   return Astro.rewrite("/404");
@@ -38,9 +39,11 @@ const isTablePartial = [
 ].includes(Component.name);
 ---
 
-{isTablePartial 
+<BaseLayout title={`Testing ${Component.name}`}>
+  {isTablePartial 
   ? <table>
     <Fragment set:html={componentStringScriptSanitized} />
   </table> 
   : <Fragment set:html={componentStringScriptSanitized} />
 }
+</BaseLayout>

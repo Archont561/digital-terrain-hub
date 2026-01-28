@@ -1,0 +1,49 @@
+---
+import TableCell from '@/components/starwind/table/TableCell.astro';
+import TableRow from '@/components/starwind/table/TableRow.astro';
+
+export type WorkspaceProps = {
+  uuid: string;
+  name: string;
+};
+
+type Props = {
+  workspaceEditUrl: string;
+  workspace: WorkspaceProps;
+};
+
+const { workspace, workspaceEditUrl } = Astro.props;
+
+---
+
+<TableRow class="ninjaodm-workspace-table-row" data-workspace-uuid={workspace.uuid}>
+  <TableCell class="font-medium">
+    <input
+      name="workspace-name"
+      value={workspace.name}
+      class="w-full bg-transparent outline-none"
+      x-ref="workspaceNameInput"
+    />
+  </TableCell>
+
+  <TableCell class="text-right">
+    <div class="inline-flex gap-2">
+      <a
+        class="btn btn-secondary"
+        href={`${workspaceEditUrl}/${workspace.uuid}`}
+        target="_blank"
+        x-ref="editWorkspaceBtn"
+        rel="noopener"
+      >
+        Edit
+      </a>
+
+      <button
+        class="btn btn-danger"
+        x-ref="deleteWorkspaceBtn"
+      >
+        Delete
+      </button>
+    </div>
+  </TableCell>
+</TableRow>

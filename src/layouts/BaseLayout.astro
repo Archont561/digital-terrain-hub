@@ -1,5 +1,6 @@
 ---
 import "@/styles/starwind.css";
+import { Toaster } from "@/components/starwind/toast";
 ---
 
 <!doctype html>
@@ -47,6 +48,7 @@ import "@/styles/starwind.css";
 	</head>
 	<body>
 		<slot></slot>
+    	<Toaster position="bottom-right" />
 	</body>
 </html>
 

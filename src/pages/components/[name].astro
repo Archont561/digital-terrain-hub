@@ -1,0 +1,43 @@
+---
+if (import.meta.env.MODE != "test") {
+  return Astro.rewrite("/404");
+}
+
+import _ from "lodash";
+import { WorkspaceTableRow } from "@/components/ninjaodm/workspaces";
+import { renderComponent } from "@/lib";
+
+const COMPONENTS = [
+  WorkspaceTableRow,
+];
+
+const paramName = _.toLower(Astro.params.name || "");
+const Component = _.find(COMPONENTS, (c) => _.toLower(c.name) === paramName);
+
+if (!Component) {
+  return Astro.rewrite("/404");
+}
+
+const url = new URL(Astro.request.url);
+const rawProps = url.searchParams.get("props");
+const props = rawProps
+  ? JSON.parse(decodeURIComponent(rawProps))
+  : {};
+
+const componentString = await renderComponent.asString(Component, {
+  props: props as any,
+  request: Astro.request,
+  partial: true,
+});
+
+const isTablePartial = [
+  WorkspaceTableRow.name,
+].includes(Component.name);
+---
+
+{isTablePartial 
+  ? <table>
+    <Fragment set:html={componentString} />
+  </table> 
+  : <Fragment set:html={componentString} />
+}

@@ -50,6 +50,7 @@ export default defineConfig({
       use: {
         ...devices["Desktop Chrome"],
       },
+      dependencies: ["ui components"],
     },
     {
       name: "protected routes",
@@ -61,6 +62,7 @@ export default defineConfig({
           process.env.TEST_CLERK_AUTH_PLAYWRIGHT_STORAGE_FILE,
         ),
       },
+      dependencies: ["ui components"],
     },
   ],
 });

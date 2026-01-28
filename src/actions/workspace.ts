@@ -5,22 +5,22 @@ import { serviceApiClient } from "./utils";
 
 export default {
   updateWorkspace: defineAction({
-    input: schemas.WorkspacePatchSchema.omit({ user_id: true }),
-    handler: async (payload, context) => {
-      return await serviceApiClient.updateWorkspace(
-        {
-          user_id: context.locals.currentUserId!,
-          ...payload,
-        },
-        {
-          params: { uuid: "test" },
+    input: z.object({
+      uuid: z.string().uuid(),
+      payload: schemas.UpdateWorkspacePublic,
+    }),
+    handler: async ({ uuid, payload }) => {
+      return await serviceApiClient.updateWorkspaceInternal(payload, {
+          params: { uuid },
         },
       );
     },
   }),
   deleteWorkspace: defineAction({
-    input: z.string().uuid(),
-    handler: async (uuid) => {
+    input: z.object({
+      uuid: z.string().uuid(),
+    }),
+    handler: async ({ uuid }) => {
       return await serviceApiClient.deleteWorkspaceInternal(undefined, {
         params: { uuid },
       });

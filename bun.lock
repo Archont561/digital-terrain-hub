@@ -19,6 +19,7 @@
       "devDependencies": {
         "@biomejs/biome": "2.3.12",
         "@clerk/testing": "^1.13.31",
+        "@msw/playwright": "^0.4.5",
         "@playwright/test": "^1.57.0",
         "@stoplight/prism-cli": "^5.14.2",
         "@tailwindcss/forms": "^0.5",
@@ -294,6 +295,8 @@
     "@jsep-plugin/regex": ["@jsep-plugin/regex@1.0.4", "", { "peerDependencies": { "jsep": "^0.4.0||^1.0.0" } }, "sha512-q7qL4Mgjs1vByCaTnDFcBnV9HS7GVPJX5vyVoCgZHNSC9rjwIlmbXG5sUuorR5ndfHAIlJ8pVStxvjXHbNvtUg=="],
 
     "@liuli-util/fs-extra": ["@liuli-util/fs-extra@0.1.0", "", { "dependencies": { "@types/fs-extra": "^9.0.13", "fs-extra": "^10.1.0" } }, "sha512-eaAyDyMGT23QuRGbITVY3SOJff3G9ekAAyGqB9joAnTBmqvFN+9a1FazOdO70G6IUqgpKV451eBHYSRcOJ/FNQ=="],
+
+    "@msw/playwright": ["@msw/playwright@0.4.5", "", { "dependencies": { "@mswjs/interceptors": "^0.40.0", "outvariant": "^1.4.3" }, "peerDependencies": { "msw": "^2.10.3" } }, "sha512-t6tft9LrAmq8busJkzFcWhpPLGuk3h8tEXp5GGv7xhFpiB6xiRo5CgCatZ9x+e1kjcU2PgYi077B4qJ4E9vp4g=="],
 
     "@mswjs/interceptors": ["@mswjs/interceptors@0.40.0", "", { "dependencies": { "@open-draft/deferred-promise": "^2.2.0", "@open-draft/logger": "^0.3.0", "@open-draft/until": "^2.0.0", "is-node-process": "^1.2.0", "outvariant": "^1.4.3", "strict-event-emitter": "^0.5.1" } }, "sha512-EFd6cVbHsgLa6wa4RljGj6Wk75qoHxUSyc5asLyyPSyuhIcdS2Q3Phw6ImS1q+CkALthJRShiYfKANcQMuMqsQ=="],
 

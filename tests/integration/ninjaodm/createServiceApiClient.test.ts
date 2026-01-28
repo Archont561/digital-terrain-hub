@@ -30,7 +30,7 @@ const test = base.extend<{
         },
       );
       const { port, hostname } = new URL(
-        process.env.TEST_NINJAODM_BASE_MOCK_SERVER_URL,
+        process.env.NINJAODM_BASE_URL,
       );
       await mockServer.listen(Number(port), hostname);
       await use(mockServer);
@@ -42,7 +42,7 @@ const test = base.extend<{
     async ({ mockServer }, use) => {
       mockServer;
       const serviceApiClient = createServiceApiClient({
-        baseUrl: process.env.TEST_NINJAODM_BASE_MOCK_SERVER_URL,
+        baseUrl: process.env.NINJAODM_BASE_URL,
         hmacAuth: HMACAuthorization.create({
           apiKey: process.env.NINJAODM_API_KEY,
           apiSecret: process.env.NINJAODM_SECRET_KEY,

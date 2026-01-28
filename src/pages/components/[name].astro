@@ -1,11 +1,11 @@
 ---
-if (import.meta.env.MODE != "test") {
-  return Astro.rewrite("/404");
-}
-
 import _ from "lodash";
 import { WorkspaceTableRow } from "@/components/ninjaodm/workspaces";
 import { renderComponent } from "@/lib";
+
+if (import.meta.env.MODE != "test") {
+  return Astro.rewrite("/404");
+}
 
 const COMPONENTS = [
   WorkspaceTableRow,

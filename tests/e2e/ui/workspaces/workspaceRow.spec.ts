@@ -107,4 +107,18 @@ test.describe.serial("WorkspaceTableRow", () => {
       alpineRef(row, "deleteWorkspaceBtn"),
     ).toBeVisible();
   });
+
+  test("edit button should redirect to /edit-workspace/{workspaceUuid}", async ({
+    page, settings, gotoComponent, alpineRef
+  }) => {
+    await gotoComponent();
+    const newURL = `${settings.componentProps.workspaceEditUrl}/${settings.componentProps.workspace.uuid}`
+
+    const row = page.locator(settings.selectors.tableRow).first();
+    const editBtn = alpineRef(row, "editWorkspaceBtn");
+
+    await editBtn.click();
+
+    await expect(page).toHaveURL(newURL);
+  });
 });

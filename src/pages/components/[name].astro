@@ -26,10 +26,13 @@ const props = rawProps
 
 const componentString = await renderComponent.asString(Component, {
   props: props as any,
-  request: Astro.request,
-  partial: true,
 });
 
+// Astro render api does not resolve scripts correctly !!!
+const componentStringScriptSanitized = componentString.replace(
+  /src\s*=\s*["'][^"']*\/src\//g,
+  'src="/src/'
+);
 const isTablePartial = [
   WorkspaceTableRow.name,
 ].includes(Component.name);
@@ -37,7 +40,7 @@ const isTablePartial = [
 
 {isTablePartial 
   ? <table>
-    <Fragment set:html={componentString} />
+    <Fragment set:html={componentStringScriptSanitized} />
   </table> 
-  : <Fragment set:html={componentString} />
+  : <Fragment set:html={componentStringScriptSanitized} />
 }

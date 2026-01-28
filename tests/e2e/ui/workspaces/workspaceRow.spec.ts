@@ -1,75 +1,110 @@
-import { expect, type Locator, test } from "@playwright/test";
+import { expect, type Locator, test as base } from "@playwright/test";
 
-test.describe.serial("WorkspaceTableRow", () => {
-  const TABLE_ROW_SELECTOR = ".ninjaodm-workspace-table-row";
-  const COMPONENT_URL = "/components/WorkspaceTableRow";
-
-  const TEST_WORKSPACE = {
-    uuid: "test-workspace-uuid",
-    name: "test-workspace-name",
+type Settings = {
+  componentUrl: string;
+  selectors: {
+    tableRow: string;
   };
+  componentProps: {
+    workspace: {
+      uuid: string;
+      name: string;
+    };
+    workspaceEditUrl: string;
+  };
+};
 
-  const WORKSPACE_EDIT_URL = `/edit-workspace`;
+type Fixtures = {
+  settings: Settings;
+  gotoComponent: () => Promise<void>;
+  alpineRef: (root: Locator, ref: string) => Locator;
+  waitForAlpineInit: () => Promise<void>;
+};
 
-  const alpineRef = (root: Locator, ref: string) =>
-    root.locator(`[x-ref="${ref}"]`);
-
-  test("should render WorkspaceRow", async ({ page }) => {
-    const params = new URLSearchParams({
-      props: encodeURIComponent(
-        JSON.stringify({
-          workspace: TEST_WORKSPACE,
-          workspaceEditUrl: WORKSPACE_EDIT_URL,
-        }),
-      ),
+const test = base.extend<Fixtures>({
+  settings: async ({}, use) => {
+    await use({
+      componentUrl: "/components/WorkspaceTableRow",
+      selectors: {
+        tableRow: ".ninjaodm-workspace-table-row",
+      },
+      componentProps: {
+        workspace: {
+          uuid: "test-workspace-uuid",
+          name: "test-workspace-name",
+        },
+       workspaceEditUrl: "/edit-workspace",
+      },
     });
+  },
 
-    await page.goto(`${COMPONENT_URL}?${params}`);
-
-    const workspaceTableRow = page.locator(TABLE_ROW_SELECTOR).first();
-    await expect(workspaceTableRow).toBeVisible();
-    await expect(workspaceTableRow).toHaveAttribute(
-      "data-workspace-uuid",
-      TEST_WORKSPACE.uuid,
-    );
-    await expect(
-      alpineRef(workspaceTableRow, "workspaceNameInput"),
-    ).toHaveValue("test-workspace-name");
-    await expect(
-      alpineRef(workspaceTableRow, "editWorkspaceBtn"),
-    ).toBeVisible();
-    await expect(
-      alpineRef(workspaceTableRow, "deleteWorkspaceBtn"),
-    ).toBeVisible();
-  });
-
-  test("should initialize alpinejs", async ({ page }) => {
-    const params = new URLSearchParams({
-      props: encodeURIComponent(
-        JSON.stringify({
-          workspace: TEST_WORKSPACE,
-          workspaceEditUrl: WORKSPACE_EDIT_URL,
-        }),
-      ),
-    });
-
+  waitForAlpineInit: async ({ page }, use) => {
+    // Install listener BEFORE navigation
     await page.addInitScript(() => {
       (window as any).__alpineInitialized = false;
+
       document.addEventListener("alpine:initialized", () => {
         (window as any).__alpineInitialized = true;
       });
     });
 
-    await page.goto(`${COMPONENT_URL}?${params}`);
-
-    await page.waitForFunction(() => {
-      return (window as any).__alpineInitialized === true;
+    await use(async () => {
+      await page.waitForFunction(
+        () => (window as any).Alpine && (window as any).__alpineInitialized === true,
+      );
     });
+  },
 
-    const alpinejsIsInitialized = await page.evaluate(() => {
-      return window.Alpine && (window as any).__alpineInitialized;
+  gotoComponent: async ({ page, settings, waitForAlpineInit }, use) => {
+    await use(async () => {
+      const params = new URLSearchParams({
+        props: encodeURIComponent(
+          JSON.stringify(settings.componentProps),
+        ),
+      });
+      await page.goto(
+        `${settings.componentUrl}?${params}`,
+      );
+      await waitForAlpineInit();
     });
+  },
 
-    expect(alpinejsIsInitialized).toBeTruthy();
+  alpineRef: async ({}, use) => {
+    await use((root: Locator, ref: string) =>
+      root.locator(`[x-ref="${ref}"]`),
+    );
+  },
+});
+
+test.describe.serial("WorkspaceTableRow", () => {
+  test("should render WorkspaceRow", async ({
+    page,
+    settings,
+    gotoComponent,
+    alpineRef,
+  }) => {
+    await gotoComponent();
+
+    const row = page
+      .locator(settings.selectors.tableRow)
+      .first();
+
+    await expect(row).toBeVisible();
+    await expect(row).toHaveAttribute(
+      "data-workspace-uuid",
+      settings.componentProps.workspace.uuid,
+    );
+
+    await expect(
+      alpineRef(row, "workspaceNameInput"),
+    ).toHaveValue(settings.componentProps.workspace.name);
+
+    await expect(
+      alpineRef(row, "editWorkspaceBtn"),
+    ).toBeVisible();
+
+    await expect(
+      alpineRef(row, "deleteWorkspaceBtn"),
+    ).toBeVisible();
   });
 });

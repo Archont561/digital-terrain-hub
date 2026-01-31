@@ -6,6 +6,12 @@ import { Toaster } from "@/components/starwind/toast";
 <!doctype html>
 <html lang="en">
 	<head>
+		<script> 
+			import Alpine from 'alpinejs';
+			window.Alpine = Alpine;
+			
+			document.addEventListener("DOMContentLoaded", Alpine.start);
+		</script>
 		<script is:inline>
 			function initTheme() {
 				const colorTheme = localStorage.getItem("colorTheme");

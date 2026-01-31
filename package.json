@@ -19,7 +19,6 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@astrojs/alpinejs": "^0.4.9",
     "@astrojs/node": "^9.5.1",
     "@clerk/astro": "^2.16.10",
     "@inox-tools/runtime-logger": "^0.7.0",

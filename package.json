@@ -28,6 +28,7 @@
     "astro": "^5.16.6",
     "embla-carousel": "^8.6.0",
     "fetch-event-stream": "^0.1.6",
+    "lodash": "^4.17.23",
     "tailwind-merge": "^3",
     "tailwind-variants": "^3"
   },

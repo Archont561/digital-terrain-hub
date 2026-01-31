@@ -409,9 +409,9 @@
           }
         ]
       },
-      "put": {
+      "patch": {
         "operationId": "updateWorkspaceInternal",
-        "summary": "Update an item",
+        "summary": "Patch an item",
         "parameters": [
           {
             "in": "path",
@@ -436,7 +436,7 @@
             }
           }
         },
-        "description": "Update Workspace item by uuid",
+        "description": "Patch Workspace item by uuid",
         "tags": [
           "workspace",
           "internal"
@@ -528,9 +528,9 @@
           }
         ]
       },
-      "put": {
+      "patch": {
         "operationId": "updateWorkspace",
-        "summary": "Update an item",
+        "summary": "Patch an item",
         "parameters": [
           {
             "in": "path",
@@ -555,7 +555,7 @@
             }
           }
         },
-        "description": "Update Workspace item by uuid",
+        "description": "Patch Workspace item by uuid",
         "tags": [
           "workspace",
           "public"
@@ -4319,7 +4319,7 @@
         "title": "WorkspaceFilterSchemaInternal",
         "type": "object"
       },
-      "PathModel1adba": {
+      "PathModelb674c": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -4330,10 +4330,10 @@
         "required": [
           "uuid"
         ],
-        "title": "PathModel1adba",
+        "title": "PathModelb674c",
         "type": "object"
       },
-      "PathModel17278": {
+      "PathModel35d3e": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -4344,7 +4344,7 @@
         "required": [
           "uuid"
         ],
-        "title": "PathModel17278",
+        "title": "PathModel35d3e",
         "type": "object"
       },
       "UpdateWorkspaceInternal": {
@@ -4375,7 +4375,7 @@
         "title": "UpdateWorkspaceInternal",
         "type": "object"
       },
-      "PathModel586af": {
+      "PathModel683fd": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -4386,10 +4386,10 @@
         "required": [
           "uuid"
         ],
-        "title": "PathModel586af",
+        "title": "PathModel683fd",
         "type": "object"
       },
-      "PathModelef79a": {
+      "PathModelc5a7e": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -4400,7 +4400,7 @@
         "required": [
           "uuid"
         ],
-        "title": "PathModelef79a",
+        "title": "PathModelc5a7e",
         "type": "object"
       },
       "WorkspaceResponsePublic": {
@@ -4431,7 +4431,7 @@
         "title": "WorkspaceResponsePublic",
         "type": "object"
       },
-      "PathModel25fe7": {
+      "PathModel56fab": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -4442,7 +4442,7 @@
         "required": [
           "uuid"
         ],
-        "title": "PathModel25fe7",
+        "title": "PathModel56fab",
         "type": "object"
       },
       "UpdateWorkspacePublic": {
@@ -4458,7 +4458,7 @@
         "title": "UpdateWorkspacePublic",
         "type": "object"
       },
-      "PathModel56d58": {
+      "PathModele0f0a": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -4469,7 +4469,7 @@
         "required": [
           "uuid"
         ],
-        "title": "PathModel56d58",
+        "title": "PathModele0f0a",
         "type": "object"
       },
       "CreateWorkspacePublic": {
@@ -4643,7 +4643,7 @@
         "title": "TusPostHeaders",
         "type": "object"
       },
-      "PathModelca9c0": {
+      "PathModele6eb9": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -4654,7 +4654,7 @@
         "required": [
           "uuid"
         ],
-        "title": "PathModelca9c0",
+        "title": "PathModele6eb9",
         "type": "object"
       },
       "ODMProcessingStage": {
@@ -4742,7 +4742,7 @@
         "title": "TaskResponse",
         "type": "object"
       },
-      "PathModel8fba4": {
+      "PathModel14b21": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -4753,10 +4753,10 @@
         "required": [
           "uuid"
         ],
-        "title": "PathModel8fba4",
+        "title": "PathModel14b21",
         "type": "object"
       },
-      "QueryModel45a9e": {
+      "QueryModelf5d75": {
         "properties": {
           "workspace_uuid": {
             "format": "uuid4",
@@ -4767,7 +4767,7 @@
         "required": [
           "workspace_uuid"
         ],
-        "title": "QueryModel45a9e",
+        "title": "QueryModelf5d75",
         "type": "object"
       },
       "CreateTask": {
@@ -4930,7 +4930,7 @@
         "title": "ODMTaskWebhookStatus",
         "type": "object"
       },
-      "PathModel57620": {
+      "PathModel6f780": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -4941,10 +4941,10 @@
         "required": [
           "uuid"
         ],
-        "title": "PathModel57620",
+        "title": "PathModel6f780",
         "type": "object"
       },
-      "PathModel966d9": {
+      "PathModelcb1d2": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -4955,10 +4955,10 @@
         "required": [
           "uuid"
         ],
-        "title": "PathModel966d9",
+        "title": "PathModelcb1d2",
         "type": "object"
       },
-      "QueryModel4ca93": {
+      "QueryModel54817": {
         "properties": {
           "workspace_uuid": {
             "format": "uuid4",
@@ -4969,10 +4969,10 @@
         "required": [
           "workspace_uuid"
         ],
-        "title": "QueryModel4ca93",
+        "title": "QueryModel54817",
         "type": "object"
       },
-      "PathModel570b3": {
+      "PathModel01643": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -4983,7 +4983,7 @@
         "required": [
           "uuid"
         ],
-        "title": "PathModel570b3",
+        "title": "PathModel01643",
         "type": "object"
       },
       "ResultResponse": {
@@ -5021,7 +5021,7 @@
         "title": "ResultResponse",
         "type": "object"
       },
-      "PathModel5355b": {
+      "PathModelb6df2": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -5032,7 +5032,7 @@
         "required": [
           "uuid"
         ],
-        "title": "PathModel5355b",
+        "title": "PathModelb6df2",
         "type": "object"
       },
       "ResultFilterSchema": {
@@ -5087,7 +5087,7 @@
         "title": "ResultFilterSchema",
         "type": "object"
       },
-      "PathModela9cd0": {
+      "PathModele1e21": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -5098,10 +5098,10 @@
         "required": [
           "uuid"
         ],
-        "title": "PathModela9cd0",
+        "title": "PathModele1e21",
         "type": "object"
       },
-      "PathModela0eb9": {
+      "PathModel2ddfe": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -5112,10 +5112,10 @@
         "required": [
           "uuid"
         ],
-        "title": "PathModela0eb9",
+        "title": "PathModel2ddfe",
         "type": "object"
       },
-      "PathModelf56f5": {
+      "PathModel4e086": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -5126,10 +5126,10 @@
         "required": [
           "uuid"
         ],
-        "title": "PathModelf56f5",
+        "title": "PathModel4e086",
         "type": "object"
       },
-      "PathModel77129": {
+      "PathModel03b58": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -5140,7 +5140,7 @@
         "required": [
           "uuid"
         ],
-        "title": "PathModel77129",
+        "title": "PathModel03b58",
         "type": "object"
       },
       "ImageFilterSchema": {
@@ -5207,7 +5207,7 @@
         "title": "ImageFilterSchema",
         "type": "object"
       },
-      "PathModel6ba59": {
+      "PathModele9691": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -5218,10 +5218,10 @@
         "required": [
           "uuid"
         ],
-        "title": "PathModel6ba59",
+        "title": "PathModele9691",
         "type": "object"
       },
-      "PathModel2a430": {
+      "PathModel2ba0d": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -5232,10 +5232,10 @@
         "required": [
           "uuid"
         ],
-        "title": "PathModel2a430",
+        "title": "PathModel2ba0d",
         "type": "object"
       },
-      "PathModeldbd4c": {
+      "PathModelc66ae": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -5246,7 +5246,7 @@
         "required": [
           "uuid"
         ],
-        "title": "PathModeldbd4c",
+        "title": "PathModelc66ae",
         "type": "object"
       },
       "GCPResponse": {
@@ -5319,7 +5319,7 @@
         "title": "GCPResponse",
         "type": "object"
       },
-      "PathModelbde68": {
+      "PathModel01b93": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -5330,7 +5330,7 @@
         "required": [
           "uuid"
         ],
-        "title": "PathModelbde68",
+        "title": "PathModel01b93",
         "type": "object"
       },
       "GCPUpdate": {
@@ -5395,7 +5395,7 @@
         "title": "GCPUpdate",
         "type": "object"
       },
-      "PathModel2f4db": {
+      "PathModel4c1b4": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -5406,10 +5406,10 @@
         "required": [
           "uuid"
         ],
-        "title": "PathModel2f4db",
+        "title": "PathModel4c1b4",
         "type": "object"
       },
-      "QueryModelf8d0b": {
+      "QueryModel052e8": {
         "properties": {
           "image_uuid": {
             "format": "uuid4",
@@ -5420,7 +5420,7 @@
         "required": [
           "image_uuid"
         ],
-        "title": "QueryModelf8d0b",
+        "title": "QueryModel052e8",
         "type": "object"
       },
       "GCPCreate": {
@@ -5534,7 +5534,7 @@
         "title": "GCPFilterSchema",
         "type": "object"
       },
-      "PathModel7e838": {
+      "PathModele689a": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -5545,10 +5545,10 @@
         "required": [
           "uuid"
         ],
-        "title": "PathModel7e838",
+        "title": "PathModele689a",
         "type": "object"
       },
-      "PathModel518d9": {
+      "PathModel71b74": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -5559,10 +5559,10 @@
         "required": [
           "uuid"
         ],
-        "title": "PathModel518d9",
+        "title": "PathModel71b74",
         "type": "object"
       },
-      "PathModel61852": {
+      "PathModelb1051": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -5573,10 +5573,10 @@
         "required": [
           "uuid"
         ],
-        "title": "PathModel61852",
+        "title": "PathModelb1051",
         "type": "object"
       },
-      "QueryModel5d2a0": {
+      "QueryModel1d526": {
         "properties": {
           "image_uuid": {
             "format": "uuid4",
@@ -5587,7 +5587,7 @@
         "required": [
           "image_uuid"
         ],
-        "title": "QueryModel5d2a0",
+        "title": "QueryModel1d526",
         "type": "object"
       },
       "FeatureCollection_Feature_Point__GCPProperties__": {

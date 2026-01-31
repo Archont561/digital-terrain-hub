@@ -1,4 +1,3 @@
-import alpinejs from "@astrojs/alpinejs";
 import node from "@astrojs/node";
 import clerk from "@clerk/astro";
 import runtimeLogger from "@inox-tools/runtime-logger";
@@ -10,7 +9,6 @@ export default defineConfig({
   integrations: [
     clerk(),
     runtimeLogger(),
-    alpinejs({ entrypoint: "./src/lib/alpine/entrypoint.ts" }),
   ],
   vite: {
     plugins: [tailwindcss()],

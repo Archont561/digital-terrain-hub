@@ -3,6 +3,7 @@ import { type NetworkFixture, createNetworkFixture } from "@msw/playwright";
 import { ToastHelper } from "./toast";
 import { ActionContextManager } from "./action";
 import { ConsoleHelper } from "./console";
+import { ClipboardHelper } from "./clipboard";
 export { ComponentPageNavigator, type ComponentConfig } from "./components";
 
 
@@ -13,6 +14,7 @@ export type BaseFixtures = {
     action: (actionName: string) => ActionContextManager;
   },
   console: ConsoleHelper;
+  clipboard: ClipboardHelper;
 };
 
 const test = base.extend<BaseFixtures>({
@@ -20,6 +22,10 @@ const test = base.extend<BaseFixtures>({
   
   console: async ({}, use) => {
     await use(new ConsoleHelper());
+  },
+
+  clipboard: async ({ page }, use) => {
+    await use(new ClipboardHelper(page));
   },
 
   toast: async ({ page }, use) => {

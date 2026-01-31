@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev --mode dev",
-    "build": "astro build",
+    "build": "bun run generate-ninjaodm-client && astro build",
     "preview": "astro preview",
     "start": "bun ./dist/server/entry.mjs",
     "astro": "astro",

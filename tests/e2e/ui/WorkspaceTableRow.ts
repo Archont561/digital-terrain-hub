@@ -1,24 +1,13 @@
 import { randomUUID } from "crypto";
-import { ComponentPageNavigator, type ComponentConfig, test as baseTest, expect } from "./fixtures";
-import type { Locator } from "@playwright/test";
+import { ComponentPageNavigator, test as baseTest, expect } from "./fixtures";
 
-interface WorkspaceProps {
+class WorkspaceTableRowNavigator extends ComponentPageNavigator<{
   workspace: { uuid: string; name: string };
   workspaceEditUrl: string;
-}
+}> {
+  protected readonly componentUrl = "/components/WorkspaceTableRow";
 
-class WorkspaceTableRowNavigator extends ComponentPageNavigator<WorkspaceProps> {
-  // 1. SELECTORS: Defined strictly inside the class
-  private static readonly SELECTORS = {
-    tableRow: ".ninjaodm-workspace-table-row",
-    nameLabel: '[x-bind="workspaceNameLabel"]',
-    nameInput: '[x-bind="workspaceNameInput"]',
-    editBtn: 'a:has-text("Edit")',
-    deleteBtn: '[x-bind="deleteWorkspaceBtn"]',
-  } as const;
-
-  // 2. PROPS: Defined strictly inside the class
-  private static readonly DEFAULT_PROPS: WorkspaceProps = {
+  protected readonly defaultProps = {
     workspace: {
       uuid: randomUUID(),
       name: "Test Workspace",
@@ -26,36 +15,30 @@ class WorkspaceTableRowNavigator extends ComponentPageNavigator<WorkspaceProps> 
     workspaceEditUrl: "/edit-workspace",
   };
 
-  constructor(config: Omit<ComponentConfig<WorkspaceProps>, "settings"> ) {
-    super({ ...config, ...{ settings: {
-      componentUrl: "/components/WorkspaceTableRow",
-      defaultProps: WorkspaceTableRowNavigator.DEFAULT_PROPS,
-    } } });
-  }
-  
-  get root(): Locator {
-    return this.config.page.locator(WorkspaceTableRowNavigator.SELECTORS.tableRow).first();
+  protected readonly rootSelector = ".ninjaodm-workspace-table-row";
+
+  protected readonly selectors = {
+    nameLabel: '[x-bind="workspaceNameLabel"]',
+    nameInput: '[x-bind="workspaceNameInput"]',
+    editBtn: 'a:has-text("Edit")',
+    deleteBtn: '[x-bind="deleteWorkspaceBtn"]',
+  } as const;
+
+  get label() {
+    return this.$(this.selectors.nameLabel);
   }
 
-  get label(): Locator {
-    return this.root.locator(WorkspaceTableRowNavigator.SELECTORS.nameLabel);
+  get input() {
+    return this.$(this.selectors.nameInput);
   }
 
-  get input(): Locator {
-    return this.root.locator(WorkspaceTableRowNavigator.SELECTORS.nameInput);
+  get editBtn() {
+    return this.$(this.selectors.editBtn);
   }
 
-  get editBtn(): Locator {
-    return this.root.locator(WorkspaceTableRowNavigator.SELECTORS.editBtn);
+  get deleteBtn() {
+    return this.$(this.selectors.deleteBtn);
   }
-
-  get deleteBtn(): Locator {
-    return this.root.locator(WorkspaceTableRowNavigator.SELECTORS.deleteBtn);
-  }
-
-  // ============================
-  // Actions
-  // ============================
 
   async enterEdit() {
     await this.label.click();
@@ -63,7 +46,7 @@ class WorkspaceTableRowNavigator extends ComponentPageNavigator<WorkspaceProps> 
   }
 
   async cancelEdit() {
-    await this.config.page.locator("body").click({ position: { x: 0, y: 0 } });
+    await this.page.locator("body").click({ position: { x: 0, y: 0 } });
     await this.label.waitFor({ state: "visible" });
   }
 
@@ -78,7 +61,7 @@ const test = baseTest.extend<{
   workspaceTableRow: WorkspaceTableRowNavigator;
 }>({
   workspaceTableRow: async ({ page }, use) => {
-    const nav = new WorkspaceTableRowNavigator({ page });
+    const nav = new WorkspaceTableRowNavigator(page);
     await nav.goto();
     await use(nav);
   },

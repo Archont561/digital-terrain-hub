@@ -4,7 +4,7 @@ import { ToastHelper } from "./toast";
 import { ActionContextManager } from "./action";
 import { ConsoleHelper } from "./console";
 import { ClipboardHelper } from "./clipboard";
-export { ComponentPageNavigator, type ComponentConfig } from "./components";
+export { ComponentPageNavigator } from "./components";
 
 
 export type BaseFixtures = {

@@ -370,125 +370,6 @@
         ]
       }
     },
-    "/api/internal/workspaces/{uuid}": {
-      "get": {
-        "operationId": "getWorkspaceInternal",
-        "summary": "Get a specific item",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "uuid",
-            "schema": {
-              "format": "uuid4",
-              "title": "Uuid",
-              "type": "string"
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/WorkspaceResponseInternal"
-                }
-              }
-            }
-          }
-        },
-        "description": "Get Workspace item by uuid",
-        "tags": [
-          "workspace",
-          "internal"
-        ],
-        "security": [
-          {
-            "ServiceHMACAuth": []
-          }
-        ]
-      },
-      "patch": {
-        "operationId": "updateWorkspaceInternal",
-        "summary": "Patch an item",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "uuid",
-            "schema": {
-              "format": "uuid4",
-              "title": "Uuid",
-              "type": "string"
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/WorkspaceResponseInternal"
-                }
-              }
-            }
-          }
-        },
-        "description": "Patch Workspace item by uuid",
-        "tags": [
-          "workspace",
-          "internal"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateWorkspaceInternal"
-              }
-            }
-          },
-          "required": true
-        },
-        "security": [
-          {
-            "ServiceHMACAuth": []
-          }
-        ]
-      },
-      "delete": {
-        "operationId": "deleteWorkspaceInternal",
-        "summary": "Delete an item",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "uuid",
-            "schema": {
-              "format": "uuid4",
-              "title": "Uuid",
-              "type": "string"
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No Content"
-          }
-        },
-        "description": "Delete Workspace item",
-        "tags": [
-          "workspace",
-          "internal"
-        ],
-        "security": [
-          {
-            "ServiceHMACAuth": []
-          }
-        ]
-      }
-    },
     "/api/workspaces/{uuid}": {
       "get": {
         "operationId": "getWorkspace",
@@ -511,7 +392,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/WorkspaceResponsePublic"
+                  "$ref": "#/components/schemas/WorkspaceResponse"
                 }
               }
             }
@@ -525,6 +406,9 @@
         "security": [
           {
             "ServiceUserJWTAuth": []
+          },
+          {
+            "ServiceHMACAuth": []
           }
         ]
       },
@@ -549,7 +433,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/WorkspaceResponsePublic"
+                  "$ref": "#/components/schemas/WorkspaceResponse"
                 }
               }
             }
@@ -564,7 +448,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateWorkspacePublic"
+                "$ref": "#/components/schemas/UpdateWorkspace"
               }
             }
           },
@@ -573,6 +457,9 @@
         "security": [
           {
             "ServiceUserJWTAuth": []
+          },
+          {
+            "ServiceHMACAuth": []
           }
         ]
       },
@@ -604,6 +491,9 @@
         "security": [
           {
             "ServiceUserJWTAuth": []
+          },
+          {
+            "ServiceHMACAuth": []
           }
         ]
       }
@@ -619,7 +509,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/WorkspaceResponsePublic"
+                  "$ref": "#/components/schemas/WorkspaceResponse"
                 }
               }
             }
@@ -634,7 +524,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateWorkspacePublic"
+                "$ref": "#/components/schemas/CreateWorkspace"
               }
             }
           },
@@ -643,6 +533,9 @@
         "security": [
           {
             "ServiceUserJWTAuth": []
+          },
+          {
+            "ServiceHMACAuth": []
           }
         ]
       },
@@ -708,7 +601,7 @@
               "application/json": {
                 "schema": {
                   "items": {
-                    "$ref": "#/components/schemas/WorkspaceResponsePublic"
+                    "$ref": "#/components/schemas/WorkspaceResponse"
                   },
                   "title": "Response",
                   "type": "array"
@@ -724,6 +617,9 @@
         "security": [
           {
             "ServiceUserJWTAuth": []
+          },
+          {
+            "ServiceHMACAuth": []
           }
         ]
       }
@@ -791,6 +687,9 @@
         "security": [
           {
             "ServiceUserJWTAuth": []
+          },
+          {
+            "ServiceHMACAuth": []
           }
         ]
       }
@@ -851,6 +750,9 @@
         "security": [
           {
             "ServiceUserJWTAuth": []
+          },
+          {
+            "ServiceHMACAuth": []
           }
         ]
       }
@@ -891,6 +793,9 @@
         "security": [
           {
             "ServiceUserJWTAuth": []
+          },
+          {
+            "ServiceHMACAuth": []
           }
         ]
       },
@@ -961,6 +866,9 @@
         "security": [
           {
             "ServiceUserJWTAuth": []
+          },
+          {
+            "ServiceHMACAuth": []
           }
         ]
       },
@@ -1010,6 +918,9 @@
         "security": [
           {
             "ServiceUserJWTAuth": []
+          },
+          {
+            "ServiceHMACAuth": []
           }
         ]
       }
@@ -1081,6 +992,9 @@
         "security": [
           {
             "ServiceUserJWTAuth": []
+          },
+          {
+            "ServiceHMACAuth": []
           }
         ]
       },
@@ -1110,21 +1024,33 @@
         "security": [
           {
             "ServiceUserJWTAuth": []
+          },
+          {
+            "ServiceHMACAuth": []
           }
         ]
       }
     },
-    "/api/internal/tasks/{uuid}": {
-      "get": {
-        "operationId": "getTaskInternal",
-        "summary": "Get a specific item",
+    "/api/internal/tasks/{uuid}/webhooks/odm": {
+      "post": {
+        "operationId": "callTaskOdmWebhook",
+        "summary": "Nodeodm Webhook",
         "parameters": [
           {
             "in": "path",
             "name": "uuid",
             "schema": {
-              "format": "uuid4",
+              "format": "uuid",
               "title": "Uuid",
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "signature",
+            "schema": {
+              "title": "Signature",
               "type": "string"
             },
             "required": true
@@ -1136,84 +1062,12 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TaskResponse"
+                  "$ref": "#/components/schemas/MessageSchema"
                 }
               }
             }
           }
         },
-        "description": "Get ODMTask item by uuid",
-        "tags": [
-          "task",
-          "internal"
-        ],
-        "security": [
-          {
-            "ServiceHMACAuth": []
-          }
-        ]
-      },
-      "delete": {
-        "operationId": "deleteTaskInternal",
-        "summary": "Delete an item",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "uuid",
-            "schema": {
-              "format": "uuid4",
-              "title": "Uuid",
-              "type": "string"
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No Content"
-          }
-        },
-        "description": "Delete ODMTask item",
-        "tags": [
-          "task",
-          "internal"
-        ],
-        "security": [
-          {
-            "ServiceHMACAuth": []
-          }
-        ]
-      }
-    },
-    "/api/internal/tasks/": {
-      "post": {
-        "operationId": "createTaskInternal",
-        "summary": "Create an item",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "workspace_uuid",
-            "schema": {
-              "format": "uuid4",
-              "title": "Workspace Uuid",
-              "type": "string"
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TaskResponse"
-                }
-              }
-            }
-          }
-        },
-        "description": "Create ODMTask item",
         "tags": [
           "task",
           "internal"
@@ -1222,18 +1076,15 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateTask"
+                "$ref": "#/components/schemas/ODMTaskWebhookInternal"
               }
             }
           },
           "required": true
-        },
-        "security": [
-          {
-            "ServiceHMACAuth": []
-          }
-        ]
-      },
+        }
+      }
+    },
+    "/api/internal/tasks/": {
       "get": {
         "operationId": "listTasksInternal",
         "summary": "List Tasks",
@@ -1347,9 +1198,86 @@
         ]
       }
     },
-    "/api/internal/tasks/{uuid}/{action}": {
+    "/api/tasks/{uuid}": {
+      "get": {
+        "operationId": "getTask",
+        "summary": "Get a specific item",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "uuid",
+            "schema": {
+              "format": "uuid4",
+              "title": "Uuid",
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "Get ODMTask item by uuid",
+        "tags": [
+          "task",
+          "public"
+        ],
+        "security": [
+          {
+            "ServiceUserJWTAuth": []
+          },
+          {
+            "ServiceHMACAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "operationId": "deleteTask",
+        "summary": "Delete an item",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "uuid",
+            "schema": {
+              "format": "uuid4",
+              "title": "Uuid",
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "description": "Delete ODMTask item",
+        "tags": [
+          "task",
+          "public"
+        ],
+        "security": [
+          {
+            "ServiceUserJWTAuth": []
+          },
+          {
+            "ServiceHMACAuth": []
+          }
+        ]
+      }
+    },
+    "/api/tasks/{uuid}/{action}": {
       "post": {
-        "operationId": "callTaskActionInternal",
+        "operationId": "callTaskAction",
         "summary": "Task Action",
         "parameters": [
           {
@@ -1391,188 +1319,19 @@
         },
         "tags": [
           "task",
-          "internal"
+          "public"
         ],
         "security": [
+          {
+            "ServiceUserJWTAuth": []
+          },
           {
             "ServiceHMACAuth": []
           }
         ]
       }
     },
-    "/api/internal/tasks/{uuid}/webhooks/odm": {
-      "post": {
-        "operationId": "callTaskOdmWebhook",
-        "summary": "Nodeodm Webhook",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "uuid",
-            "schema": {
-              "format": "uuid",
-              "title": "Uuid",
-              "type": "string"
-            },
-            "required": true
-          },
-          {
-            "in": "query",
-            "name": "signature",
-            "schema": {
-              "title": "Signature",
-              "type": "string"
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/MessageSchema"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "task",
-          "internal"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ODMTaskWebhookInternal"
-              }
-            }
-          },
-          "required": true
-        }
-      }
-    },
-    "/api/tasks/{uuid}": {
-      "get": {
-        "operationId": "getTask",
-        "summary": "Get a specific item",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "uuid",
-            "schema": {
-              "format": "uuid4",
-              "title": "Uuid",
-              "type": "string"
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TaskResponse"
-                }
-              }
-            }
-          }
-        },
-        "description": "Get ODMTask item by uuid",
-        "tags": [
-          "task",
-          "public"
-        ],
-        "security": [
-          {
-            "ServiceUserJWTAuth": []
-          }
-        ]
-      },
-      "delete": {
-        "operationId": "deleteTask",
-        "summary": "Delete an item",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "uuid",
-            "schema": {
-              "format": "uuid4",
-              "title": "Uuid",
-              "type": "string"
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No Content"
-          }
-        },
-        "description": "Delete ODMTask item",
-        "tags": [
-          "task",
-          "public"
-        ],
-        "security": [
-          {
-            "ServiceUserJWTAuth": []
-          }
-        ]
-      }
-    },
     "/api/tasks/": {
-      "post": {
-        "operationId": "createTask",
-        "summary": "Create an item",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "workspace_uuid",
-            "schema": {
-              "format": "uuid4",
-              "title": "Workspace Uuid",
-              "type": "string"
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TaskResponse"
-                }
-              }
-            }
-          }
-        },
-        "description": "Create ODMTask item",
-        "tags": [
-          "task",
-          "public"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateTask"
-              }
-            }
-          },
-          "required": true
-        },
-        "security": [
-          {
-            "ServiceUserJWTAuth": []
-          }
-        ]
-      },
       "get": {
         "operationId": "listTasks",
         "summary": "List Tasks",
@@ -1682,43 +1441,19 @@
         "security": [
           {
             "ServiceUserJWTAuth": []
-          }
-        ]
-      }
-    },
-    "/api/tasks/{uuid}/{action}": {
-      "post": {
-        "operationId": "callTaskAction",
-        "summary": "Task Action",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "uuid",
-            "schema": {
-              "format": "uuid",
-              "title": "Uuid",
-              "type": "string"
-            },
-            "required": true
           },
           {
-            "in": "path",
-            "name": "action",
-            "schema": {
-              "enum": [
-                "pause",
-                "resume",
-                "cancel"
-              ],
-              "title": "Action",
-              "type": "string"
-            },
-            "required": true
+            "ServiceHMACAuth": []
           }
-        ],
+        ]
+      },
+      "post": {
+        "operationId": "createTask",
+        "summary": "Create Task",
+        "parameters": [],
         "responses": {
-          "200": {
-            "description": "OK",
+          "201": {
+            "description": "Created",
             "content": {
               "application/json": {
                 "schema": {
@@ -1732,78 +1467,20 @@
           "task",
           "public"
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTask"
+              }
+            }
+          },
+          "required": true
+        },
         "security": [
           {
             "ServiceUserJWTAuth": []
-          }
-        ]
-      }
-    },
-    "/api/internal/results/{uuid}": {
-      "get": {
-        "operationId": "getTaskResultInternal",
-        "summary": "Get a specific item",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "uuid",
-            "schema": {
-              "format": "uuid4",
-              "title": "Uuid",
-              "type": "string"
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResultResponse"
-                }
-              }
-            }
-          }
-        },
-        "description": "Get ODMTaskResult item by uuid",
-        "tags": [
-          "result",
-          "internal"
-        ],
-        "security": [
-          {
-            "ServiceHMACAuth": []
-          }
-        ]
-      },
-      "delete": {
-        "operationId": "deleteTaskResultInternal",
-        "summary": "Delete an item",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "uuid",
-            "schema": {
-              "format": "uuid4",
-              "title": "Uuid",
-              "type": "string"
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No Content"
-          }
-        },
-        "description": "Delete ODMTaskResult item",
-        "tags": [
-          "result",
-          "internal"
-        ],
-        "security": [
+          },
           {
             "ServiceHMACAuth": []
           }
@@ -1945,6 +1622,9 @@
         "security": [
           {
             "ServiceUserJWTAuth": []
+          },
+          {
+            "ServiceHMACAuth": []
           }
         ]
       },
@@ -1976,6 +1656,9 @@
         "security": [
           {
             "ServiceUserJWTAuth": []
+          },
+          {
+            "ServiceHMACAuth": []
           }
         ]
       }
@@ -2075,6 +1758,9 @@
         "security": [
           {
             "ServiceUserJWTAuth": []
+          },
+          {
+            "ServiceHMACAuth": []
           }
         ]
       }
@@ -2097,7 +1783,14 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResultShareKeyResponse"
+                }
+              }
+            }
           }
         },
         "tags": [
@@ -2107,6 +1800,9 @@
         "security": [
           {
             "ServiceUserJWTAuth": []
+          },
+          {
+            "ServiceHMACAuth": []
           }
         ]
       }
@@ -2148,6 +1844,9 @@
         "security": [
           {
             "ShareResultsApiKeyAuth": []
+          },
+          {
+            "ServiceHMACAuth": []
           }
         ]
       }
@@ -2180,75 +1879,7 @@
         "security": [
           {
             "ServiceUserJWTAuth": []
-          }
-        ]
-      }
-    },
-    "/api/internal/images/{uuid}": {
-      "get": {
-        "operationId": "getImageInternal",
-        "summary": "Get a specific item",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "uuid",
-            "schema": {
-              "format": "uuid4",
-              "title": "Uuid",
-              "type": "string"
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ImageResponse"
-                }
-              }
-            }
-          }
-        },
-        "description": "Get Image item by uuid",
-        "tags": [
-          "image",
-          "internal"
-        ],
-        "security": [
-          {
-            "ServiceHMACAuth": []
-          }
-        ]
-      },
-      "delete": {
-        "operationId": "deleteImageInternal",
-        "summary": "Delete an item",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "uuid",
-            "schema": {
-              "format": "uuid4",
-              "title": "Uuid",
-              "type": "string"
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No Content"
-          }
-        },
-        "description": "Delete Image item",
-        "tags": [
-          "image",
-          "internal"
-        ],
-        "security": [
+          },
           {
             "ServiceHMACAuth": []
           }
@@ -2407,6 +2038,9 @@
         "security": [
           {
             "ServiceUserJWTAuth": []
+          },
+          {
+            "ServiceHMACAuth": []
           }
         ]
       },
@@ -2438,6 +2072,9 @@
         "security": [
           {
             "ServiceUserJWTAuth": []
+          },
+          {
+            "ServiceHMACAuth": []
           }
         ]
       }
@@ -2554,6 +2191,9 @@
         "security": [
           {
             "ServiceUserJWTAuth": []
+          },
+          {
+            "ServiceHMACAuth": []
           }
         ]
       }
@@ -2586,123 +2226,7 @@
         "security": [
           {
             "ServiceUserJWTAuth": []
-          }
-        ]
-      }
-    },
-    "/api/internal/gcps/{uuid}": {
-      "get": {
-        "operationId": "getGCPInternal",
-        "summary": "Get a specific item",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "uuid",
-            "schema": {
-              "format": "uuid4",
-              "title": "Uuid",
-              "type": "string"
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GCPResponse"
-                }
-              }
-            }
-          }
-        },
-        "description": "Get GroundControlPoint item by uuid",
-        "tags": [
-          "gcp",
-          "internal"
-        ],
-        "security": [
-          {
-            "ServiceHMACAuth": []
-          }
-        ]
-      },
-      "patch": {
-        "operationId": "updateGCPInternal",
-        "summary": "Patch an item",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "uuid",
-            "schema": {
-              "format": "uuid4",
-              "title": "Uuid",
-              "type": "string"
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GCPResponse"
-                }
-              }
-            }
-          }
-        },
-        "description": "Patch GroundControlPoint item by uuid",
-        "tags": [
-          "gcp",
-          "internal"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/GCPUpdate"
-              }
-            }
           },
-          "required": true
-        },
-        "security": [
-          {
-            "ServiceHMACAuth": []
-          }
-        ]
-      },
-      "delete": {
-        "operationId": "deleteGCPInternal",
-        "summary": "Delete an item",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "uuid",
-            "schema": {
-              "format": "uuid4",
-              "title": "Uuid",
-              "type": "string"
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No Content"
-          }
-        },
-        "description": "Delete GroundControlPoint item",
-        "tags": [
-          "gcp",
-          "internal"
-        ],
-        "security": [
           {
             "ServiceHMACAuth": []
           }
@@ -2710,54 +2234,6 @@
       }
     },
     "/api/internal/gcps/": {
-      "post": {
-        "operationId": "createGCPInternal",
-        "summary": "Create an item",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "image_uuid",
-            "schema": {
-              "format": "uuid4",
-              "title": "Image Uuid",
-              "type": "string"
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GCPResponse"
-                }
-              }
-            }
-          }
-        },
-        "description": "Create GroundControlPoint item",
-        "tags": [
-          "gcp",
-          "internal"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/GCPCreate"
-              }
-            }
-          },
-          "required": true
-        },
-        "security": [
-          {
-            "ServiceHMACAuth": []
-          }
-        ]
-      },
       "get": {
         "operationId": "listGCPsInternal",
         "summary": "List Gcps",
@@ -2910,6 +2386,9 @@
         "security": [
           {
             "ServiceUserJWTAuth": []
+          },
+          {
+            "ServiceHMACAuth": []
           }
         ]
       },
@@ -2958,6 +2437,9 @@
         "security": [
           {
             "ServiceUserJWTAuth": []
+          },
+          {
+            "ServiceHMACAuth": []
           }
         ]
       },
@@ -2989,171 +2471,9 @@
         "security": [
           {
             "ServiceUserJWTAuth": []
-          }
-        ]
-      }
-    },
-    "/api/gcps/": {
-      "post": {
-        "operationId": "createGCP",
-        "summary": "Create an item",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "image_uuid",
-            "schema": {
-              "format": "uuid4",
-              "title": "Image Uuid",
-              "type": "string"
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GCPResponse"
-                }
-              }
-            }
-          }
-        },
-        "description": "Create GroundControlPoint item",
-        "tags": [
-          "gcp",
-          "public"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/GCPCreate"
-              }
-            }
-          },
-          "required": true
-        },
-        "security": [
-          {
-            "ServiceUserJWTAuth": []
-          }
-        ]
-      },
-      "get": {
-        "operationId": "listGCPs",
-        "summary": "List Gcps",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "label",
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Label"
-            },
-            "required": false
           },
           {
-            "in": "query",
-            "name": "created_after",
-            "schema": {
-              "anyOf": [
-                {
-                  "format": "date-time",
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Created After"
-            },
-            "required": false
-          },
-          {
-            "in": "query",
-            "name": "created_before",
-            "schema": {
-              "anyOf": [
-                {
-                  "format": "date-time",
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Created Before"
-            },
-            "required": false
-          },
-          {
-            "in": "query",
-            "name": "image_uuid",
-            "schema": {
-              "anyOf": [
-                {
-                  "format": "uuid",
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Image Uuid"
-            },
-            "required": false
-          },
-          {
-            "in": "query",
-            "name": "workspace_uuid",
-            "schema": {
-              "anyOf": [
-                {
-                  "format": "uuid",
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Workspace Uuid"
-            },
-            "required": false
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "items": {
-                    "$ref": "#/components/schemas/GCPResponse"
-                  },
-                  "title": "Response",
-                  "type": "array"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "gcp",
-          "public"
-        ],
-        "security": [
-          {
-            "ServiceUserJWTAuth": []
+            "ServiceHMACAuth": []
           }
         ]
       }
@@ -3268,6 +2588,168 @@
         "security": [
           {
             "ServiceUserJWTAuth": []
+          },
+          {
+            "ServiceHMACAuth": []
+          }
+        ]
+      }
+    },
+    "/api/gcps/": {
+      "get": {
+        "operationId": "listGCPs",
+        "summary": "List Gcps",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "label",
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Label"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "created_after",
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Created After"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "created_before",
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Created Before"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "image_uuid",
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Image Uuid"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "workspace_uuid",
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Workspace Uuid"
+            },
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/GCPResponse"
+                  },
+                  "title": "Response",
+                  "type": "array"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "gcp",
+          "public"
+        ],
+        "security": [
+          {
+            "ServiceUserJWTAuth": []
+          },
+          {
+            "ServiceHMACAuth": []
+          }
+        ]
+      },
+      "post": {
+        "operationId": "createGCP",
+        "summary": "Create Gcp",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GCPResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "gcp",
+          "public"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GCPCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "ServiceUserJWTAuth": []
+          },
+          {
+            "ServiceHMACAuth": []
           }
         ]
       }
@@ -4245,10 +3727,6 @@
       },
       "CreateWorkspaceInternal": {
         "properties": {
-          "user_id": {
-            "title": "User Id",
-            "type": "string"
-          },
           "name": {
             "anyOf": [
               {
@@ -4259,6 +3737,10 @@
               }
             ],
             "title": "Name"
+          },
+          "user_id": {
+            "title": "User Id",
+            "type": "string"
           }
         },
         "required": [
@@ -4319,7 +3801,7 @@
         "title": "WorkspaceFilterSchemaInternal",
         "type": "object"
       },
-      "PathModelb674c": {
+      "PathModelaeafc": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -4330,80 +3812,10 @@
         "required": [
           "uuid"
         ],
-        "title": "PathModelb674c",
+        "title": "PathModelaeafc",
         "type": "object"
       },
-      "PathModel35d3e": {
-        "properties": {
-          "uuid": {
-            "format": "uuid4",
-            "title": "Uuid",
-            "type": "string"
-          }
-        },
-        "required": [
-          "uuid"
-        ],
-        "title": "PathModel35d3e",
-        "type": "object"
-      },
-      "UpdateWorkspaceInternal": {
-        "properties": {
-          "user_id": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "User Id"
-          },
-          "name": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Name"
-          }
-        },
-        "title": "UpdateWorkspaceInternal",
-        "type": "object"
-      },
-      "PathModel683fd": {
-        "properties": {
-          "uuid": {
-            "format": "uuid4",
-            "title": "Uuid",
-            "type": "string"
-          }
-        },
-        "required": [
-          "uuid"
-        ],
-        "title": "PathModel683fd",
-        "type": "object"
-      },
-      "PathModelc5a7e": {
-        "properties": {
-          "uuid": {
-            "format": "uuid4",
-            "title": "Uuid",
-            "type": "string"
-          }
-        },
-        "required": [
-          "uuid"
-        ],
-        "title": "PathModelc5a7e",
-        "type": "object"
-      },
-      "WorkspaceResponsePublic": {
+      "WorkspaceResponse": {
         "properties": {
           "uuid": {
             "anyOf": [
@@ -4428,10 +3840,10 @@
             "type": "string"
           }
         },
-        "title": "WorkspaceResponsePublic",
+        "title": "WorkspaceResponse",
         "type": "object"
       },
-      "PathModel56fab": {
+      "PathModel2ed7d": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -4442,10 +3854,10 @@
         "required": [
           "uuid"
         ],
-        "title": "PathModel56fab",
+        "title": "PathModel2ed7d",
         "type": "object"
       },
-      "UpdateWorkspacePublic": {
+      "UpdateWorkspace": {
         "properties": {
           "name": {
             "title": "Name",
@@ -4455,10 +3867,10 @@
         "required": [
           "name"
         ],
-        "title": "UpdateWorkspacePublic",
+        "title": "UpdateWorkspace",
         "type": "object"
       },
-      "PathModele0f0a": {
+      "PathModel8eabd": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -4469,10 +3881,10 @@
         "required": [
           "uuid"
         ],
-        "title": "PathModele0f0a",
+        "title": "PathModel8eabd",
         "type": "object"
       },
-      "CreateWorkspacePublic": {
+      "CreateWorkspace": {
         "properties": {
           "name": {
             "anyOf": [
@@ -4486,10 +3898,10 @@
             "title": "Name"
           }
         },
-        "title": "CreateWorkspacePublic",
+        "title": "CreateWorkspace",
         "type": "object"
       },
-      "WorkspaceFilterSchemaPublic": {
+      "WorkspaceFilterSchema": {
         "properties": {
           "name": {
             "anyOf": [
@@ -4527,7 +3939,7 @@
             "title": "Created Before"
           }
         },
-        "title": "WorkspaceFilterSchemaPublic",
+        "title": "WorkspaceFilterSchema",
         "type": "object"
       },
       "ImageResponse": {
@@ -4643,227 +4055,6 @@
         "title": "TusPostHeaders",
         "type": "object"
       },
-      "PathModele6eb9": {
-        "properties": {
-          "uuid": {
-            "format": "uuid4",
-            "title": "Uuid",
-            "type": "string"
-          }
-        },
-        "required": [
-          "uuid"
-        ],
-        "title": "PathModele6eb9",
-        "type": "object"
-      },
-      "ODMProcessingStage": {
-        "enum": [
-          "dataset",
-          "split",
-          "merge",
-          "opensfm",
-          "openmvs",
-          "odm_filterpoints",
-          "odm_meshing",
-          "mvs_texturing",
-          "odm_georeferencing",
-          "odm_dem",
-          "odm_orthophoto",
-          "odm_report",
-          "odm_postprocess"
-        ],
-        "title": "ODMProcessingStage",
-        "type": "string"
-      },
-      "ODMTaskStatus": {
-        "enum": [
-          "queued",
-          "running",
-          "pausing",
-          "paused",
-          "resuming",
-          "cancelling",
-          "finishing",
-          "completed",
-          "failed",
-          "cancelled"
-        ],
-        "title": "ODMTaskStatus",
-        "type": "string"
-      },
-      "TaskResponse": {
-        "properties": {
-          "workspace_uuid": {
-            "format": "uuid",
-            "title": "Workspace Uuid",
-            "type": "string"
-          },
-          "status": {
-            "$ref": "#/components/schemas/ODMTaskStatus"
-          },
-          "step": {
-            "$ref": "#/components/schemas/ODMProcessingStage"
-          },
-          "uuid": {
-            "anyOf": [
-              {
-                "format": "uuid",
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Uuid"
-          },
-          "options": {
-            "anyOf": [
-              {
-                "type": "object"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Options"
-          },
-          "created_at": {
-            "format": "date-time",
-            "title": "Created At",
-            "type": "string"
-          }
-        },
-        "required": [
-          "workspace_uuid",
-          "status",
-          "step"
-        ],
-        "title": "TaskResponse",
-        "type": "object"
-      },
-      "PathModel14b21": {
-        "properties": {
-          "uuid": {
-            "format": "uuid4",
-            "title": "Uuid",
-            "type": "string"
-          }
-        },
-        "required": [
-          "uuid"
-        ],
-        "title": "PathModel14b21",
-        "type": "object"
-      },
-      "QueryModelf5d75": {
-        "properties": {
-          "workspace_uuid": {
-            "format": "uuid4",
-            "title": "Workspace Uuid",
-            "type": "string"
-          }
-        },
-        "required": [
-          "workspace_uuid"
-        ],
-        "title": "QueryModelf5d75",
-        "type": "object"
-      },
-      "CreateTask": {
-        "properties": {
-          "name": {
-            "title": "Name",
-            "type": "string"
-          },
-          "quality": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/ODMQualityOption"
-              }
-            ],
-            "default": "ultra_low"
-          }
-        },
-        "required": [
-          "name"
-        ],
-        "title": "CreateTask",
-        "type": "object"
-      },
-      "ODMQualityOption": {
-        "enum": [
-          "ultra_high",
-          "high",
-          "medium",
-          "low",
-          "ultra_low"
-        ],
-        "title": "ODMQualityOption",
-        "type": "string"
-      },
-      "TaskFilterSchema": {
-        "properties": {
-          "status": {
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/ODMTaskStatus"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "step": {
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/ODMProcessingStage"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "created_after": {
-            "anyOf": [
-              {
-                "format": "date-time",
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Created After"
-          },
-          "created_before": {
-            "anyOf": [
-              {
-                "format": "date-time",
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Created Before"
-          },
-          "workspace_uuid": {
-            "anyOf": [
-              {
-                "format": "uuid",
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Workspace Uuid"
-          }
-        },
-        "title": "TaskFilterSchema",
-        "type": "object"
-      },
       "NodeODMTaskStatus": {
         "enum": [10, 20, 30, 40, 50],
         "title": "NodeODMTaskStatus",
@@ -4930,71 +4121,115 @@
         "title": "ODMTaskWebhookStatus",
         "type": "object"
       },
-      "PathModel6f780": {
-        "properties": {
-          "uuid": {
-            "format": "uuid4",
-            "title": "Uuid",
-            "type": "string"
-          }
-        },
-        "required": [
-          "uuid"
+      "ODMProcessingStage": {
+        "enum": [
+          "dataset",
+          "split",
+          "merge",
+          "opensfm",
+          "openmvs",
+          "odm_filterpoints",
+          "odm_meshing",
+          "mvs_texturing",
+          "odm_georeferencing",
+          "odm_dem",
+          "odm_orthophoto",
+          "odm_report",
+          "odm_postprocess"
         ],
-        "title": "PathModel6f780",
-        "type": "object"
+        "title": "ODMProcessingStage",
+        "type": "string"
       },
-      "PathModelcb1d2": {
-        "properties": {
-          "uuid": {
-            "format": "uuid4",
-            "title": "Uuid",
-            "type": "string"
-          }
-        },
-        "required": [
-          "uuid"
+      "ODMTaskStatus": {
+        "enum": [
+          "queued",
+          "running",
+          "pausing",
+          "paused",
+          "resuming",
+          "cancelling",
+          "finishing",
+          "completed",
+          "failed",
+          "cancelled"
         ],
-        "title": "PathModelcb1d2",
-        "type": "object"
+        "title": "ODMTaskStatus",
+        "type": "string"
       },
-      "QueryModel54817": {
+      "TaskFilterSchema": {
         "properties": {
+          "status": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ODMTaskStatus"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "step": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ODMProcessingStage"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "created_after": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Created After"
+          },
+          "created_before": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Created Before"
+          },
           "workspace_uuid": {
-            "format": "uuid4",
-            "title": "Workspace Uuid",
-            "type": "string"
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Workspace Uuid"
           }
         },
-        "required": [
-          "workspace_uuid"
-        ],
-        "title": "QueryModel54817",
+        "title": "TaskFilterSchema",
         "type": "object"
       },
-      "PathModel01643": {
-        "properties": {
-          "uuid": {
-            "format": "uuid4",
-            "title": "Uuid",
-            "type": "string"
-          }
-        },
-        "required": [
-          "uuid"
-        ],
-        "title": "PathModel01643",
-        "type": "object"
-      },
-      "ResultResponse": {
+      "TaskResponse": {
         "properties": {
           "workspace_uuid": {
             "format": "uuid",
             "title": "Workspace Uuid",
             "type": "string"
           },
-          "result_type": {
-            "$ref": "#/components/schemas/ODMTaskResultType"
+          "status": {
+            "$ref": "#/components/schemas/ODMTaskStatus"
+          },
+          "step": {
+            "$ref": "#/components/schemas/ODMProcessingStage"
           },
           "uuid": {
             "anyOf": [
@@ -5008,6 +4243,17 @@
             ],
             "title": "Uuid"
           },
+          "options": {
+            "anyOf": [
+              {
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Options"
+          },
           "created_at": {
             "format": "date-time",
             "title": "Created At",
@@ -5016,12 +4262,13 @@
         },
         "required": [
           "workspace_uuid",
-          "result_type"
+          "status",
+          "step"
         ],
-        "title": "ResultResponse",
+        "title": "TaskResponse",
         "type": "object"
       },
-      "PathModelb6df2": {
+      "PathModel8f324": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -5032,8 +4279,59 @@
         "required": [
           "uuid"
         ],
-        "title": "PathModelb6df2",
+        "title": "PathModel8f324",
         "type": "object"
+      },
+      "PathModel60133": {
+        "properties": {
+          "uuid": {
+            "format": "uuid4",
+            "title": "Uuid",
+            "type": "string"
+          }
+        },
+        "required": [
+          "uuid"
+        ],
+        "title": "PathModel60133",
+        "type": "object"
+      },
+      "CreateTask": {
+        "properties": {
+          "workspace_uuid": {
+            "title": "Workspace Uuid",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "quality": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ODMQualityOption"
+              }
+            ],
+            "default": "ultra_low"
+          }
+        },
+        "required": [
+          "workspace_uuid",
+          "name"
+        ],
+        "title": "CreateTask",
+        "type": "object"
+      },
+      "ODMQualityOption": {
+        "enum": [
+          "ultra_high",
+          "high",
+          "medium",
+          "low",
+          "ultra_low"
+        ],
+        "title": "ODMQualityOption",
+        "type": "string"
       },
       "ResultFilterSchema": {
         "properties": {
@@ -5087,21 +4385,42 @@
         "title": "ResultFilterSchema",
         "type": "object"
       },
-      "PathModele1e21": {
+      "ResultResponse": {
         "properties": {
+          "workspace_uuid": {
+            "format": "uuid",
+            "title": "Workspace Uuid",
+            "type": "string"
+          },
+          "result_type": {
+            "$ref": "#/components/schemas/ODMTaskResultType"
+          },
           "uuid": {
-            "format": "uuid4",
-            "title": "Uuid",
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Uuid"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
             "type": "string"
           }
         },
         "required": [
-          "uuid"
+          "workspace_uuid",
+          "result_type"
         ],
-        "title": "PathModele1e21",
+        "title": "ResultResponse",
         "type": "object"
       },
-      "PathModel2ddfe": {
+      "PathModel7be7c": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -5112,10 +4431,10 @@
         "required": [
           "uuid"
         ],
-        "title": "PathModel2ddfe",
+        "title": "PathModel7be7c",
         "type": "object"
       },
-      "PathModel4e086": {
+      "PathModelc2844": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -5126,21 +4445,20 @@
         "required": [
           "uuid"
         ],
-        "title": "PathModel4e086",
+        "title": "PathModelc2844",
         "type": "object"
       },
-      "PathModel03b58": {
+      "ResultShareKeyResponse": {
         "properties": {
-          "uuid": {
-            "format": "uuid4",
-            "title": "Uuid",
+          "share_api_key": {
+            "title": "Share Api Key",
             "type": "string"
           }
         },
         "required": [
-          "uuid"
+          "share_api_key"
         ],
-        "title": "PathModel03b58",
+        "title": "ResultShareKeyResponse",
         "type": "object"
       },
       "ImageFilterSchema": {
@@ -5207,7 +4525,7 @@
         "title": "ImageFilterSchema",
         "type": "object"
       },
-      "PathModele9691": {
+      "PathModel6e0ed": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -5218,10 +4536,10 @@
         "required": [
           "uuid"
         ],
-        "title": "PathModele9691",
+        "title": "PathModel6e0ed",
         "type": "object"
       },
-      "PathModel2ba0d": {
+      "PathModel7b9bc": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -5232,21 +4550,72 @@
         "required": [
           "uuid"
         ],
-        "title": "PathModel2ba0d",
+        "title": "PathModel7b9bc",
         "type": "object"
       },
-      "PathModelc66ae": {
+      "GCPFilterSchema": {
         "properties": {
-          "uuid": {
-            "format": "uuid4",
-            "title": "Uuid",
-            "type": "string"
+          "label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Label"
+          },
+          "created_after": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Created After"
+          },
+          "created_before": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Created Before"
+          },
+          "image_uuid": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Image Uuid"
+          },
+          "workspace_uuid": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Workspace Uuid"
           }
         },
-        "required": [
-          "uuid"
-        ],
-        "title": "PathModelc66ae",
+        "title": "GCPFilterSchema",
         "type": "object"
       },
       "GCPResponse": {
@@ -5319,7 +4688,7 @@
         "title": "GCPResponse",
         "type": "object"
       },
-      "PathModel01b93": {
+      "PathModel8272e": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -5330,7 +4699,21 @@
         "required": [
           "uuid"
         ],
-        "title": "PathModel01b93",
+        "title": "PathModel8272e",
+        "type": "object"
+      },
+      "PathModelf80ee": {
+        "properties": {
+          "uuid": {
+            "format": "uuid4",
+            "title": "Uuid",
+            "type": "string"
+          }
+        },
+        "required": [
+          "uuid"
+        ],
+        "title": "PathModelf80ee",
         "type": "object"
       },
       "GCPUpdate": {
@@ -5395,7 +4778,7 @@
         "title": "GCPUpdate",
         "type": "object"
       },
-      "PathModel4c1b4": {
+      "PathModel2ef41": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -5406,188 +4789,7 @@
         "required": [
           "uuid"
         ],
-        "title": "PathModel4c1b4",
-        "type": "object"
-      },
-      "QueryModel052e8": {
-        "properties": {
-          "image_uuid": {
-            "format": "uuid4",
-            "title": "Image Uuid",
-            "type": "string"
-          }
-        },
-        "required": [
-          "image_uuid"
-        ],
-        "title": "QueryModel052e8",
-        "type": "object"
-      },
-      "GCPCreate": {
-        "properties": {
-          "gcp_point": {
-            "maxItems": 3,
-            "minItems": 3,
-            "prefixItems": [
-              {
-                "type": "number"
-              },
-              {
-                "type": "number"
-              },
-              {
-                "type": "number"
-              }
-            ],
-            "title": "Gcp Point",
-            "type": "array"
-          },
-          "image_point": {
-            "maxItems": 2,
-            "minItems": 2,
-            "prefixItems": [
-              {
-                "type": "number"
-              },
-              {
-                "type": "number"
-              }
-            ],
-            "title": "Image Point",
-            "type": "array"
-          },
-          "label": {
-            "title": "Label",
-            "type": "string"
-          }
-        },
-        "required": [
-          "gcp_point",
-          "image_point",
-          "label"
-        ],
-        "title": "GCPCreate",
-        "type": "object"
-      },
-      "GCPFilterSchema": {
-        "properties": {
-          "label": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Label"
-          },
-          "created_after": {
-            "anyOf": [
-              {
-                "format": "date-time",
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Created After"
-          },
-          "created_before": {
-            "anyOf": [
-              {
-                "format": "date-time",
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Created Before"
-          },
-          "image_uuid": {
-            "anyOf": [
-              {
-                "format": "uuid",
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Image Uuid"
-          },
-          "workspace_uuid": {
-            "anyOf": [
-              {
-                "format": "uuid",
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Workspace Uuid"
-          }
-        },
-        "title": "GCPFilterSchema",
-        "type": "object"
-      },
-      "PathModele689a": {
-        "properties": {
-          "uuid": {
-            "format": "uuid4",
-            "title": "Uuid",
-            "type": "string"
-          }
-        },
-        "required": [
-          "uuid"
-        ],
-        "title": "PathModele689a",
-        "type": "object"
-      },
-      "PathModel71b74": {
-        "properties": {
-          "uuid": {
-            "format": "uuid4",
-            "title": "Uuid",
-            "type": "string"
-          }
-        },
-        "required": [
-          "uuid"
-        ],
-        "title": "PathModel71b74",
-        "type": "object"
-      },
-      "PathModelb1051": {
-        "properties": {
-          "uuid": {
-            "format": "uuid4",
-            "title": "Uuid",
-            "type": "string"
-          }
-        },
-        "required": [
-          "uuid"
-        ],
-        "title": "PathModelb1051",
-        "type": "object"
-      },
-      "QueryModel1d526": {
-        "properties": {
-          "image_uuid": {
-            "format": "uuid4",
-            "title": "Image Uuid",
-            "type": "string"
-          }
-        },
-        "required": [
-          "image_uuid"
-        ],
-        "title": "QueryModel1d526",
+        "title": "PathModel2ef41",
         "type": "object"
       },
       "FeatureCollection_Feature_Point__GCPProperties__": {
@@ -5912,6 +5114,57 @@
           }
         ],
         "type": "array"
+      },
+      "GCPCreate": {
+        "properties": {
+          "image_uuid": {
+            "title": "Image Uuid",
+            "type": "string"
+          },
+          "gcp_point": {
+            "maxItems": 3,
+            "minItems": 3,
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "title": "Gcp Point",
+            "type": "array"
+          },
+          "image_point": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "title": "Image Point",
+            "type": "array"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          }
+        },
+        "required": [
+          "image_uuid",
+          "gcp_point",
+          "image_point",
+          "label"
+        ],
+        "title": "GCPCreate",
+        "type": "object"
       }
     },
     "securitySchemes": {

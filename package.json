@@ -12,8 +12,8 @@
     "format": "biome format --write",
     "lint": "biome lint",
     "check": "biome check --write",
-    "test:unit": "vitest run ./tests/unit",
-    "test:integration": "vitest run ./tests/integration",
+    "test:unit": "bun test ./tests/unit",
+    "test:integration": "bun test ./tests/integration --preload ./tests/integration/bun.setup.ts",
     "test:e2e": "playwright test --pass-with-no-tests",
     "generate-ninjaodm-client": "openapi-zod-client ./src/assets/ninjaodm.openapi.json -o ./src/lib/ninjaodm/generated-api.ts",
     "prepare": "husky"

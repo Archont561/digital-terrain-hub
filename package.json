@@ -4,10 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "astro dev --mode dev",
-    "build": "bun run generate-ninjaodm-client && astro build",
+    "dev": "bunx --bun astro dev --mode dev",
+    "build": "bun run generate-ninjaodm-client && bunx --bun astro build",
     "preview": "astro preview",
-    "start": "bun ./dist/server/entry.mjs",
+    "start": "bunx --bun ./dist/server/entry.mjs",
     "astro": "astro",
     "format": "biome format --write",
     "lint": "biome lint",

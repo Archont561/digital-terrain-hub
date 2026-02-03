@@ -3,7 +3,28 @@ import { z } from "astro/zod";
 import { schemas } from "@/lib";
 import { serviceApiClient } from "./utils";
 
-export default {
+export const actions = {
+  createWorkspace: defineAction({
+    input: z.object({
+      name: z.string().max(50).optional(),
+    }),
+    handler: async ({ name }, { locals }) => {
+      return await serviceApiClient.createWorkspaceInternal({
+        user_id: locals.currentUserId || "dummy-user-id",
+        name,
+      });
+    },
+  }),
+  getWorkspace: defineAction({
+    input: z.object({
+      uuid: z.string().uuid(),
+    }),
+    handler: async ({ uuid }) => {
+      return await serviceApiClient.getWorkspace({
+        params: { uuid },
+      });
+    },
+  }),
   updateWorkspace: defineAction({
     input: z.object({
       uuid: z.string().uuid(),
@@ -23,6 +44,18 @@ export default {
       return await serviceApiClient.deleteWorkspace(undefined, {
         params: { uuid },
       });
+    },
+  }),
+  listWorkspaces: defineAction({
+    input: z
+      .object({
+        name: z.string().nullable().optional(),
+        created_after: z.string().nullable().optional(),
+        created_before: z.string().nullable().optional(),
+      })
+      .optional(),
+    handler: async (queries) => {
+      return await serviceApiClient.listWorkspaces({ queries });
     },
   }),
 };

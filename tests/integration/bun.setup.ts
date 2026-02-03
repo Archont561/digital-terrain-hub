@@ -1,12 +1,11 @@
-import { beforeAll, afterAll } from "bun:test";
+import { afterAll, beforeAll } from "bun:test";
+import path from "node:path";
 import { createLogger } from "@stoplight/prism-core";
 import { getHttpOperationsFromSpec } from "@stoplight/prism-http/dist";
 import { createServer } from "@stoplight/prism-http-server";
+import dotenv from "dotenv";
 import PATH_TO_NINJAODM_OPENAPI_SPEC from "@/assets/ninjaodm.openapi.json";
 import { createServiceApiClient, HMACAuthorization } from "@/lib";
-
-import path from "node:path";
-import dotenv from "dotenv";
 
 /* ------------------------------------------------------------------ */
 /* Environment setup                                                    */
@@ -24,7 +23,7 @@ function getRequiredEnv() {
 
   if (!baseUrl || !apiKey || !apiSecret) {
     throw new Error(
-      "Missing required environment variables: NINJAODM_BASE_URL, NINJAODM_API_KEY, or NINJAODM_SECRET_KEY"
+      "Missing required environment variables: NINJAODM_BASE_URL, NINJAODM_API_KEY, or NINJAODM_SECRET_KEY",
     );
   }
 
@@ -37,7 +36,7 @@ function getRequiredEnv() {
 
 async function createMockServer() {
   const operations = await getHttpOperationsFromSpec(
-    PATH_TO_NINJAODM_OPENAPI_SPEC
+    PATH_TO_NINJAODM_OPENAPI_SPEC,
   );
 
   return createServer(operations, {
@@ -59,7 +58,7 @@ async function createMockServer() {
 
 async function startMockServer(
   server: Awaited<ReturnType<typeof createMockServer>>,
-  baseUrl: string
+  baseUrl: string,
 ) {
   const { port, hostname } = new URL(baseUrl);
   await server.listen(Number(port), hostname);

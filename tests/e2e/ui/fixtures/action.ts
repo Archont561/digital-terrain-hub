@@ -1,6 +1,6 @@
+import type { NetworkFixture } from "@msw/playwright";
 import { expect, type Page, type Response } from "@playwright/test";
-import { NetworkFixture } from "@msw/playwright";
-import { http, HttpResponse, type JsonBodyType } from "msw";
+import { HttpResponse, http, type JsonBodyType } from "msw";
 
 // =======================
 // TYPES
@@ -35,7 +35,7 @@ export const ASTRO_ERROR_STATUS_MAP = {
   TOO_MANY_REQUESTS: 429,
   REQUEST_HEADER_FIELDS_TOO_LARGE: 431,
   UNAVAILABLE_FOR_LEGAL_REASONS: 451,
-  
+
   INTERNAL_SERVER_ERROR: 500,
   NOT_IMPLEMENTED: 501,
   BAD_GATEWAY: 502,
@@ -45,7 +45,7 @@ export const ASTRO_ERROR_STATUS_MAP = {
   VARIANT_ALSO_NEGOTIATES: 506,
   INSUFFICIENT_STORAGE: 507,
   LOOP_DETECTED: 508,
-  NETWORK_AUTHENTICATION_REQUIRED: 511
+  NETWORK_AUTHENTICATION_REQUIRED: 511,
 } as const;
 
 export type AstroActionErrorCode = keyof typeof ASTRO_ERROR_STATUS_MAP;
@@ -88,7 +88,6 @@ type MockState =
 // =======================
 
 export class ActionContextManager {
-  
   private mockState: MockState = { type: "success", status: 204 };
 
   constructor(private config: ActionContextManagerConfig) {}
@@ -98,26 +97,28 @@ export class ActionContextManager {
   }
 
   mockSuccess(options?: { status?: number }): this {
-    this.mockState = { 
-      type: "success", 
-      status: options?.status ?? 204 
+    this.mockState = {
+      type: "success",
+      status: options?.status ?? 204,
     };
     return this;
   }
 
-  mockSuccessWithData<T extends JsonBodyType>(options: MockSuccessDataOptions<T>): this {
-    this.mockState = { 
-      type: "successWithData", 
-      data: options.data, 
-      status: options.status ?? 200 
+  mockSuccessWithData<T extends JsonBodyType>(
+    options: MockSuccessDataOptions<T>,
+  ): this {
+    this.mockState = {
+      type: "successWithData",
+      data: options.data,
+      status: options.status ?? 200,
     };
     return this;
   }
-  
+
   mockError(options: MockErrorOptions): this {
-    this.mockState = { 
-      type: "error", 
-      options: { ...options, status: getStatusFromErrorCode(options.code) } 
+    this.mockState = {
+      type: "error",
+      options: { ...options, status: getStatusFromErrorCode(options.code) },
     };
     return this;
   }
@@ -133,31 +134,34 @@ export class ActionContextManager {
       switch (state.type) {
         case "success":
           return HttpResponse.text(null, { status: state.status });
-        
+
         case "successWithData":
           return HttpResponse.json(state.data, { status: state.status });
-        
-        case "error":
+
+        case "error": {
           const { code, message, status } = state.options;
-          
+
           const body: AstroActionErrorBody = {
             type: "AstroActionError",
             code: code,
             message: message || "Mocked Action Error",
-            status: status
+            status: status,
           };
 
           return HttpResponse.json(body, { status });
+        }
       }
     });
 
     this.config.network.use(handler);
   }
-  
-  async execute<T>(callback: () => Promise<T>): Promise<{ result: T; response: Response }> {
+
+  async execute<T>(
+    callback: () => Promise<T>,
+  ): Promise<{ result: T; response: Response }> {
     this.setupMock();
     const responsePromise = this.config.page.waitForResponse((response) =>
-      response.url().includes(`/_actions/${this.config.actionName}`)
+      response.url().includes(`/_actions/${this.config.actionName}`),
     );
     const result = await callback();
     const response = await responsePromise;

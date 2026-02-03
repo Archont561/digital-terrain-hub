@@ -4,6 +4,9 @@
   "exclude": ["dist"],
   "compilerOptions": {
     "baseUrl": ".",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "target": "ES2020",
     "paths": {
       "@/*": ["src/*"],
       "#/*": ["tests/*"]

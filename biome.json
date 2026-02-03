@@ -21,7 +21,8 @@
         "noEmptyPattern": "off"
       },
       "suspicious": {
-        "noExplicitAny": "off"
+        "noExplicitAny": "off",
+        "useIterableCallbackReturn": "off"
       },
       "style": {
         "noNonNullAssertion": "off"

@@ -7,13 +7,12 @@ export default {
   updateWorkspace: defineAction({
     input: z.object({
       uuid: z.string().uuid(),
-      payload: schemas.UpdateWorkspacePublic,
+      payload: schemas.UpdateWorkspace,
     }),
     handler: async ({ uuid, payload }) => {
-      return await serviceApiClient.updateWorkspaceInternal(payload, {
-          params: { uuid },
-        },
-      );
+      return await serviceApiClient.updateWorkspace(payload, {
+        params: { uuid },
+      });
     },
   }),
   deleteWorkspace: defineAction({
@@ -21,7 +20,7 @@ export default {
       uuid: z.string().uuid(),
     }),
     handler: async ({ uuid }) => {
-      return await serviceApiClient.deleteWorkspaceInternal(undefined, {
+      return await serviceApiClient.deleteWorkspace(undefined, {
         params: { uuid },
       });
     },

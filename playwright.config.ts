@@ -38,11 +38,16 @@ export default defineConfig({
 
   projects: [
     {
+      name: "astro actions",
+      testMatch: /.*\/actions\/.*\.spec\.ts/,
+    },
+    {
       name: "ui components",
       testMatch: /.*\/ui\/.*\.spec\.ts/,
       use: {
         ...devices["Desktop Chrome"],
       },
+      dependencies: ["astro actions"],
     },
     {
       name: "public routes",

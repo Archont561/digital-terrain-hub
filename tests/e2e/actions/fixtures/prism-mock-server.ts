@@ -3,9 +3,7 @@ import { getHttpOperationsFromSpec } from "@stoplight/prism-http/dist/index.js";
 import { createServer } from "@stoplight/prism-http-server";
 
 export async function createMockServer(specFilePathOrObject: string | object) {
-  const operations = await getHttpOperationsFromSpec(
-    specFilePathOrObject,
-  );
+  const operations = await getHttpOperationsFromSpec(specFilePathOrObject);
 
   return createServer(operations, {
     components: {

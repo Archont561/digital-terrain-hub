@@ -1,7 +1,7 @@
-import { expect } from '@playwright/test';
-import type { APIRequestContext, APIResponse } from '@playwright/test';
-import type { ReadStream } from 'fs';
-import { parse as parseDevalue } from 'devalue';
+import type { ReadStream } from "node:fs";
+import type { APIRequestContext, APIResponse } from "@playwright/test";
+import { expect } from "@playwright/test";
+import { parse as parseDevalue } from "devalue";
 
 /* -------------------------------------------------------------------------- */
 /* Types                                                                      */
@@ -12,7 +12,7 @@ export type ActionResult<T = unknown> =
   | { data: undefined; error: ActionError };
 
 export interface ActionError {
-  type: 'AstroActionError' | 'AstroActionInputError';
+  type: "AstroActionError" | "AstroActionInputError";
   code: string;
   status: number;
   message: string;
@@ -30,10 +30,10 @@ type MultipartValue =
   | boolean
   | ReadStream
   | {
-    name: string;
-    mimeType: string;
-    buffer: Buffer;
-  };
+      name: string;
+      mimeType: string;
+      buffer: Buffer;
+    };
 
 type MultipartData = Record<string, MultipartValue>;
 
@@ -48,19 +48,16 @@ export class AstroActionRequest {
   constructor(
     private readonly request: APIRequestContext,
     baseURL: string,
-    options: { trailingSlash?: boolean } = {}
+    options: { trailingSlash?: boolean } = {},
   ) {
-    this.baseURL = baseURL.replace(/\/$/, '');
+    this.baseURL = baseURL.replace(/\/$/, "");
     this.trailingSlash = options.trailingSlash ?? false;
   }
 
   /* ---------------------------------- URL --------------------------------- */
 
   private actionUrl(actionName: string): string {
-    return (
-      `${this.baseURL}/_actions/${actionName}` +
-      (this.trailingSlash ? '/' : '')
-    );
+    return `${this.baseURL}/_actions/${actionName}${this.trailingSlash ? "/" : ""}`;
   }
 
   /* -------------------------------------------------------------------------- */
@@ -69,7 +66,7 @@ export class AstroActionRequest {
 
   async callAction<T = unknown>(
     actionName: string,
-    data?: unknown
+    data?: unknown,
   ): Promise<{ response: APIResponse; result: ActionResult<T> }> {
     const response = await this.post(actionName, this.buildPayload(data));
     const result = await this.deserialize<T>(response);
@@ -78,12 +75,12 @@ export class AstroActionRequest {
 
   async callActionWithForm<T = unknown>(
     actionName: string,
-    multipart: MultipartData
+    multipart: MultipartData,
   ): Promise<{ response: APIResponse; result: ActionResult<T> }> {
     const response = await this.request.post(this.actionUrl(actionName), {
       multipart,
       headers: {
-        Accept: 'application/json',
+        Accept: "application/json",
       },
     });
 
@@ -97,7 +94,7 @@ export class AstroActionRequest {
 
   async expectSuccess<T = unknown>(
     actionName: string,
-    data?: unknown
+    data?: unknown,
   ): Promise<T> {
     const { response, result } = await this.callAction<T>(actionName, data);
 
@@ -111,7 +108,7 @@ export class AstroActionRequest {
   async expectError(
     actionName: string,
     data?: unknown,
-    expectedCode?: string
+    expectedCode?: string,
   ): Promise<ActionError> {
     const { response, result } = await this.callAction(actionName, data);
 
@@ -128,11 +125,15 @@ export class AstroActionRequest {
 
   async expectValidationError(
     actionName: string,
-    data?: unknown
+    data?: unknown,
   ): Promise<ActionError> {
-    const error = await this.expectError(actionName, data, 'INTERNAL_SERVER_ERROR');
+    const error = await this.expectError(
+      actionName,
+      data,
+      "INTERNAL_SERVER_ERROR",
+    );
 
-    expect(error.type).toBe('AstroActionInputError');
+    expect(error.type).toBe("AstroActionInputError");
     expect(Array.isArray(error.issues)).toBeTruthy();
 
     return error;
@@ -144,7 +145,7 @@ export class AstroActionRequest {
 
   private async post(
     actionName: string,
-    options: Parameters<APIRequestContext['post']>[1]
+    options: Parameters<APIRequestContext["post"]>[1],
   ): Promise<APIResponse> {
     return await this.request.post(this.actionUrl(actionName), options);
   }
@@ -154,7 +155,7 @@ export class AstroActionRequest {
     headers?: Record<string, string>;
   } {
     const headers: Record<string, string> = {
-      Accept: 'application/json',
+      Accept: "application/json",
     };
 
     // FormData
@@ -164,20 +165,22 @@ export class AstroActionRequest {
 
     // No body
     if (data === undefined) {
-      headers['Content-Length'] = '0';
+      headers["Content-Length"] = "0";
       return { headers };
     }
 
     // Use plain JSON instead of devalue
-    headers['Content-Type'] = 'application/json';
+    headers["Content-Type"] = "application/json";
 
     return {
-      data, 
+      data,
       headers,
     };
   }
 
-  private async deserialize<T>(response: APIResponse): Promise<ActionResult<T>> {
+  private async deserialize<T>(
+    response: APIResponse,
+  ): Promise<ActionResult<T>> {
     const status = response.status();
     const text = await response.text();
 
@@ -210,8 +213,8 @@ export class AstroActionRequest {
       return {
         data: undefined,
         error: {
-          type: json.type ?? 'AstroActionError',
-          code: json.code ?? 'INTERNAL_SERVER_ERROR',
+          type: json.type ?? "AstroActionError",
+          code: json.code ?? "INTERNAL_SERVER_ERROR",
           status,
           message: json.message ?? text,
           ...(json.issues && { issues: json.issues }),
@@ -222,8 +225,8 @@ export class AstroActionRequest {
       return {
         data: undefined,
         error: {
-          type: 'AstroActionError',
-          code: 'INTERNAL_SERVER_ERROR',
+          type: "AstroActionError",
+          code: "INTERNAL_SERVER_ERROR",
           status,
           message: text,
         },

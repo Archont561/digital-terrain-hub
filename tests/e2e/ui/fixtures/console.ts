@@ -1,4 +1,4 @@
-import type { Page, ConsoleMessage } from '@playwright/test';
+import type { Page } from "@playwright/test";
 
 export type CapturedConsoleLog = {
   type: string;
@@ -12,14 +12,10 @@ export type CapturedConsoleLog = {
 
 export class ConsoleHelper {
   private logs: CapturedConsoleLog[] = [];
-  private ignorePatterns = [
-    /clerk/i,
-    /vite/i,
-    /astro/i,
-  ];
+  private ignorePatterns = [/clerk/i, /vite/i, /astro/i];
 
   attach(page: Page) {
-    page.on('console', (msg) => {
+    page.on("console", (msg) => {
       const text = msg.text();
       if (!text) return;
 
@@ -43,7 +39,7 @@ export class ConsoleHelper {
     this.logs = [];
   }
 
-  print(prefix = 'Browser console') {
+  print(prefix = "Browser console") {
     if (!this.logs.length) return;
 
     console.log(`\n📣 ${prefix}:`);
@@ -52,7 +48,7 @@ export class ConsoleHelper {
         `[${log.type}] ${log.text}` +
           (log.location?.url
             ? ` (${log.location.url}:${log.location.lineNumber})`
-            : '')
+            : ""),
       );
     }
   }

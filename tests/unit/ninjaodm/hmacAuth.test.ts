@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, expect, describe, test, mock } from "bun:test";
+import { afterEach, beforeEach, describe, expect, mock, test } from "bun:test";
 import {
   HMACAuthorization,
   InvalidApiKeyError,
@@ -11,7 +11,7 @@ import {
 // Constants
 // ---------------------------------------------------------------------
 const FIXED_TIMESTAMP = 1_700_000_000;
-const FIXED_DATE = new Date(FIXED_TIMESTAMP * 1000);
+const _FIXED_DATE = new Date(FIXED_TIMESTAMP * 1000);
 
 const API_KEY = process.env.NINJAODM_API_KEY || "test-api-key";
 const API_SECRET = process.env.NINJAODM_SECRET_KEY || "test-api-key";
@@ -102,7 +102,7 @@ describe("HMACAuthorization", () => {
       expect(parts[0]).toBe(API_KEY);
       expect(Number(parts[1])).toBe(FIXED_TIMESTAMP);
       expect(parts[2]).toMatch(/^[a-f0-9]{64}$/);
-      
+
       // Verify Date.now was called
       expect(mockDateNow).toHaveBeenCalled();
     });
@@ -135,7 +135,7 @@ describe("HMACAuthorization", () => {
     test("uses custom timestamp when provided", () => {
       const auth = createAuth();
       const customTimestamp = 1234567890;
-      
+
       const token = auth.createToken({
         ...REQUEST_OPTS,
         timestamp: customTimestamp,
@@ -143,7 +143,7 @@ describe("HMACAuthorization", () => {
 
       const parts = token.split(":");
       expect(Number(parts[1])).toBe(customTimestamp);
-      
+
       // Date.now should not be called when timestamp is provided
       expect(mockDateNow).not.toHaveBeenCalled();
     });
@@ -155,14 +155,14 @@ describe("HMACAuthorization", () => {
       const token = createValidToken(auth);
 
       const result = auth.verify(token, REQUEST_OPTS);
-      
+
       expect(result.valid).toBe(true);
       expect(result.apiKey).toBe(API_KEY);
     });
 
     test("accepts token within timestamp window", () => {
       const auth = createAuth({ timestampWindowSeconds: 300 });
-      
+
       // Create token at FIXED_TIMESTAMP
       const token = auth.createToken({
         ...REQUEST_OPTS,
@@ -171,14 +171,14 @@ describe("HMACAuthorization", () => {
 
       // Move time forward by 299 seconds (still within window)
       freezeTime(FIXED_TIMESTAMP + 299);
-      
+
       const result = auth.verify(token, REQUEST_OPTS);
       expect(result.valid).toBe(true);
     });
 
     test("rejects token outside timestamp window", () => {
       const auth = createAuth({ timestampWindowSeconds: 300 });
-      
+
       // Create token at FIXED_TIMESTAMP
       const token = auth.createToken({
         ...REQUEST_OPTS,
@@ -187,7 +187,7 @@ describe("HMACAuthorization", () => {
 
       // Move time forward by 301 seconds (outside window)
       freezeTime(FIXED_TIMESTAMP + 301);
-      
+
       expect(() => {
         auth.verify(token, REQUEST_OPTS);
       }).toThrow(TimestampExpiredError);
@@ -195,7 +195,7 @@ describe("HMACAuthorization", () => {
 
     test("rejects future timestamps", () => {
       const auth = createAuth({ timestampWindowSeconds: 300 });
-      
+
       // Create token with future timestamp
       const futureTimestamp = FIXED_TIMESTAMP + 400;
       const token = auth.createToken({
@@ -211,7 +211,7 @@ describe("HMACAuthorization", () => {
 
     test("handles exact window boundary", () => {
       const auth = createAuth({ timestampWindowSeconds: 300 });
-      
+
       const token = auth.createToken({
         ...REQUEST_OPTS,
         timestamp: FIXED_TIMESTAMP,
@@ -219,7 +219,7 @@ describe("HMACAuthorization", () => {
 
       // Test at exact boundary (300 seconds)
       freezeTime(FIXED_TIMESTAMP + 300);
-      
+
       const result = auth.verify(token, REQUEST_OPTS);
       expect(result.valid).toBe(true);
     });
@@ -326,7 +326,7 @@ describe("HMACAuthorization", () => {
     test("handles Bearer token extraction correctly", () => {
       const auth = createAuth();
       const token = createValidToken(auth);
-      
+
       // Test with "Bearer " prefix (case-sensitive)
       const requestWithBearer = new Request("http://localhost/test-path", {
         method: METHOD,
@@ -353,17 +353,23 @@ describe("HMACAuthorization", () => {
     test("verifyRequest ignores query parameters from URL", () => {
       const auth = createAuth();
       const pathWithoutQuery = "/test-path";
-      
+
       // Create token for path WITHOUT query params (as verifyRequest will extract)
-      const token = auth.createToken({ method: METHOD, path: pathWithoutQuery });
-      
-      // Create request with query params in URL
-      const request = new Request("http://localhost/test-path?param=value&other=123", {
+      const token = auth.createToken({
         method: METHOD,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        path: pathWithoutQuery,
       });
+
+      // Create request with query params in URL
+      const request = new Request(
+        "http://localhost/test-path?param=value&other=123",
+        {
+          method: METHOD,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
 
       // Should succeed because verifyRequest uses pathname only
       const result = auth.verifyRequest(request);
@@ -373,17 +379,17 @@ describe("HMACAuthorization", () => {
     test("verify method with query parameters requires exact match", () => {
       const auth = createAuth();
       const pathWithQuery = "/test-path?param=value";
-      
+
       // Create token with query params
-      const token = auth.createToken({ 
-        method: METHOD, 
-        path: pathWithQuery 
+      const token = auth.createToken({
+        method: METHOD,
+        path: pathWithQuery,
       });
-      
+
       // Direct verify call with matching query params should succeed
       const result1 = auth.verify(token, {
         method: METHOD,
-        path: pathWithQuery
+        path: pathWithQuery,
       });
       expect(result1.valid).toBe(true);
 
@@ -391,7 +397,7 @@ describe("HMACAuthorization", () => {
       expect(() => {
         auth.verify(token, {
           method: METHOD,
-          path: "/test-path?param=different"
+          path: "/test-path?param=different",
         });
       }).toThrow(InvalidSignatureError);
 
@@ -399,7 +405,7 @@ describe("HMACAuthorization", () => {
       expect(() => {
         auth.verify(token, {
           method: METHOD,
-          path: "/test-path"
+          path: "/test-path",
         });
       }).toThrow(InvalidSignatureError);
     });
@@ -410,7 +416,7 @@ describe("HMACAuthorization", () => {
 
       for (const method of methods) {
         const token = auth.createToken({ method, path: PATH });
-        
+
         const request = new Request(`http://localhost${PATH}`, {
           method,
           headers: {
@@ -428,7 +434,7 @@ describe("HMACAuthorization", () => {
     test("handles empty path", () => {
       const auth = createAuth();
       const token = auth.createToken({ method: METHOD, path: "" });
-      
+
       const result = auth.verify(token, { method: METHOD, path: "" });
       expect(result.valid).toBe(true);
     });
@@ -452,7 +458,7 @@ describe("HMACAuthorization", () => {
     test("is not case-sensitive for methods", () => {
       const auth = createAuth();
       const token = auth.createToken({ method: "GET", path: PATH });
-            
+
       // Should succeed with same case
       const result = auth.verify(token, { method: "get", path: PATH });
       expect(result.valid).toBe(true);
@@ -462,29 +468,31 @@ describe("HMACAuthorization", () => {
       const auth = createAuth();
       const longPath = "/segment".repeat(100);
       const token = auth.createToken({ method: METHOD, path: longPath });
-      
+
       const result = auth.verify(token, { method: METHOD, path: longPath });
       expect(result.valid).toBe(true);
     });
 
     test("handles concurrent verifications", async () => {
       const auth = createAuth();
-      const tokens = Array.from({ length: 10 }, (_, i) => 
-        auth.createToken({ method: METHOD, path: `/path${i}` })
+      const tokens = Array.from({ length: 10 }, (_, i) =>
+        auth.createToken({ method: METHOD, path: `/path${i}` }),
       );
 
-      const verifications = tokens.map((token, i) => 
-        Promise.resolve(auth.verify(token, { method: METHOD, path: `/path${i}` }))
+      const verifications = tokens.map((token, i) =>
+        Promise.resolve(
+          auth.verify(token, { method: METHOD, path: `/path${i}` }),
+        ),
       );
 
       const results = await Promise.all(verifications);
-      expect(results.every(r => r.valid)).toBe(true);
+      expect(results.every((r) => r.valid)).toBe(true);
     });
 
     test("handles token without Bearer prefix", () => {
       const auth = createAuth();
       const token = createValidToken(auth);
-      
+
       // Direct token without Bearer prefix
       const result = auth.verify(token, REQUEST_OPTS);
       expect(result.valid).toBe(true);
@@ -493,35 +501,44 @@ describe("HMACAuthorization", () => {
     test("handles root path correctly", () => {
       const auth = createAuth();
       const token = auth.createToken({ method: METHOD, path: "/" });
-      
+
       const result = auth.verify(token, { method: METHOD, path: "/" });
       expect(result.valid).toBe(true);
     });
 
     test("verifyRequest strips query params while verify does not", () => {
       const auth = createAuth();
-      
+
       // For verifyRequest: token should be created without query params
-      const tokenForRequest = auth.createToken({ method: METHOD, path: "/api/test" });
-      const requestWithQuery = new Request("http://localhost/api/test?foo=bar", {
+      const tokenForRequest = auth.createToken({
         method: METHOD,
-        headers: { Authorization: `Bearer ${tokenForRequest}` },
+        path: "/api/test",
       });
-      
+      const requestWithQuery = new Request(
+        "http://localhost/api/test?foo=bar",
+        {
+          method: METHOD,
+          headers: { Authorization: `Bearer ${tokenForRequest}` },
+        },
+      );
+
       // verifyRequest should succeed (ignores query in URL)
       const requestResult = auth.verifyRequest(requestWithQuery);
       expect(requestResult.valid).toBe(true);
-      
+
       // For direct verify: token must include query params
-      const tokenWithQuery = auth.createToken({ method: METHOD, path: "/api/test?foo=bar" });
-      
+      const tokenWithQuery = auth.createToken({
+        method: METHOD,
+        path: "/api/test?foo=bar",
+      });
+
       // verify should succeed with matching query
-      const verifyResult = auth.verify(tokenWithQuery, { 
-        method: METHOD, 
-        path: "/api/test?foo=bar" 
+      const verifyResult = auth.verify(tokenWithQuery, {
+        method: METHOD,
+        path: "/api/test?foo=bar",
       });
       expect(verifyResult.valid).toBe(true);
-      
+
       // verify should fail without query
       expect(() => {
         auth.verify(tokenWithQuery, { method: METHOD, path: "/api/test" });
@@ -533,7 +550,7 @@ describe("HMACAuthorization", () => {
     test("tracks Date.now calls during token creation", () => {
       mockDateNow.mockClear();
       const auth = createAuth();
-      
+
       // Create multiple tokens without custom timestamp
       auth.createToken(REQUEST_OPTS);
       auth.createToken(REQUEST_OPTS);
@@ -550,16 +567,16 @@ describe("HMACAuthorization", () => {
 
     test("simulates time progression", () => {
       const auth = createAuth({ timestampWindowSeconds: 60 });
-      
+
       // Create token at t=0
       const token = createValidToken(auth);
-      
+
       // Verify at different time points
       const timePoints = [0, 30, 59, 60, 61];
-      
+
       for (const seconds of timePoints) {
         freezeTime(FIXED_TIMESTAMP + seconds);
-        
+
         if (seconds <= 60) {
           const result = auth.verify(token, REQUEST_OPTS);
           expect(result.valid).toBe(true);

@@ -1,4 +1,4 @@
-import type { Page } from '@playwright/test';
+import type { Page } from "@playwright/test";
 
 export class ClipboardHelper {
   constructor(private page: Page) {}
@@ -17,7 +17,7 @@ export class ClipboardHelper {
     const text = await this.read();
     if (!text.includes(value)) {
       throw new Error(
-        `Expected clipboard to contain "${value}", but got:\n${text}`
+        `Expected clipboard to contain "${value}", but got:\n${text}`,
       );
     }
   }

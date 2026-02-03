@@ -1,25 +1,25 @@
+import { createNetworkFixture, type NetworkFixture } from "@msw/playwright";
 import { test as base, expect } from "@playwright/test";
-import { type NetworkFixture, createNetworkFixture } from "@msw/playwright";
-import { ToastHelper } from "./toast";
 import { ActionContextManager } from "./action";
-import { ConsoleHelper } from "./console";
 import { ClipboardHelper } from "./clipboard";
-export { ComponentPageNavigator } from "./components";
+import { ConsoleHelper } from "./console";
+import { ToastHelper } from "./toast";
 
+export { ComponentPageNavigator } from "./components";
 
 export type BaseFixtures = {
   network: NetworkFixture;
   toast: ToastHelper;
   ctx: {
     action: (actionName: string) => ActionContextManager;
-  },
+  };
   console: ConsoleHelper;
   clipboard: ClipboardHelper;
 };
 
 const test = base.extend<BaseFixtures>({
   network: createNetworkFixture(),
-  
+
   console: async ({}, use) => {
     await use(new ConsoleHelper());
   },
@@ -34,7 +34,8 @@ const test = base.extend<BaseFixtures>({
 
   ctx: async ({ page, network }, use) => {
     await use({
-      action: (actionName: string) => ActionContextManager.with({ page, network, actionName }),
+      action: (actionName: string) =>
+        ActionContextManager.with({ page, network, actionName }),
     });
   },
 });

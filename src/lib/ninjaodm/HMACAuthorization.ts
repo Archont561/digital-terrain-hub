@@ -213,7 +213,7 @@ export default class HMACAuthorization {
       return null;
     }
 
-    const token = authHeader.replace(/^Bearer\s+/i, "");;
+    const token = authHeader.replace(/^Bearer\s+/i, "");
 
     return this.parseToken(token);
   }

@@ -3513,7 +3513,7 @@
         "title": "WorkspaceFilterSchemaInternal",
         "type": "object"
       },
-      "PathModelaeafc": {
+      "PathModeld7d77": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -3522,7 +3522,7 @@
           }
         },
         "required": ["uuid"],
-        "title": "PathModelaeafc",
+        "title": "PathModeld7d77",
         "type": "object"
       },
       "WorkspaceResponse": {
@@ -3553,7 +3553,7 @@
         "title": "WorkspaceResponse",
         "type": "object"
       },
-      "PathModel2ed7d": {
+      "PathModele5ba5": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -3562,7 +3562,7 @@
           }
         },
         "required": ["uuid"],
-        "title": "PathModel2ed7d",
+        "title": "PathModele5ba5",
         "type": "object"
       },
       "UpdateWorkspace": {
@@ -3576,7 +3576,7 @@
         "title": "UpdateWorkspace",
         "type": "object"
       },
-      "PathModel8eabd": {
+      "PathModel5a8fe": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -3585,7 +3585,7 @@
           }
         },
         "required": ["uuid"],
-        "title": "PathModel8eabd",
+        "title": "PathModel5a8fe",
         "type": "object"
       },
       "CreateWorkspace": {
@@ -3955,7 +3955,7 @@
         "title": "TaskResponse",
         "type": "object"
       },
-      "PathModel8f324": {
+      "PathModel68053": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -3964,10 +3964,10 @@
           }
         },
         "required": ["uuid"],
-        "title": "PathModel8f324",
+        "title": "PathModel68053",
         "type": "object"
       },
-      "PathModel60133": {
+      "PathModelc340c": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -3976,29 +3976,40 @@
           }
         },
         "required": ["uuid"],
-        "title": "PathModel60133",
+        "title": "PathModelc340c",
         "type": "object"
       },
       "CreateTask": {
         "properties": {
           "workspace_uuid": {
+            "format": "uuid",
             "title": "Workspace Uuid",
             "type": "string"
           },
           "name": {
-            "title": "Name",
-            "type": "string"
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
           },
           "quality": {
-            "allOf": [
+            "anyOf": [
               {
                 "$ref": "#/components/schemas/ODMQualityOption"
+              },
+              {
+                "type": "null"
               }
             ],
             "default": "ultra_low"
           }
         },
-        "required": ["workspace_uuid", "name"],
+        "required": ["workspace_uuid"],
         "title": "CreateTask",
         "type": "object"
       },
@@ -4091,7 +4102,7 @@
         "title": "ResultResponse",
         "type": "object"
       },
-      "PathModel7be7c": {
+      "PathModel7a3f1": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -4100,10 +4111,10 @@
           }
         },
         "required": ["uuid"],
-        "title": "PathModel7be7c",
+        "title": "PathModel7a3f1",
         "type": "object"
       },
-      "PathModelc2844": {
+      "PathModel4df85": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -4112,7 +4123,7 @@
           }
         },
         "required": ["uuid"],
-        "title": "PathModelc2844",
+        "title": "PathModel4df85",
         "type": "object"
       },
       "ResultShareKeyResponse": {
@@ -4190,7 +4201,7 @@
         "title": "ImageFilterSchema",
         "type": "object"
       },
-      "PathModel6e0ed": {
+      "PathModelc286a": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -4199,10 +4210,10 @@
           }
         },
         "required": ["uuid"],
-        "title": "PathModel6e0ed",
+        "title": "PathModelc286a",
         "type": "object"
       },
-      "PathModel7b9bc": {
+      "PathModel616b2": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -4211,7 +4222,7 @@
           }
         },
         "required": ["uuid"],
-        "title": "PathModel7b9bc",
+        "title": "PathModel616b2",
         "type": "object"
       },
       "GCPFilterSchema": {
@@ -4342,9 +4353,17 @@
         },
         "required": ["image_uuid", "gcp_point", "image_point", "label"],
         "title": "GCPResponse",
-        "type": "object"
+        "type": "object",
+        "example": {
+          "uuid": "950e8400-e29b-41d4-a716-446655440000",
+          "image_uuid": "c1b9c4d0-2d1c-4d6c-9c9e-9e9a9b9a9b9a",
+          "gcp_point": [1.5, 2.5, 3.0],
+          "image_point": [100, 200],
+          "label": "Test GCP",
+          "created_at": "2026-01-15T10:30:00Z"
+        }
       },
-      "PathModel8272e": {
+      "PathModel52187": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -4353,10 +4372,10 @@
           }
         },
         "required": ["uuid"],
-        "title": "PathModel8272e",
+        "title": "PathModel52187",
         "type": "object"
       },
-      "PathModelf80ee": {
+      "PathModel545a8": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -4365,7 +4384,7 @@
           }
         },
         "required": ["uuid"],
-        "title": "PathModelf80ee",
+        "title": "PathModel545a8",
         "type": "object"
       },
       "GCPUpdate": {
@@ -4430,7 +4449,7 @@
         "title": "GCPUpdate",
         "type": "object"
       },
-      "PathModel2ef41": {
+      "PathModelc9da5": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -4439,7 +4458,7 @@
           }
         },
         "required": ["uuid"],
-        "title": "PathModel2ef41",
+        "title": "PathModelc9da5",
         "type": "object"
       },
       "FeatureCollection_Feature_Point__GCPProperties__": {
@@ -4754,6 +4773,7 @@
       "GCPCreate": {
         "properties": {
           "image_uuid": {
+            "format": "uuid",
             "title": "Image Uuid",
             "type": "string"
           },

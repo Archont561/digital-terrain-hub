@@ -1,3 +1,4 @@
+import { actions as gcpActions } from "./gcp";
 import { actions as imageActions } from "./image";
 import { actions as resultActions } from "./result";
 import { actions as taskActions } from "./task";
@@ -8,4 +9,5 @@ export const server = {
   ...resultActions,
   ...taskActions,
   ...imageActions,
+  ...gcpActions,
 };

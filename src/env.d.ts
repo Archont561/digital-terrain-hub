@@ -12,6 +12,13 @@ declare global {
     interface Locals {
       currentUserId: string | null;
     }
+    
+    interface SessionData {
+      userNinjaODMAPITokenPair: {
+        access: string;
+        refresh: string;
+      };
+    }
   }
   
   declare namespace NodeJS {

@@ -9,10 +9,12 @@ export const actions = {
       name: z.string().max(50).optional(),
     }),
     handler: async ({ name }, { locals }) => {
-      return await serviceApiClient.createWorkspaceInternal({
+      const result = await serviceApiClient.createWorkspaceInternal({
         user_id: locals.currentUserId || "dummy-user-id",
         name,
       });
+      const { user_id, ...rest } = result;
+      return rest;
     },
   }),
   getWorkspace: defineAction({

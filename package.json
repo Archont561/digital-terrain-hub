@@ -16,6 +16,7 @@
     "test:integration": "bun test ./tests/integration --preload ./tests/integration/bun.setup.ts",
     "test:e2e": "playwright test --pass-with-no-tests",
     "generate-ninjaodm-client": "openapi-zod-client ./src/assets/ninjaodm.openapi.json -o ./src/lib/ninjaodm/generated-api.ts",
+    "start:backend-mock-server": "bunx prism mock ./src/assets/ninjaodm.openapi.json",
     "prepare": "husky"
   },
   "dependencies": {

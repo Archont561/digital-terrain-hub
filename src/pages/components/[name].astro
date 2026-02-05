@@ -1,6 +1,6 @@
 ---
 import _ from "lodash";
-import { WorkspaceTableRow } from "@/components/ninjaodm/workspaces";
+import { WorkspaceManager } from "@/components/ninjaodm/workspaces";
 import { renderComponent } from "@/lib/server";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 
@@ -9,7 +9,7 @@ if (import.meta.env.MODE != "test") {
 }
 
 const COMPONENTS = [
-  WorkspaceTableRow,
+  WorkspaceManager,
 ];
 
 const paramName = _.toLower(Astro.params.name || "");
@@ -34,16 +34,8 @@ const componentStringScriptSanitized = componentString.replace(
   /src\s*=\s*["'][^"']*\/src\//g,
   'src="/src/'
 );
-const isTablePartial = [
-  WorkspaceTableRow.name,
-].includes(Component.name);
 ---
 
 <BaseLayout title={`Testing ${Component.name}`}>
-  {isTablePartial 
-  ? <table>
-    <Fragment set:html={componentStringScriptSanitized} />
-  </table> 
-  : <Fragment set:html={componentStringScriptSanitized} />
-}
+  <Fragment set:html={componentStringScriptSanitized} />
 </BaseLayout>

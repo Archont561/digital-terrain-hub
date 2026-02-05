@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { schemas } from "@/lib";
+import { schemas } from "@/lib/server";
 import { expect, test } from "./fixtures";
 
 const TaskResponse = z.object({

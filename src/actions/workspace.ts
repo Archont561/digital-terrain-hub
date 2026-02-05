@@ -1,6 +1,6 @@
 import { defineAction } from "astro:actions";
 import { z } from "astro/zod";
-import { schemas } from "@/lib";
+import { schemas } from "@/lib/server";
 import { serviceApiClient } from "./utils";
 
 export const actions = {

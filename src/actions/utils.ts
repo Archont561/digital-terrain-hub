@@ -1,4 +1,4 @@
-import { createServiceApiClient, HMACAuthorization } from "@/lib";
+import { createServiceApiClient, HMACAuthorization } from "@/lib/server";
 
 export const hmacAuth = HMACAuthorization.create({
   apiKey: process.env.NINJAODM_API_KEY!,

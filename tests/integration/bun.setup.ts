@@ -5,7 +5,7 @@ import { getHttpOperationsFromSpec } from "@stoplight/prism-http/dist";
 import { createServer } from "@stoplight/prism-http-server";
 import dotenv from "dotenv";
 import PATH_TO_NINJAODM_OPENAPI_SPEC from "@/assets/ninjaodm.openapi.json";
-import { createServiceApiClient, HMACAuthorization } from "@/lib";
+import { createServiceApiClient, HMACAuthorization } from "@/lib/server";
 
 /* ------------------------------------------------------------------ */
 /* Environment setup                                                    */

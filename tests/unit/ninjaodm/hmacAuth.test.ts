@@ -5,7 +5,7 @@ import {
   InvalidHeaderError,
   InvalidSignatureError,
   TimestampExpiredError,
-} from "@/lib";
+} from "@/lib/server";
 
 // ---------------------------------------------------------------------
 // Constants

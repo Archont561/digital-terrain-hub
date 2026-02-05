@@ -1,25 +1,27 @@
-import { createNetworkFixture, type NetworkFixture } from "@msw/playwright";
 import { test as base, expect } from "@playwright/test";
-import { ActionContextManager } from "./action";
+import { createMockServer } from "./prism-mock-server";
 import { ClipboardHelper } from "./clipboard";
 import { ConsoleHelper } from "./console";
 import { ToastHelper } from "./toast";
-
 export { ComponentPageNavigator } from "./components";
+import path from "node:path";
+
+const PATH_TO_NINJAODM_OPENAPI_SPEC = path.resolve(
+  import.meta.dirname,
+  "../../../../src/assets/ninjaodm.openapi.json",
+);
 
 export type BaseFixtures = {
-  network: NetworkFixture;
   toast: ToastHelper;
-  ctx: {
-    action: (actionName: string) => ActionContextManager;
-  };
   console: ConsoleHelper;
   clipboard: ClipboardHelper;
 };
 
-const test = base.extend<BaseFixtures>({
-  network: createNetworkFixture(),
+type WorkerFixtures = {
+  ninjaodmMockServer: Awaited<ReturnType<typeof createMockServer>>;
+};
 
+const test = base.extend<BaseFixtures, WorkerFixtures>({
   console: async ({}, use) => {
     await use(new ConsoleHelper());
   },
@@ -32,12 +34,22 @@ const test = base.extend<BaseFixtures>({
     await use(new ToastHelper(page));
   },
 
-  ctx: async ({ page, network }, use) => {
-    await use({
-      action: (actionName: string) =>
-        ActionContextManager.with({ page, network, actionName }),
-    });
-  },
+  ninjaodmMockServer: [
+    async ({}, use) => {
+      const mockServer = await createMockServer(PATH_TO_NINJAODM_OPENAPI_SPEC);
+      const { port, hostname } = new URL(
+        process.env.NINJAODM_BASE_URL || "http://localhost:4010",
+      );
+      mockServer.listen(Number(port), hostname);
+      await use(mockServer);
+      await mockServer.close();
+    },
+    { scope: "worker" },
+  ],
+});
+
+test.beforeAll(async ({ ninjaodmMockServer }) => {
+  ninjaodmMockServer;
 });
 
 test.beforeEach(async ({ console, page }) => {
@@ -45,7 +57,7 @@ test.beforeEach(async ({ console, page }) => {
 });
 
 test.afterEach(async ({ console }) => {
-  console.print();
+    console.print();
 });
 
 export { test, expect };

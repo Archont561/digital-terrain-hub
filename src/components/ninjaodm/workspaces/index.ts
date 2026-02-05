@@ -1,1 +1,1 @@
-export { default as WorkspaceTableRow } from "./WorkspaceTableRow.astro";
+export { default as WorkspaceManager } from "./WorkspaceManager.astro";

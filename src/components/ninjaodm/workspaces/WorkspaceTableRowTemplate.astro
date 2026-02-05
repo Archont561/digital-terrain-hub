@@ -1,0 +1,64 @@
+---
+import { Button } from "@/components/starwind/button";
+import { Input } from "@/components/starwind/input";
+import { Label } from "@/components/starwind/label";
+import { TableRow, TableCell } from "@/components/starwind/table";
+import DeleteIcon from "@tabler/icons/outline/trash.svg";
+import EditIcon from "@tabler/icons/outline/pencil.svg";
+---
+
+<template x-for="(workspace, index) in workspaces" x-bind:key="index">
+  <TableRow
+    data-ninjaodm-component="WorkspaceTableRow"
+    class="ninjaodm-workspace-table-row"
+  >
+    <!-- NAME CELL -->
+    <TableCell class="font-medium">
+      <!-- View Mode -->
+      <Label
+        x-show="!workspace.isMode('edit')"
+        size="md"
+        x-text="workspace.name"
+        x-on:click="workspace.startEdit()"
+      />
+      <!-- Edit Mode -->
+      <Input
+        size="md"
+        x-show="workspace.isMode('edit')"
+        x-model="workspace.bufferName"
+        x-bind:id="workspace.inputId"
+        x-on:click.away="workspace.cancelEdit()"
+        @keyup.escape="workspace.cancelEdit()"
+        @keyup.enter="workspace.save()"
+      />
+    </TableCell>
+
+    <!-- DATE CELL -->
+    <TableCell class="text-sm text-muted-foreground">
+      <span x-text="workspace.humanDate"></span>
+    </TableCell>
+
+    <!-- ACTIONS CELL -->
+    <TableCell class="text-right">
+      <div class="inline-flex gap-2">
+        <Button
+          variant="ghost"
+          size="icon"
+          href="#"
+          target="_blank"
+          x-bind:href="workspace.editUrl"
+        >
+          <EditIcon class="size-10" />
+        </Button>
+        <Button
+          variant="ghost"
+          size="icon"
+          x-bind:disabled="workspace.isMode('delete')"
+          x-on:click="deleteWorkspace(workspace)"
+        >
+          <DeleteIcon class="size-10" />
+        </Button>
+      </div>
+    </TableCell>
+  </TableRow>
+</template>

@@ -1,0 +1,99 @@
+---
+import { Button } from "@/components/starwind/button";
+import PlusIcon from "@tabler/icons/outline/plus.svg";
+import {
+  Table,
+  TableHeader,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableCell,
+} from "@/components/starwind/table";
+import WorkspaceTableRowTemplate from "./WorkspaceTableRowTemplate.astro";
+
+import type { WorkspaceManagerProps } from "./controllers";
+
+type Props = WorkspaceManagerProps;
+
+const headers = ["Name", "Created", "Actions"];
+const { workspaces = [], baseEditUrl } = Astro.props;
+
+const ninjaId = "dummy-ninja-id";
+---
+
+<div
+  x-ignore
+  data-ninjaodm-component="WorkspaceManager"
+  data-ninjaodm-id={ninjaId}
+  x-data="WorkspaceManager(window.ninjaodmData[$el.dataset.ninjaodmId])"
+  class="max-w-lg mx-auto"
+>
+  <!-- Toolbar -->
+  <div class="flex items-center justify-between mb-4">
+    <h2 class="text-lg font-semibold">Workspaces</h2>
+
+    <Button
+      size="sm"
+      variant="outline"
+      x-on:click="createWorkspace()"
+      x-show="!isEmpty"
+      class="rounded-full"
+    >
+      <PlusIcon class="size-4" /> Create New
+    </Button>
+  </div>
+
+  <Table>
+    <TableHeader>
+      <TableRow>
+        {
+          headers.map((header) => (
+            <TableHead class:list={{ "text-right": header === "Actions" }}>
+              {header}
+            </TableHead>
+          ))
+        }
+      </TableRow>
+    </TableHeader>
+
+    <TableBody>
+      <WorkspaceTableRowTemplate />
+
+      <!-- Empty State -->
+      <TableRow x-show="isEmpty">
+        <TableCell
+          colspan={headers.length}
+          class="text-center p-8 text-muted-foreground"
+        >
+          <div class="flex flex-col items-center gap-3">
+            <span>No workspaces found.</span>
+            <Button variant="outline" x-on:click="createWorkspace()">
+              Create New Workspace
+            </Button>
+          </div>
+        </TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</div>
+
+<script define:vars={{ workspaces, baseEditUrl, ninjaId }} is:inline>
+  window.ninjaodmData = window.ninjaodmData || {};
+  window.ninjaodmData[ninjaId] = {
+    workspaces,
+    baseEditUrl,
+  };
+</script>
+
+<script>
+  import { WorkspaceManager } from "./controllers";
+  WorkspaceManager.register(window.Alpine, "WorkspaceManager", () => {
+    document
+      .querySelectorAll('[data-ninjaodm-component="WorkspaceManager"]')
+      .forEach((el) => {
+        el.removeAttribute("x-ignore");
+        delete (el as any)._x_ignore;
+        window.Alpine.initTree(el as any);
+      });
+  });
+</script>

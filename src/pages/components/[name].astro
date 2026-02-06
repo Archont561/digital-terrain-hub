@@ -1,6 +1,7 @@
 ---
 import _ from "lodash";
 import { WorkspaceManager } from "@/components/ninjaodm/workspaces";
+import { ResultManager } from "@/components/ninjaodm/results";
 import { renderComponent } from "@/lib/server";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 
@@ -10,6 +11,7 @@ if (import.meta.env.MODE != "test") {
 
 const COMPONENTS = [
   WorkspaceManager,
+  ResultManager,
 ];
 
 const paramName = _.toLower(Astro.params.name || "");

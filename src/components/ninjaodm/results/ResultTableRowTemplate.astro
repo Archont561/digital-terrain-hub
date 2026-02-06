@@ -1,0 +1,66 @@
+---
+import { Button } from "@/components/starwind/button";
+import { Label } from "@/components/starwind/label";
+import { TableRow, TableCell } from "@/components/starwind/table";
+import DownloadIcon from "@tabler/icons/outline/download.svg";
+import ShareIcon from "@tabler/icons/outline/share-3.svg";
+import ClipboardCopyIcon from "@tabler/icons/outline/clipboard-copy.svg";
+import DeleteIcon from "@tabler/icons/outline/trash.svg";
+---
+
+<template x-for="(result, index) in results" x-bind:key="index">
+  <TableRow data-ninjaodm-component="ResultTableRow">
+    <!-- TYPE CELL -->
+    <TableCell class="font-medium">
+      <Label size="md" x-text="result.humanType" />
+    </TableCell>
+
+    <!-- DATE CELL -->
+    <TableCell class="text-sm text-muted-foreground">
+      <span x-text="result.humanDate"></span>
+    </TableCell>
+
+    <!-- ACTIONS CELL -->
+    <TableCell class="text-right">
+      <div class="inline-flex gap-2">
+        <Button
+          variant="ghost"
+          size="icon"
+          x-bind:disabled="result.isMode('downloading')"
+          x-on:click="result.download()"
+        >
+          <DownloadIcon class="size-10" />
+        </Button>
+
+        <Button
+          variant="ghost"
+          size="icon"
+          x-bind:disabled="result.isMode('sharing')"
+          x-show="!result.isShared"
+          x-on:click="result.share()"
+        >
+          <ShareIcon class="size-10" />
+        </Button>
+        
+        <Button
+          variant="ghost"
+          size="icon"
+          x-show="result.isShared"
+          x-bind:disabled="result.isMode('sharing')"
+          x-on:click="result.share()"
+        >
+          <ClipboardCopyIcon class="size-10" />
+        </Button>
+
+        <Button
+          variant="ghost"
+          size="icon"
+          x-bind:disabled="result.isMode('delete')"
+          x-on:click="deleteResult(result)"
+        >
+          <DeleteIcon class="size-10" />
+        </Button>
+      </div>
+    </TableCell>
+  </TableRow>
+</template>

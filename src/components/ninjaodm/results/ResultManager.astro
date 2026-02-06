@@ -1,0 +1,97 @@
+---
+import {
+  Table,
+  TableHeader,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableCell,
+} from "@/components/starwind/table";
+import ResultTableRowTemplate from "./ResultTableRowTemplate.astro";
+
+import type { ResultManagerProps } from "./controllers";
+
+type Props = ResultManagerProps;
+
+const headers = ["Type", "Created", "Actions"];
+const {
+  results = [],
+  downloadResultUrlTemplate,
+  shareResultUrlTemplate,
+} = Astro.props;
+
+const ninjaId = "dummy-ninja-id";
+---
+
+<div
+  x-ignore
+  data-ninjaodm-component="ResultManager"
+  data-ninjaodm-id={ninjaId}
+  x-data="ResultManager(window.ninjaodmData[$el.dataset.ninjaodmId])"
+  class="max-w-lg mx-auto"
+>
+  <!-- Toolbar -->
+  <div class="flex items-center justify-between mb-4">
+    <h2 class="text-lg font-semibold">Results</h2>
+  </div>
+
+  <Table>
+    <TableHeader>
+      <TableRow>
+        {
+          headers.map((header) => (
+            <TableHead class:list={{ "text-right": header === "Actions" }}>
+              {header}
+            </TableHead>
+          ))
+        }
+      </TableRow>
+    </TableHeader>
+
+    <TableBody>
+      <ResultTableRowTemplate />
+
+      <!-- Empty State -->
+      <TableRow x-show="isEmpty">
+        <TableCell
+          colspan={headers.length}
+          class="text-center p-8 text-muted-foreground"
+        >
+          <div class="flex flex-col items-center gap-3">
+            <span>No results available.</span>
+          </div>
+        </TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</div>
+
+<script
+  define:vars={{
+    results,
+    downloadResultUrlTemplate,
+    shareResultUrlTemplate,
+    ninjaId,
+  }}
+  is:inline
+>
+  window.ninjaodmData = window.ninjaodmData || {};
+  window.ninjaodmData[ninjaId] = {
+    results,
+    downloadResultUrlTemplate,
+    shareResultUrlTemplate,
+  };
+</script>
+
+<script>
+  import { ResultManager } from "./controllers";
+  ResultManager.register(window.Alpine, "ResultManager", () => {
+    document
+      .querySelectorAll('[data-ninjaodm-component="ResultManager"]')
+      .forEach((el) => {
+        el.removeAttribute("x-ignore");
+        delete (el as any)._x_ignore;
+        window.Alpine.initTree(el as any);
+      });
+  });
+</script>

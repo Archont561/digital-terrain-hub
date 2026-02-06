@@ -184,7 +184,7 @@ const test = baseTest.extend<{
   },
 });
 
-test.describe.serial.only("ResultManager", () => {
+test.describe.serial("ResultManager", () => {
   test("renders result table with data", async ({ resultManager }) => {
     await test.step("verify table structure", async () => {
       const { results } = resultManager.getProps();

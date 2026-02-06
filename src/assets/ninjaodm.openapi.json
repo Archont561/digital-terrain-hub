@@ -3949,6 +3949,11 @@
             "format": "date-time",
             "title": "Created At",
             "type": "string"
+          },
+          "name": {
+            "maxLength": 50,
+            "title": "Name",
+            "type": "string"
           }
         },
         "required": ["workspace_uuid", "status", "step"],

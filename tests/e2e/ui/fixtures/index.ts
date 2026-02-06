@@ -1,9 +1,11 @@
 import { test as base, expect } from "@playwright/test";
-import { createMockServer } from "./prism-mock-server";
 import { ClipboardHelper } from "./clipboard";
 import { ConsoleHelper } from "./console";
+import { createMockServer } from "./prism-mock-server";
 import { ToastHelper } from "./toast";
+
 export { ComponentPageNavigator } from "./components";
+
 import path from "node:path";
 
 const PATH_TO_NINJAODM_OPENAPI_SPEC = path.resolve(
@@ -57,7 +59,7 @@ test.beforeEach(async ({ console, page }) => {
 });
 
 test.afterEach(async ({ console }) => {
-    console.print();
+  console.print();
 });
 
 export { test, expect };

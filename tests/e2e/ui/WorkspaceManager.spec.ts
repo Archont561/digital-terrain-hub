@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto";
-import type { Page, Request } from "@playwright/test";
+import type { Page } from "@playwright/test";
 import { test as baseTest, ComponentPageNavigator, expect } from "./fixtures";
 
 /* -------------------------------------------------------------------------- */
@@ -117,9 +117,12 @@ class WorkspaceManagerNavigator extends ComponentPageNavigator<{
 
   async waitForRows(count?: number) {
     const expectedCount = count ?? this.getProps().workspaces.length;
-    await expect(this.page.locator(this.selectors.rows)).toHaveCount(expectedCount, {
-      timeout: 10000,
-    });
+    await expect(this.page.locator(this.selectors.rows)).toHaveCount(
+      expectedCount,
+      {
+        timeout: 10000,
+      },
+    );
   }
 
   async rowsCount() {
@@ -127,8 +130,10 @@ class WorkspaceManagerNavigator extends ComponentPageNavigator<{
   }
 
   async getTableHeaders() {
-    const headers = await this.page.locator(this.selectors.tableHeaders).allTextContents();
-    return headers.map(h => h.trim());
+    const headers = await this.page
+      .locator(this.selectors.tableHeaders)
+      .allTextContents();
+    return headers.map((h) => h.trim());
   }
 }
 
@@ -137,9 +142,10 @@ class WorkspaceManagerNavigator extends ComponentPageNavigator<{
 /* -------------------------------------------------------------------------- */
 
 const waitForAction = (page: Page, actionName: string) => {
-  return page.waitForResponse((res) =>
-    res.url().includes(`/_actions/${actionName}`) &&
-    res.request().method() === 'POST'
+  return page.waitForResponse(
+    (res) =>
+      res.url().includes(`/_actions/${actionName}`) &&
+      res.request().method() === "POST",
   );
 };
 

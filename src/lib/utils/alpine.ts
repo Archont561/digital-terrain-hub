@@ -2,10 +2,10 @@ import type { Magics } from "alpinejs";
 
 type AlpineRefs = Record<string, HTMLElement>;
 
-type AlpineContext<
-  T,
-  Refs extends AlpineRefs = AlpineRefs,
-> = Omit<Magics<T>, "$refs"> & {
+type AlpineContext<T, Refs extends AlpineRefs = AlpineRefs> = Omit<
+  Magics<T>,
+  "$refs"
+> & {
   $refs: Refs;
 };
 
@@ -24,14 +24,10 @@ export abstract class AlpineController<
 
   private static isRegistered = false;
 
-  static register(
-    Alpine: any,
-    name: string,
-    afterRegister?: () => void,
-  ) {
-    if (!this.isRegistered) {
-      Alpine.data(name, (props: any) => new (this as any)(props));
-      this.isRegistered = true;
+  static register(Alpine: any, name: string, afterRegister?: () => void) {
+    if (!AlpineController.isRegistered) {
+      Alpine.data(name, (props: any) => new (AlpineController as any)(props));
+      AlpineController.isRegistered = true;
       afterRegister?.();
     }
   }

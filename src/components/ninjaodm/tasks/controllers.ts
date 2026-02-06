@@ -1,5 +1,4 @@
-import { actions } from "astro:actions";
-import { AlpineController, runAction } from "@/lib/client";
+import { AlpineController } from "@/lib/client";
 import { Task, type TaskProps } from "./models";
 
 export type TaskManagerProps = {
@@ -9,7 +8,6 @@ export type TaskManagerProps = {
 
 export class TaskManager extends AlpineController<TaskManager> {
   private tasks: Task[];
-  private workspaceUuid?: string;
 
   constructor({ tasks = [], workspaceUuid }: TaskManagerProps) {
     super();

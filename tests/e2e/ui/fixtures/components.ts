@@ -11,7 +11,7 @@ export abstract class ComponentPageNavigator<TProps> {
   protected abstract readonly rootSelector: string;
   protected abstract readonly selectors: Record<string, string>;
 
-  constructor(protected readonly page: Page) { }
+  constructor(protected readonly page: Page) {}
 
   get root(): Locator {
     return this.page.locator(this.rootSelector).first();
@@ -36,10 +36,15 @@ export abstract class ComponentPageNavigator<TProps> {
   getProps(propsOverride?: DeepPartial<TProps>): TProps {
     if (!propsOverride) return this.defaultProps;
 
-    return _.mergeWith({}, this.defaultProps, propsOverride, (objValue, srcValue) => {
-      if (_.isArray(objValue) && _.isArray(srcValue)) {
-        return srcValue; // fully override arrays
-      }
-    });
+    return _.mergeWith(
+      {},
+      this.defaultProps,
+      propsOverride,
+      (objValue, srcValue) => {
+        if (_.isArray(objValue) && _.isArray(srcValue)) {
+          return srcValue; // fully override arrays
+        }
+      },
+    );
   }
 }

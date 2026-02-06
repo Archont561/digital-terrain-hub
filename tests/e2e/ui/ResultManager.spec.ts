@@ -141,7 +141,7 @@ class ResultManagerNavigator extends ComponentPageNavigator<{
       expectedCount,
       {
         timeout: 10000,
-      }
+      },
     );
   }
 
@@ -165,7 +165,7 @@ const waitForAction = (page: Page, actionName: string) => {
   return page.waitForResponse(
     (res) =>
       res.url().includes(`/_actions/${actionName}`) &&
-      res.request().method() === "POST"
+      res.request().method() === "POST",
   );
 };
 
@@ -184,125 +184,132 @@ const test = baseTest.extend<{
   },
 });
 
-test.describe.serial("ResultManager", () => {
-  test("renders result table with data", async ({ resultManager }) => {
-    await test.step("verify table structure", async () => {
-      const { results } = resultManager.getProps();
+test.describe
+  .serial("ResultManager", () => {
+    test("renders result table with data", async ({ resultManager }) => {
+      await test.step("verify table structure", async () => {
+        const { results } = resultManager.getProps();
 
-      await expect(resultManager.root).toBeVisible();
-      await expect(resultManager.title).toHaveText("Results");
+        await expect(resultManager.root).toBeVisible();
+        await expect(resultManager.title).toHaveText("Results");
 
-      const headers = await resultManager.getTableHeaders();
-      expect(headers).toEqual(["Type", "Created", "Actions"]);
+        const headers = await resultManager.getTableHeaders();
+        expect(headers).toEqual(["Type", "Created", "Actions"]);
 
-      expect(await resultManager.rowsCount()).toBe(results.length);
+        expect(await resultManager.rowsCount()).toBe(results.length);
+      });
+
+      await test.step("verify row content", async () => {
+        const row = resultManager.row(0);
+
+        await expect(row.typeLabel).toBeVisible();
+        await expect(row.downloadBtn).toBeVisible();
+        await expect(row.shareBtn).toBeVisible();
+        await expect(row.copyBtn).not.toBeVisible();
+        await expect(row.deleteBtn).toBeVisible();
+        await expect(row.dateSpan).toBeVisible();
+      });
     });
 
-    await test.step("verify row content", async () => {
+    test("shows empty state when no results", async ({ page }) => {
+      await test.step("navigate to empty state", async () => {
+        const nav = new ResultManagerNavigator(page);
+        await nav.goto({ results: [] });
+
+        await expect(nav.emptyState).toBeVisible();
+        await expect(nav.emptyState).toContainText("No results available");
+      });
+    });
+
+    test("downloads a result", async ({ page, resultManager }) => {
       const row = resultManager.row(0);
+      const { results, downloadResultUrlTemplate } = resultManager.getProps();
 
-      await expect(row.typeLabel).toBeVisible();
-      await expect(row.downloadBtn).toBeVisible();
-      await expect(row.shareBtn).toBeVisible();
-      await expect(row.copyBtn).not.toBeVisible();
-      await expect(row.deleteBtn).toBeVisible();
-      await expect(row.dateSpan).toBeVisible();
-    });
-  });
+      const expectedUrl = downloadResultUrlTemplate.replace(
+        "{uuid}",
+        results[0].uuid,
+      );
 
-  test("shows empty state when no results", async ({ page }) => {
-    await test.step("navigate to empty state", async () => {
-      const nav = new ResultManagerNavigator(page);
-      await nav.goto({ results: [] });
-
-      await expect(nav.emptyState).toBeVisible();
-      await expect(nav.emptyState).toContainText("No results available");
-    });
-  });
-
-  test("downloads a result", async ({ page, resultManager }) => {
-    const row = resultManager.row(0);
-    const { results, downloadResultUrlTemplate } = resultManager.getProps();
-
-    const expectedUrl = downloadResultUrlTemplate.replace(
-      "{uuid}",
-      results[0].uuid
-    );
-
-    await test.step("setup download mock", async () => {
-      await page.route(expectedUrl, (route) => {
-        route.fulfill({
-          status: 200,
-          headers: {
-            'Content-Type': 'application/octet-stream',
-            'Content-Disposition': `attachment; filename="${results[0].result_type}.ply"`,
-          },
-          body: Buffer.from('mock point cloud data'),
+      await test.step("setup download mock", async () => {
+        await page.route(expectedUrl, (route) => {
+          route.fulfill({
+            status: 200,
+            headers: {
+              "Content-Type": "application/octet-stream",
+              "Content-Disposition": `attachment; filename="${results[0].result_type}.ply"`,
+            },
+            body: Buffer.from("mock point cloud data"),
+          });
         });
       });
-    });
 
-    await test.step("trigger and verify download", async () => {
-      const downloadPromise = page.waitForEvent("download");
+      await test.step("trigger and verify download", async () => {
+        const downloadPromise = page.waitForEvent("download");
 
-      await row.download();
+        await row.download();
 
-      const download = await downloadPromise;
+        const download = await downloadPromise;
 
-      expect(download.url()).toContain(expectedUrl);
-      expect(download.suggestedFilename()).toContain(results[0].result_type);
+        expect(download.url()).toContain(expectedUrl);
+        expect(download.suggestedFilename()).toContain(results[0].result_type);
 
-      await download.cancel(); // Don't actually save the file
-    });
-
-    await test.step("verify success feedback", async () => {
-      await expect(page.locator('text=Download started')).toBeVisible({
-        timeout: 3000,
+        await download.cancel(); // Don't actually save the file
       });
 
-      await expect(row.downloadBtn).not.toBeDisabled();
+      await test.step("verify success feedback", async () => {
+        await expect(page.locator("text=Download started")).toBeVisible({
+          timeout: 3000,
+        });
+
+        await expect(row.downloadBtn).not.toBeDisabled();
+      });
+    });
+
+    test("shares a result and copies link", async ({
+      page,
+      resultManager,
+      clipboard,
+    }) => {
+      await test.step("share result", async () => {
+        const row = resultManager.row(0);
+
+        const actionPromise = waitForAction(page, "shareTaskResult");
+        await row.share();
+        await actionPromise;
+        await expect(row.shareBtn).not.toBeVisible();
+        await expect(row.copyBtn).toBeVisible();
+      });
+
+      await test.step("copy share link to clipboard", async () => {
+        const row = resultManager.row(0);
+
+        await page
+          .context()
+          .grantPermissions(["clipboard-read", "clipboard-write"]);
+        await row.copyShareLink();
+
+        await clipboard.expectContains("/api/results/");
+        await clipboard.expectContains("/share?key=");
+      });
+    });
+
+    test("deletes a result", async ({ page, resultManager }) => {
+      let initialCount: number;
+
+      await test.step("get initial state", async () => {
+        initialCount = await resultManager.rowsCount();
+      });
+
+      await test.step("delete result", async () => {
+        const row = resultManager.row(0);
+
+        const actionPromise = waitForAction(page, "deleteTaskResult");
+        await row.delete();
+        await actionPromise;
+      });
+
+      await test.step("verify result removed", async () => {
+        await resultManager.waitForRows(initialCount - 1);
+      });
     });
   });
-
-  test("shares a result and copies link", async ({ page, resultManager, clipboard }) => {
-    await test.step("share result", async () => {
-      const row = resultManager.row(0);
-
-      const actionPromise = waitForAction(page, "shareTaskResult");
-      await row.share();
-      await actionPromise;
-      await expect(row.shareBtn).not.toBeVisible();
-      await expect(row.copyBtn).toBeVisible();
-    });
-
-    await test.step("copy share link to clipboard", async () => {
-      const row = resultManager.row(0);
-
-      await page.context().grantPermissions(["clipboard-read", "clipboard-write"]);
-      await row.copyShareLink();
-
-      await clipboard.expectContains("/api/results/");
-      await clipboard.expectContains("/share?key=");
-    });
-  });
-
-  test("deletes a result", async ({ page, resultManager }) => {
-    let initialCount: number;
-
-    await test.step("get initial state", async () => {
-      initialCount = await resultManager.rowsCount();
-    });
-
-    await test.step("delete result", async () => {
-      const row = resultManager.row(0);
-
-      const actionPromise = waitForAction(page, "deleteTaskResult");
-      await row.delete();
-      await actionPromise;
-    });
-
-    await test.step("verify result removed", async () => {
-      await resultManager.waitForRows(initialCount - 1);
-    });
-  });
-});

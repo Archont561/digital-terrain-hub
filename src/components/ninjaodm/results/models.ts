@@ -118,7 +118,7 @@ export class Result {
       toast.success("Download started", { duration: 2000 });
       this.setMode("view");
       return true;
-    } catch (error) {
+    } catch (_error) {
       toast.error("Failed to download result", { duration: 2000 });
       this.setMode("view");
       return false;
@@ -129,20 +129,23 @@ export class Result {
     this.setMode("delete");
 
     try {
-      await toast.promise(actions.deleteTaskResult.orThrow({ uuid: this.uuid }), {
-        loading: `Deleting ${this.humanType}`,
-        success: {
-          title: "Result deleted successfully",
-          duration: 2000,
+      await toast.promise(
+        actions.deleteTaskResult.orThrow({ uuid: this.uuid }),
+        {
+          loading: `Deleting ${this.humanType}`,
+          success: {
+            title: "Result deleted successfully",
+            duration: 2000,
+          },
+          error: {
+            title: "Failed to delete result!",
+            duration: 2000,
+          },
         },
-        error: {
-          title: "Failed to delete result!",
-          duration: 2000,
-        },
-      });
+      );
 
       return true;
-    } catch (error) {
+    } catch (_error) {
       this.setMode("view");
       return false;
     }

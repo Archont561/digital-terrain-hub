@@ -58,7 +58,7 @@ export class WorkspaceManager extends AlpineController<
 
   async deleteWorkspace(workspace: Workspace) {
     const deleted = await workspace.delete();
-    
+
     if (!deleted) return;
     this.removeWorkspace(workspace.uuid);
   }

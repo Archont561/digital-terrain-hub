@@ -39,7 +39,12 @@ export type TaskStep =
   | "odm_report"
   | "odm_postprocess";
 
-export type TaskMode = "view" | "pausing" | "resuming" | "cancelling" | "deleting";
+export type TaskMode =
+  | "view"
+  | "pausing"
+  | "resuming"
+  | "cancelling"
+  | "deleting";
 
 export type TaskConfig = {
   data: TaskProps;
@@ -144,7 +149,7 @@ export class Task {
           this.bufferStatus = oldBuffer;
           this.setMode("view");
         },
-      }
+      },
     );
   }
 
@@ -174,7 +179,7 @@ export class Task {
           this.bufferStatus = oldBuffer;
           this.setMode("view");
         },
-      }
+      },
     );
   }
 
@@ -204,7 +209,7 @@ export class Task {
           this.bufferStatus = oldBuffer;
           this.setMode("view");
         },
-      }
+      },
     );
   }
 
@@ -227,7 +232,7 @@ export class Task {
       });
 
       return true;
-    } catch (error) {
+    } catch (_error) {
       this.setMode("view");
       return false;
     }

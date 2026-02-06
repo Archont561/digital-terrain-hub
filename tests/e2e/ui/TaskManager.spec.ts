@@ -147,7 +147,7 @@ class TaskManagerNavigator extends ComponentPageNavigator<{
     const expectedCount = count ?? this.getProps().tasks.length;
     await expect(this.page.locator(this.selectors.rows)).toHaveCount(
       expectedCount,
-      { timeout: 10000 }
+      { timeout: 10000 },
     );
   }
 
@@ -168,7 +168,7 @@ const waitForAction = (page: Page, actionName: string) => {
   return page.waitForResponse(
     (res) =>
       res.url().includes(`/_actions/${actionName}`) &&
-      res.request().method() === "POST"
+      res.request().method() === "POST",
   );
 };
 
@@ -191,104 +191,106 @@ const test = baseTest.extend<{
   },
 });
 
-test.describe.serial("TaskManager", () => {
-
-  test("shows empty state when no tasks", async ({ taskManager }) => {
-    await test.step("load task manager with no tasks", async () => {
-      await taskManager.goto({ tasks: [] });
-    });
-
-    await test.step("verify empty state is visible", async () => {
-      await expect(taskManager.emptyRow).toBeVisible();
-    });
-  });
-
-  test("renders task table with data", async ({ taskManager }) => {
-    await test.step("verify task manager is visible", async () => {
-      await expect(taskManager.root).toBeVisible();
-    });
-
-    await test.step("verify title", async () => {
-      await expect(taskManager.title).toHaveText("Tasks");
-    });
-
-    await test.step("verify number of rows", async () => {
-      const { tasks } = taskManager.getProps();
-      expect(await taskManager.rowsCount()).toBe(tasks.length);
-    });
-
-    await test.step("shows correct badges for different statuses", async () => {
-      // Wait for UI bufferStatus to render
-      await expect(taskManager.row(0).statusBadge).toHaveText(/Running/i);
-      await expect(taskManager.row(1).statusBadge).toHaveText(/Paused/i);
-      await expect(taskManager.row(2).statusBadge).toHaveText(/Completed/i);
-
-      await test.step("shows pause button only for running tasks", async () => {
-        await expect(taskManager.row(0).pauseBtn).toBeVisible();
-        await expect(taskManager.row(1).pauseBtn).not.toBeVisible();
+test.describe
+  .serial("TaskManager", () => {
+    test("shows empty state when no tasks", async ({ taskManager }) => {
+      await test.step("load task manager with no tasks", async () => {
+        await taskManager.goto({ tasks: [] });
       });
 
-      await test.step("shows resume button only for paused tasks", async () => {
-        await expect(taskManager.row(0).resumeBtn).not.toBeVisible();
-        await expect(taskManager.row(1).resumeBtn).toBeVisible();
+      await test.step("verify empty state is visible", async () => {
+        await expect(taskManager.emptyRow).toBeVisible();
+      });
+    });
+
+    test("renders task table with data", async ({ taskManager }) => {
+      await test.step("verify task manager is visible", async () => {
+        await expect(taskManager.root).toBeVisible();
       });
 
-      await test.step("shows delete button only for completed tasks", async () => {
-        await expect(taskManager.row(0).deleteBtn).not.toBeVisible();
-        await expect(taskManager.row(2).deleteBtn).toBeVisible();
+      await test.step("verify title", async () => {
+        await expect(taskManager.title).toHaveText("Tasks");
+      });
+
+      await test.step("verify number of rows", async () => {
+        const { tasks } = taskManager.getProps();
+        expect(await taskManager.rowsCount()).toBe(tasks.length);
+      });
+
+      await test.step("shows correct badges for different statuses", async () => {
+        // Wait for UI bufferStatus to render
+        await expect(taskManager.row(0).statusBadge).toHaveText(/Running/i);
+        await expect(taskManager.row(1).statusBadge).toHaveText(/Paused/i);
+        await expect(taskManager.row(2).statusBadge).toHaveText(/Completed/i);
+
+        await test.step("shows pause button only for running tasks", async () => {
+          await expect(taskManager.row(0).pauseBtn).toBeVisible();
+          await expect(taskManager.row(1).pauseBtn).not.toBeVisible();
+        });
+
+        await test.step("shows resume button only for paused tasks", async () => {
+          await expect(taskManager.row(0).resumeBtn).not.toBeVisible();
+          await expect(taskManager.row(1).resumeBtn).toBeVisible();
+        });
+
+        await test.step("shows delete button only for completed tasks", async () => {
+          await expect(taskManager.row(0).deleteBtn).not.toBeVisible();
+          await expect(taskManager.row(2).deleteBtn).toBeVisible();
+        });
+      });
+    });
+
+    test("handles actions correctly with bufferStatus", async ({
+      page,
+      taskManager,
+    }) => {
+      let row = taskManager.row(0);
+
+      await test.step("pause running task", async () => {
+        const actionPromise = waitForAction(page, "callTaskAction");
+        await row.pause();
+        await actionPromise;
+
+        // Wait until bufferStatus updates to "Paused"
+        await expect(row.statusBadge).toHaveText(/Paused/i);
+      });
+
+      row = taskManager.row(1);
+
+      await test.step("resume paused task", async () => {
+        const actionPromise = waitForAction(page, "callTaskAction");
+        await row.resume();
+        await actionPromise;
+
+        // Wait until bufferStatus updates to "Running"
+        await expect(row.statusBadge).toHaveText(/Running/i);
+      });
+
+      row = taskManager.row(0);
+
+      await test.step("cancel paused task", async () => {
+        const actionPromise = waitForAction(page, "callTaskAction");
+        await row.cancel();
+        await actionPromise;
+
+        // Wait until bufferStatus updates to "Cancelled"
+        await expect(row.statusBadge).toHaveText(/Cancelled/i);
+      });
+
+      let initialCount = 0;
+      await test.step("capture initial row count", async () => {
+        initialCount = await taskManager.rowsCount();
+      });
+
+      await test.step("delete completed task", async () => {
+        const row = taskManager.row(2);
+        const actionPromise = waitForAction(page, "deleteTask");
+        await row.delete();
+        await actionPromise;
+      });
+
+      await test.step("verify task removed from table", async () => {
+        await taskManager.waitForRows(initialCount - 1);
       });
     });
   });
-
-  test("handles actions correctly with bufferStatus", async ({ page, taskManager }) => {
-    let row = taskManager.row(0);
-
-    await test.step("pause running task", async () => {
-      const actionPromise = waitForAction(page, "callTaskAction");
-      await row.pause();
-      await actionPromise;
-
-      // Wait until bufferStatus updates to "Paused"
-      await expect(row.statusBadge).toHaveText(/Paused/i);
-    });
-
-    row = taskManager.row(1);
-
-    await test.step("resume paused task", async () => {
-      const actionPromise = waitForAction(page, "callTaskAction");
-      await row.resume();
-      await actionPromise;
-
-      // Wait until bufferStatus updates to "Running"
-      await expect(row.statusBadge).toHaveText(/Running/i);
-    });
-
-    row = taskManager.row(0);
-
-    await test.step("cancel paused task", async () => {
-      const actionPromise = waitForAction(page, "callTaskAction");
-      await row.cancel();
-      await actionPromise;
-
-      // Wait until bufferStatus updates to "Cancelled"
-      await expect(row.statusBadge).toHaveText(/Cancelled/i);
-    });
-
-    let initialCount = 0;
-    await test.step("capture initial row count", async () => {
-      initialCount = await taskManager.rowsCount();
-    });
-
-    await test.step("delete completed task", async () => {
-      const row = taskManager.row(2);
-      const actionPromise = waitForAction(page, "deleteTask");
-      await row.delete();
-      await actionPromise;
-    });
-
-    await test.step("verify task removed from table", async () => {
-      await taskManager.waitForRows(initialCount - 1);
-    });
-  });
-});
-

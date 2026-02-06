@@ -1,4 +1,3 @@
-
 import { actions } from "astro:actions";
 import { toast } from "@/components/starwind/toast";
 import { runAction } from "@/lib/client";
@@ -124,10 +123,9 @@ export class Workspace {
       );
 
       return true;
-    } catch (error) {
+    } catch (_error) {
       this.setMode("view");
       return false;
     }
   }
-
 }

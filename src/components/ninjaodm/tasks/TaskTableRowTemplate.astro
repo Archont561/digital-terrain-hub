@@ -1,0 +1,79 @@
+---
+import { Button } from "@/components/starwind/button";
+import { Label } from "@/components/starwind/label";
+import { Badge } from "@/components/starwind/badge";
+import { TableRow, TableCell } from "@/components/starwind/table";
+import PlayIcon from "@tabler/icons/outline/player-play.svg";
+import PauseIcon from "@tabler/icons/outline/player-pause.svg";
+import StopIcon from "@tabler/icons/outline/player-stop.svg";
+import DeleteIcon from "@tabler/icons/outline/trash.svg";
+---
+
+<template x-for="(task, index) in tasks" x-bind:key="index">
+  <TableRow data-ninjaodm-component="TaskTableRow">
+    <!-- NAME CELL -->
+    <TableCell class="font-medium">
+      <Label size="md" x-text="task.name" />
+    </TableCell>
+
+    <!-- STATUS CELL -->
+    <TableCell>
+      <Badge x-text="task.humanStatus" />
+    </TableCell>
+
+    <!-- STEP CELL -->
+    <TableCell>
+      <Badge x-text="task.humanStep" />
+    </TableCell>
+
+    <!-- DATE CELL -->
+    <TableCell class="text-sm text-muted-foreground">
+      <span x-text="task.humanDate"></span>
+    </TableCell>
+
+    <!-- ACTIONS CELL -->
+    <TableCell class="text-right">
+      <div class="inline-flex gap-2">
+        <Button
+          variant="ghost"
+          size="icon"
+          x-show="task.canPause || task.isMode('pausing')"
+          x-bind:disabled="task.isMode('pausing') || task.isMode('cancelling')"
+          x-on:click="task.pause()"
+        >
+          <PauseIcon class="size-8" />
+        </Button>
+
+        <Button
+          variant="ghost"
+          size="icon"
+          x-show="task.canResume || task.isMode('resuming')"
+          x-bind:disabled="task.isMode('resuming') || task.isMode('cancelling')"
+          x-on:click="task.resume()"
+        >
+          <PlayIcon class="size-8" />
+        </Button>
+
+        <Button
+          variant="ghost"
+          size="icon"
+          x-show="task.canCancel"
+          x-bind:disabled="task.isMode('cancelling')"
+          x-on:click="task.cancel()"
+        >
+          <StopIcon class="size-8" />
+        </Button>
+
+        <Button
+          variant="ghost"
+          size="icon"
+          x-show="task.canDelete"
+          x-bind:disabled="task.isMode('deleting')"
+          x-on:click="deleteTask(task)"
+        >
+          <DeleteIcon class="size-8" />
+        </Button>
+      </div>
+    </TableCell>
+  </TableRow>
+</template>

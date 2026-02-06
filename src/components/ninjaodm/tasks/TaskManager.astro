@@ -1,0 +1,84 @@
+---
+import {
+  Table,
+  TableHeader,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableCell,
+} from "@/components/starwind/table";
+import TaskTableRowTemplate from "./TaskTableRowTemplate.astro";
+
+import type { TaskManagerProps } from "./controllers";
+
+type Props = TaskManagerProps;
+
+const headers = ["Name", "Status", "Step", "Created", "Actions"];
+const { tasks = [], workspaceUuid } = Astro.props;
+
+const ninjaId = "dummy-ninja-id";
+---
+
+<div
+  x-ignore
+  data-ninjaodm-component="TaskManager"
+  data-ninjaodm-id={ninjaId}
+  x-data="TaskManager(window.ninjaodmData[$el.dataset.ninjaodmId])"
+  class="max-w-6xl mx-auto"
+>
+  <!-- Toolbar -->
+  <div class="flex items-center justify-between mb-4">
+    <h2 class="text-lg font-semibold">Tasks</h2>
+  </div>
+
+  <Table>
+    <TableHeader>
+      <TableRow>
+        {
+          headers.map((header) => (
+            <TableHead class:list={{ "text-right": header === "Actions" }}>
+              {header}
+            </TableHead>
+          ))
+        }
+      </TableRow>
+    </TableHeader>
+
+    <TableBody>
+      <TaskTableRowTemplate />
+
+      <!-- Empty State -->
+      <TableRow x-show="isEmpty">
+        <TableCell
+          colspan={headers.length}
+          class="text-center p-8 text-muted-foreground"
+        >
+          <div class="flex flex-col items-center gap-3">
+            <span>No tasks found.</span>
+          </div>
+        </TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</div>
+
+<script define:vars={{ tasks, workspaceUuid, ninjaId }} is:inline>
+  window.ninjaodmData = window.ninjaodmData || {};
+  window.ninjaodmData[ninjaId] = {
+    tasks,
+    workspaceUuid,
+  };
+</script>
+
+<script>
+  import { TaskManager } from "./controllers";
+  TaskManager.register(window.Alpine, "TaskManager", () => {
+    document
+      .querySelectorAll('[data-ninjaodm-component="TaskManager"]')
+      .forEach((el) => {
+        el.removeAttribute("x-ignore");
+        delete (el as any)._x_ignore;
+        window.Alpine.initTree(el as any);
+      });
+  });
+</script>

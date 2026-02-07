@@ -88,7 +88,10 @@
             }
           }
         },
-        "tags": ["public", "sse"],
+        "tags": [
+          "public",
+          "sse"
+        ],
         "security": [
           {
             "ServiceUserJWTAuth": []
@@ -106,7 +109,9 @@
             "description": "OK"
           }
         },
-        "tags": ["public"]
+        "tags": [
+          "public"
+        ]
       }
     },
     "/api/health": {
@@ -126,7 +131,9 @@
             }
           }
         },
-        "tags": ["public"]
+        "tags": [
+          "public"
+        ]
       }
     },
     "/api/health/detailed": {
@@ -146,7 +153,9 @@
             }
           }
         },
-        "tags": ["public"]
+        "tags": [
+          "public"
+        ]
       }
     },
     "/api/internal/token/refresh": {
@@ -166,7 +175,10 @@
             }
           }
         },
-        "tags": ["token", "internal"],
+        "tags": [
+          "token",
+          "internal"
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -201,7 +213,10 @@
             }
           }
         },
-        "tags": ["token", "internal"],
+        "tags": [
+          "token",
+          "internal"
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -237,7 +252,10 @@
           }
         },
         "description": "Create Workspace item",
-        "tags": ["workspace", "internal"],
+        "tags": [
+          "workspace",
+          "internal"
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -341,7 +359,10 @@
             }
           }
         },
-        "tags": ["workspace", "internal"],
+        "tags": [
+          "workspace",
+          "internal"
+        ],
         "security": [
           {
             "ServiceHMACAuth": []
@@ -378,7 +399,10 @@
           }
         },
         "description": "Get Workspace item by uuid",
-        "tags": ["workspace", "public"],
+        "tags": [
+          "workspace",
+          "public"
+        ],
         "security": [
           {
             "ServiceUserJWTAuth": []
@@ -416,7 +440,10 @@
           }
         },
         "description": "Patch Workspace item by uuid",
-        "tags": ["workspace", "public"],
+        "tags": [
+          "workspace",
+          "public"
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -457,7 +484,10 @@
           }
         },
         "description": "Delete Workspace item",
-        "tags": ["workspace", "public"],
+        "tags": [
+          "workspace",
+          "public"
+        ],
         "security": [
           {
             "ServiceUserJWTAuth": []
@@ -486,7 +516,10 @@
           }
         },
         "description": "Create Workspace item",
-        "tags": ["workspace", "public"],
+        "tags": [
+          "workspace",
+          "public"
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -577,7 +610,10 @@
             }
           }
         },
-        "tags": ["workspace", "public"],
+        "tags": [
+          "workspace",
+          "public"
+        ],
         "security": [
           {
             "ServiceUserJWTAuth": []
@@ -620,7 +656,10 @@
             }
           }
         },
-        "tags": ["workspace", "public"],
+        "tags": [
+          "workspace",
+          "public"
+        ],
         "requestBody": {
           "content": {
             "multipart/form-data": {
@@ -635,7 +674,9 @@
                     "type": "array"
                   }
                 },
-                "required": ["image_files"],
+                "required": [
+                  "image_files"
+                ],
                 "title": "FileParams",
                 "type": "object"
               }
@@ -681,7 +722,10 @@
             }
           }
         },
-        "tags": ["workspace", "public"],
+        "tags": [
+          "workspace",
+          "public"
+        ],
         "requestBody": {
           "content": {
             "multipart/form-data": {
@@ -693,7 +737,9 @@
                     "type": "string"
                   }
                 },
-                "required": ["image_file"],
+                "required": [
+                  "image_file"
+                ],
                 "title": "FileParams",
                 "type": "object"
               }
@@ -741,7 +787,9 @@
             "description": "OK"
           }
         },
-        "tags": ["tus"],
+        "tags": [
+          "tus"
+        ],
         "security": [
           {
             "ServiceUserJWTAuth": []
@@ -812,7 +860,9 @@
             "description": "OK"
           }
         },
-        "tags": ["tus"],
+        "tags": [
+          "tus"
+        ],
         "security": [
           {
             "ServiceUserJWTAuth": []
@@ -862,7 +912,9 @@
             "description": "OK"
           }
         },
-        "tags": ["tus"],
+        "tags": [
+          "tus"
+        ],
         "security": [
           {
             "ServiceUserJWTAuth": []
@@ -934,7 +986,9 @@
             "description": "OK"
           }
         },
-        "tags": ["tus"],
+        "tags": [
+          "tus"
+        ],
         "security": [
           {
             "ServiceUserJWTAuth": []
@@ -964,7 +1018,9 @@
             "description": "OK"
           }
         },
-        "tags": ["tus"],
+        "tags": [
+          "tus"
+        ],
         "security": [
           {
             "ServiceUserJWTAuth": []
@@ -1012,7 +1068,10 @@
             }
           }
         },
-        "tags": ["task", "internal"],
+        "tags": [
+          "task",
+          "internal"
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -1128,7 +1187,10 @@
             }
           }
         },
-        "tags": ["task", "internal"],
+        "tags": [
+          "task",
+          "internal"
+        ],
         "security": [
           {
             "ServiceHMACAuth": []
@@ -1165,7 +1227,10 @@
           }
         },
         "description": "Get ODMTask item by uuid",
-        "tags": ["task", "public"],
+        "tags": [
+          "task",
+          "public"
+        ],
         "security": [
           {
             "ServiceUserJWTAuth": []
@@ -1196,7 +1261,10 @@
           }
         },
         "description": "Delete ODMTask item",
-        "tags": ["task", "public"],
+        "tags": [
+          "task",
+          "public"
+        ],
         "security": [
           {
             "ServiceUserJWTAuth": []
@@ -1226,7 +1294,11 @@
             "in": "path",
             "name": "action",
             "schema": {
-              "enum": ["pause", "resume", "cancel"],
+              "enum": [
+                "pause",
+                "resume",
+                "cancel"
+              ],
               "title": "Action",
               "type": "string"
             },
@@ -1245,7 +1317,10 @@
             }
           }
         },
-        "tags": ["task", "public"],
+        "tags": [
+          "task",
+          "public"
+        ],
         "security": [
           {
             "ServiceUserJWTAuth": []
@@ -1359,7 +1434,10 @@
             }
           }
         },
-        "tags": ["task", "public"],
+        "tags": [
+          "task",
+          "public"
+        ],
         "security": [
           {
             "ServiceUserJWTAuth": []
@@ -1385,7 +1463,10 @@
             }
           }
         },
-        "tags": ["task", "public"],
+        "tags": [
+          "task",
+          "public"
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -1494,7 +1575,10 @@
             }
           }
         },
-        "tags": ["result", "internal"],
+        "tags": [
+          "result",
+          "internal"
+        ],
         "security": [
           {
             "ServiceHMACAuth": []
@@ -1531,7 +1615,10 @@
           }
         },
         "description": "Get ODMTaskResult item by uuid",
-        "tags": ["result", "public"],
+        "tags": [
+          "result",
+          "public"
+        ],
         "security": [
           {
             "ServiceUserJWTAuth": []
@@ -1562,7 +1649,10 @@
           }
         },
         "description": "Delete ODMTaskResult item",
-        "tags": ["result", "public"],
+        "tags": [
+          "result",
+          "public"
+        ],
         "security": [
           {
             "ServiceUserJWTAuth": []
@@ -1661,7 +1751,10 @@
             }
           }
         },
-        "tags": ["result", "public"],
+        "tags": [
+          "result",
+          "public"
+        ],
         "security": [
           {
             "ServiceUserJWTAuth": []
@@ -1700,7 +1793,10 @@
             }
           }
         },
-        "tags": ["result", "public"],
+        "tags": [
+          "result",
+          "public"
+        ],
         "security": [
           {
             "ServiceUserJWTAuth": []
@@ -1741,7 +1837,10 @@
             "description": "OK"
           }
         },
-        "tags": ["result", "public"],
+        "tags": [
+          "result",
+          "public"
+        ],
         "security": [
           {
             "ShareResultsApiKeyAuth": []
@@ -1773,7 +1872,10 @@
             "description": "OK"
           }
         },
-        "tags": ["result", "public"],
+        "tags": [
+          "result",
+          "public"
+        ],
         "security": [
           {
             "ServiceUserJWTAuth": []
@@ -1889,7 +1991,10 @@
             }
           }
         },
-        "tags": ["image", "internal"],
+        "tags": [
+          "image",
+          "internal"
+        ],
         "security": [
           {
             "ServiceHMACAuth": []
@@ -1926,7 +2031,10 @@
           }
         },
         "description": "Get Image item by uuid",
-        "tags": ["image", "public"],
+        "tags": [
+          "image",
+          "public"
+        ],
         "security": [
           {
             "ServiceUserJWTAuth": []
@@ -1957,7 +2065,10 @@
           }
         },
         "description": "Delete Image item",
-        "tags": ["image", "public"],
+        "tags": [
+          "image",
+          "public"
+        ],
         "security": [
           {
             "ServiceUserJWTAuth": []
@@ -2073,7 +2184,10 @@
             }
           }
         },
-        "tags": ["image", "public"],
+        "tags": [
+          "image",
+          "public"
+        ],
         "security": [
           {
             "ServiceUserJWTAuth": []
@@ -2105,7 +2219,10 @@
             "description": "OK"
           }
         },
-        "tags": ["image", "public"],
+        "tags": [
+          "image",
+          "public"
+        ],
         "security": [
           {
             "ServiceUserJWTAuth": []
@@ -2222,7 +2339,10 @@
             }
           }
         },
-        "tags": ["gcp", "internal"],
+        "tags": [
+          "gcp",
+          "internal"
+        ],
         "security": [
           {
             "ServiceHMACAuth": []
@@ -2259,7 +2379,10 @@
           }
         },
         "description": "Get GroundControlPoint item by uuid",
-        "tags": ["gcp", "public"],
+        "tags": [
+          "gcp",
+          "public"
+        ],
         "security": [
           {
             "ServiceUserJWTAuth": []
@@ -2297,7 +2420,10 @@
           }
         },
         "description": "Patch GroundControlPoint item by uuid",
-        "tags": ["gcp", "public"],
+        "tags": [
+          "gcp",
+          "public"
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -2338,7 +2464,10 @@
           }
         },
         "description": "Delete GroundControlPoint item",
-        "tags": ["gcp", "public"],
+        "tags": [
+          "gcp",
+          "public"
+        ],
         "security": [
           {
             "ServiceUserJWTAuth": []
@@ -2451,7 +2580,11 @@
             }
           }
         },
-        "tags": ["gcp", "public", "geojson"],
+        "tags": [
+          "gcp",
+          "public",
+          "geojson"
+        ],
         "security": [
           {
             "ServiceUserJWTAuth": []
@@ -2568,7 +2701,10 @@
             }
           }
         },
-        "tags": ["gcp", "public"],
+        "tags": [
+          "gcp",
+          "public"
+        ],
         "security": [
           {
             "ServiceUserJWTAuth": []
@@ -2594,12 +2730,148 @@
             }
           }
         },
-        "tags": ["gcp", "public"],
+        "tags": [
+          "gcp",
+          "public"
+        ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/GCPCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "ServiceUserJWTAuth": []
+          },
+          {
+            "ServiceHMACAuth": []
+          }
+        ]
+      }
+    },
+    "/api/gcps/bulk": {
+      "patch": {
+        "operationId": "bulkUpdateGCPs",
+        "summary": "Bulk Update Gcps",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/GCPResponse"
+                  },
+                  "title": "Response",
+                  "type": "array"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "gcp",
+          "public"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "items": {
+                  "$ref": "#/components/schemas/GCPUpdateForBulk"
+                },
+                "title": "Payload",
+                "type": "array"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "ServiceUserJWTAuth": []
+          },
+          {
+            "ServiceHMACAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "operationId": "bulkDeleteGCPs",
+        "summary": "Bulk Delete Gcps",
+        "parameters": [],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "gcp",
+          "public"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "items": {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "title": "Uuids",
+                "type": "array"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "ServiceUserJWTAuth": []
+          },
+          {
+            "ServiceHMACAuth": []
+          }
+        ]
+      },
+      "post": {
+        "operationId": "bulkCreateGCPs",
+        "summary": "Bulk Create Gcps",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/GCPResponse"
+                  },
+                  "title": "Response",
+                  "type": "array"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "gcp",
+          "public"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "items": {
+                  "$ref": "#/components/schemas/GCPCreate"
+                },
+                "title": "Payload",
+                "type": "array"
               }
             }
           },
@@ -2630,7 +2902,10 @@
             "type": "string"
           }
         },
-        "required": ["uuid", "label"],
+        "required": [
+          "uuid",
+          "label"
+        ],
         "title": "GCPDeletedSSEData",
         "type": "object"
       },
@@ -2646,7 +2921,10 @@
             "type": "string"
           }
         },
-        "required": ["uuid", "label"],
+        "required": [
+          "uuid",
+          "label"
+        ],
         "title": "GCPUpdatedSSEData",
         "type": "object"
       },
@@ -2662,7 +2940,10 @@
             "type": "string"
           }
         },
-        "required": ["uuid", "label"],
+        "required": [
+          "uuid",
+          "label"
+        ],
         "title": "GPCCreatedSSEData",
         "type": "object"
       },
@@ -2690,7 +2971,10 @@
             "type": "string"
           }
         },
-        "required": ["uuid", "name"],
+        "required": [
+          "uuid",
+          "name"
+        ],
         "title": "ImageDeletedSSEData",
         "type": "object"
       },
@@ -2722,7 +3006,10 @@
             "type": "string"
           }
         },
-        "required": ["uuid", "workspace_name"],
+        "required": [
+          "uuid",
+          "workspace_name"
+        ],
         "title": "ResultCreatedSSEData",
         "type": "object"
       },
@@ -2737,7 +3024,10 @@
             "$ref": "#/components/schemas/ODMTaskResultType"
           }
         },
-        "required": ["uuid", "result_type"],
+        "required": [
+          "uuid",
+          "result_type"
+        ],
         "title": "ResultDeletedSSEData",
         "type": "object"
       },
@@ -2752,7 +3042,10 @@
             "$ref": "#/components/schemas/GCPDeletedSSEData"
           }
         },
-        "required": ["event", "data"],
+        "required": [
+          "event",
+          "data"
+        ],
         "title": "SSEWrapper[Literal['gcp:deleted'], GCPDeletedSSEData]",
         "type": "object"
       },
@@ -2767,7 +3060,10 @@
             "$ref": "#/components/schemas/GCPUpdatedSSEData"
           }
         },
-        "required": ["event", "data"],
+        "required": [
+          "event",
+          "data"
+        ],
         "title": "SSEWrapper[Literal['gcp:updated'], GCPUpdatedSSEData]",
         "type": "object"
       },
@@ -2782,7 +3078,10 @@
             "$ref": "#/components/schemas/GPCCreatedSSEData"
           }
         },
-        "required": ["event", "data"],
+        "required": [
+          "event",
+          "data"
+        ],
         "title": "SSEWrapper[Literal['gcp:created'], GPCCreatedSSEData]",
         "type": "object"
       },
@@ -2797,7 +3096,10 @@
             "$ref": "#/components/schemas/ImageDeletedSSEData"
           }
         },
-        "required": ["event", "data"],
+        "required": [
+          "event",
+          "data"
+        ],
         "title": "SSEWrapper[Literal['image:deleted'], ImageDeletedSSEData]",
         "type": "object"
       },
@@ -2812,7 +3114,10 @@
             "$ref": "#/components/schemas/ResultCreatedSSEData"
           }
         },
-        "required": ["event", "data"],
+        "required": [
+          "event",
+          "data"
+        ],
         "title": "SSEWrapper[Literal['task-result:created'], ResultCreatedSSEData]",
         "type": "object"
       },
@@ -2827,7 +3132,10 @@
             "$ref": "#/components/schemas/ResultDeletedSSEData"
           }
         },
-        "required": ["event", "data"],
+        "required": [
+          "event",
+          "data"
+        ],
         "title": "SSEWrapper[Literal['task-result:deleted'], ResultDeletedSSEData]",
         "type": "object"
       },
@@ -2842,7 +3150,10 @@
             "$ref": "#/components/schemas/TaskCancelledSSEData"
           }
         },
-        "required": ["event", "data"],
+        "required": [
+          "event",
+          "data"
+        ],
         "title": "SSEWrapper[Literal['task:cancelled'], TaskCancelledSSEData]",
         "type": "object"
       },
@@ -2857,7 +3168,10 @@
             "$ref": "#/components/schemas/TaskCompletedSSEData"
           }
         },
-        "required": ["event", "data"],
+        "required": [
+          "event",
+          "data"
+        ],
         "title": "SSEWrapper[Literal['task:completed'], TaskCompletedSSEData]",
         "type": "object"
       },
@@ -2872,7 +3186,10 @@
             "$ref": "#/components/schemas/TaskCreatedSSEData"
           }
         },
-        "required": ["event", "data"],
+        "required": [
+          "event",
+          "data"
+        ],
         "title": "SSEWrapper[Literal['task:created'], TaskCreatedSSEData]",
         "type": "object"
       },
@@ -2887,7 +3204,10 @@
             "$ref": "#/components/schemas/TaskDeletedSSEData"
           }
         },
-        "required": ["event", "data"],
+        "required": [
+          "event",
+          "data"
+        ],
         "title": "SSEWrapper[Literal['task:deleted'], TaskDeletedSSEData]",
         "type": "object"
       },
@@ -2902,7 +3222,10 @@
             "$ref": "#/components/schemas/TaskFailedSSEData"
           }
         },
-        "required": ["event", "data"],
+        "required": [
+          "event",
+          "data"
+        ],
         "title": "SSEWrapper[Literal['task:failed'], TaskFailedSSEData]",
         "type": "object"
       },
@@ -2917,7 +3240,10 @@
             "$ref": "#/components/schemas/TaskNextStageSSEData"
           }
         },
-        "required": ["event", "data"],
+        "required": [
+          "event",
+          "data"
+        ],
         "title": "SSEWrapper[Literal['task:next-stage'], TaskNextStageSSEData]",
         "type": "object"
       },
@@ -2932,7 +3258,10 @@
             "$ref": "#/components/schemas/TaskPausedSSEData"
           }
         },
-        "required": ["event", "data"],
+        "required": [
+          "event",
+          "data"
+        ],
         "title": "SSEWrapper[Literal['task:paused'], TaskPausedSSEData]",
         "type": "object"
       },
@@ -2947,7 +3276,10 @@
             "$ref": "#/components/schemas/TaskResumedSSEData"
           }
         },
-        "required": ["event", "data"],
+        "required": [
+          "event",
+          "data"
+        ],
         "title": "SSEWrapper[Literal['task:resumed'], TaskResumedSSEData]",
         "type": "object"
       },
@@ -2962,7 +3294,10 @@
             "$ref": "#/components/schemas/TaskStartedSSEData"
           }
         },
-        "required": ["event", "data"],
+        "required": [
+          "event",
+          "data"
+        ],
         "title": "SSEWrapper[Literal['task:started'], TaskStartedSSEData]",
         "type": "object"
       },
@@ -2977,7 +3312,10 @@
             "$ref": "#/components/schemas/TaskUpdatedSSEData"
           }
         },
-        "required": ["event", "data"],
+        "required": [
+          "event",
+          "data"
+        ],
         "title": "SSEWrapper[Literal['task:updated'], TaskUpdatedSSEData]",
         "type": "object"
       },
@@ -2992,7 +3330,10 @@
             "$ref": "#/components/schemas/WorkspaceCreatedSSEData"
           }
         },
-        "required": ["event", "data"],
+        "required": [
+          "event",
+          "data"
+        ],
         "title": "SSEWrapper[Literal['workspace:created'], WorkspaceCreatedSSEData]",
         "type": "object"
       },
@@ -3007,7 +3348,10 @@
             "$ref": "#/components/schemas/WorkspaceDeletedSSEData"
           }
         },
-        "required": ["event", "data"],
+        "required": [
+          "event",
+          "data"
+        ],
         "title": "SSEWrapper[Literal['workspace:deleted'], WorkspaceDeletedSSEData]",
         "type": "object"
       },
@@ -3022,7 +3366,10 @@
             "$ref": "#/components/schemas/WorkspaceImagesUploadedSSEData"
           }
         },
-        "required": ["event", "data"],
+        "required": [
+          "event",
+          "data"
+        ],
         "title": "SSEWrapper[Literal['workspace:images-uploaded'], WorkspaceImagesUploadedSSEData]",
         "type": "object"
       },
@@ -3037,7 +3384,10 @@
             "$ref": "#/components/schemas/WorkspaceUpdatedSSEData"
           }
         },
-        "required": ["event", "data"],
+        "required": [
+          "event",
+          "data"
+        ],
         "title": "SSEWrapper[Literal['workspace:updated'], WorkspaceUpdatedSSEData]",
         "type": "object"
       },
@@ -3057,7 +3407,11 @@
             "type": "string"
           }
         },
-        "required": ["uuid", "status", "step"],
+        "required": [
+          "uuid",
+          "status",
+          "step"
+        ],
         "title": "TaskCancelledSSEData",
         "type": "object"
       },
@@ -3077,7 +3431,11 @@
             "type": "string"
           }
         },
-        "required": ["uuid", "status", "step"],
+        "required": [
+          "uuid",
+          "status",
+          "step"
+        ],
         "title": "TaskCompletedSSEData",
         "type": "object"
       },
@@ -3097,7 +3455,11 @@
             "type": "string"
           }
         },
-        "required": ["uuid", "status", "step"],
+        "required": [
+          "uuid",
+          "status",
+          "step"
+        ],
         "title": "TaskCreatedSSEData",
         "type": "object"
       },
@@ -3117,7 +3479,11 @@
             "type": "string"
           }
         },
-        "required": ["uuid", "status", "step"],
+        "required": [
+          "uuid",
+          "status",
+          "step"
+        ],
         "title": "TaskDeletedSSEData",
         "type": "object"
       },
@@ -3148,7 +3514,11 @@
             "title": "Error"
           }
         },
-        "required": ["uuid", "status", "step"],
+        "required": [
+          "uuid",
+          "status",
+          "step"
+        ],
         "title": "TaskFailedSSEData",
         "type": "object"
       },
@@ -3168,7 +3538,11 @@
             "type": "string"
           }
         },
-        "required": ["uuid", "status", "step"],
+        "required": [
+          "uuid",
+          "status",
+          "step"
+        ],
         "title": "TaskNextStageSSEData",
         "type": "object"
       },
@@ -3188,7 +3562,11 @@
             "type": "string"
           }
         },
-        "required": ["uuid", "status", "step"],
+        "required": [
+          "uuid",
+          "status",
+          "step"
+        ],
         "title": "TaskPausedSSEData",
         "type": "object"
       },
@@ -3208,7 +3586,11 @@
             "type": "string"
           }
         },
-        "required": ["uuid", "status", "step"],
+        "required": [
+          "uuid",
+          "status",
+          "step"
+        ],
         "title": "TaskResumedSSEData",
         "type": "object"
       },
@@ -3228,7 +3610,11 @@
             "type": "string"
           }
         },
-        "required": ["uuid", "status", "step"],
+        "required": [
+          "uuid",
+          "status",
+          "step"
+        ],
         "title": "TaskStartedSSEData",
         "type": "object"
       },
@@ -3248,7 +3634,11 @@
             "type": "string"
           }
         },
-        "required": ["uuid", "status", "step"],
+        "required": [
+          "uuid",
+          "status",
+          "step"
+        ],
         "title": "TaskUpdatedSSEData",
         "type": "object"
       },
@@ -3264,7 +3654,10 @@
             "type": "string"
           }
         },
-        "required": ["uuid", "name"],
+        "required": [
+          "uuid",
+          "name"
+        ],
         "title": "WorkspaceCreatedSSEData",
         "type": "object"
       },
@@ -3280,7 +3673,10 @@
             "type": "string"
           }
         },
-        "required": ["uuid", "name"],
+        "required": [
+          "uuid",
+          "name"
+        ],
         "title": "WorkspaceDeletedSSEData",
         "type": "object"
       },
@@ -3296,7 +3692,10 @@
             "type": "integer"
           }
         },
-        "required": ["uuid", "uploaded"],
+        "required": [
+          "uuid",
+          "uploaded"
+        ],
         "title": "WorkspaceImagesUploadedSSEData",
         "type": "object"
       },
@@ -3312,7 +3711,10 @@
             "type": "string"
           }
         },
-        "required": ["uuid", "name"],
+        "required": [
+          "uuid",
+          "name"
+        ],
         "title": "WorkspaceUpdatedSSEData",
         "type": "object"
       },
@@ -3323,7 +3725,9 @@
             "type": "string"
           }
         },
-        "required": ["message"],
+        "required": [
+          "message"
+        ],
         "title": "MessageSchema",
         "type": "object"
       },
@@ -3345,7 +3749,11 @@
             "type": "object"
           }
         },
-        "required": ["status", "timestamp", "mixins"],
+        "required": [
+          "status",
+          "timestamp",
+          "mixins"
+        ],
         "title": "HealthSchema",
         "type": "object"
       },
@@ -3356,7 +3764,9 @@
             "type": "string"
           }
         },
-        "required": ["access"],
+        "required": [
+          "access"
+        ],
         "title": "AccessTokenResponseInternal",
         "type": "object"
       },
@@ -3367,7 +3777,9 @@
             "type": "string"
           }
         },
-        "required": ["refresh"],
+        "required": [
+          "refresh"
+        ],
         "title": "RefreshRequestInternal",
         "type": "object"
       },
@@ -3382,7 +3794,10 @@
             "type": "string"
           }
         },
-        "required": ["refresh", "access"],
+        "required": [
+          "refresh",
+          "access"
+        ],
         "title": "TokenPairResponseInternal",
         "type": "object"
       },
@@ -3401,7 +3816,9 @@
             "type": "array"
           }
         },
-        "required": ["user_id"],
+        "required": [
+          "user_id"
+        ],
         "title": "TokenRequestInternal",
         "type": "object"
       },
@@ -3435,7 +3852,9 @@
             "type": "string"
           }
         },
-        "required": ["user_id"],
+        "required": [
+          "user_id"
+        ],
         "title": "WorkspaceResponseInternal",
         "type": "object"
       },
@@ -3457,7 +3876,9 @@
             "type": "string"
           }
         },
-        "required": ["user_id"],
+        "required": [
+          "user_id"
+        ],
         "title": "CreateWorkspaceInternal",
         "type": "object"
       },
@@ -3513,7 +3934,7 @@
         "title": "WorkspaceFilterSchemaInternal",
         "type": "object"
       },
-      "PathModeld7d77": {
+      "PathModel90f51": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -3521,8 +3942,10 @@
             "type": "string"
           }
         },
-        "required": ["uuid"],
-        "title": "PathModeld7d77",
+        "required": [
+          "uuid"
+        ],
+        "title": "PathModel90f51",
         "type": "object"
       },
       "WorkspaceResponse": {
@@ -3553,7 +3976,7 @@
         "title": "WorkspaceResponse",
         "type": "object"
       },
-      "PathModele5ba5": {
+      "PathModel6b53e": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -3561,8 +3984,10 @@
             "type": "string"
           }
         },
-        "required": ["uuid"],
-        "title": "PathModele5ba5",
+        "required": [
+          "uuid"
+        ],
+        "title": "PathModel6b53e",
         "type": "object"
       },
       "UpdateWorkspace": {
@@ -3572,11 +3997,13 @@
             "type": "string"
           }
         },
-        "required": ["name"],
+        "required": [
+          "name"
+        ],
         "title": "UpdateWorkspace",
         "type": "object"
       },
-      "PathModel5a8fe": {
+      "PathModel45169": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -3584,8 +4011,10 @@
             "type": "string"
           }
         },
-        "required": ["uuid"],
-        "title": "PathModel5a8fe",
+        "required": [
+          "uuid"
+        ],
+        "title": "PathModel45169",
         "type": "object"
       },
       "CreateWorkspace": {
@@ -3681,7 +4110,10 @@
             "type": "string"
           }
         },
-        "required": ["workspace_uuid", "name"],
+        "required": [
+          "workspace_uuid",
+          "name"
+        ],
         "title": "ImageResponse",
         "type": "object"
       },
@@ -3703,7 +4135,10 @@
             "type": "string"
           }
         },
-        "required": ["Tus-Resumable", "Upload-Offset"],
+        "required": [
+          "Tus-Resumable",
+          "Upload-Offset"
+        ],
         "title": "TusPatchHeaders",
         "type": "object"
       },
@@ -3715,7 +4150,9 @@
             "type": "string"
           }
         },
-        "required": ["Tus-Resumable"],
+        "required": [
+          "Tus-Resumable"
+        ],
         "title": "TusBaseHeaders",
         "type": "object"
       },
@@ -3744,7 +4181,10 @@
             "title": "Upload-Metadata"
           }
         },
-        "required": ["Tus-Resumable", "Upload-Length"],
+        "required": [
+          "Tus-Resumable",
+          "Upload-Length"
+        ],
         "title": "TusPostHeaders",
         "type": "object"
       },
@@ -3808,7 +4248,9 @@
             "$ref": "#/components/schemas/NodeODMTaskStatus"
           }
         },
-        "required": ["code"],
+        "required": [
+          "code"
+        ],
         "title": "ODMTaskWebhookStatus",
         "type": "object"
       },
@@ -3956,11 +4398,15 @@
             "type": "string"
           }
         },
-        "required": ["workspace_uuid", "status", "step"],
+        "required": [
+          "workspace_uuid",
+          "status",
+          "step"
+        ],
         "title": "TaskResponse",
         "type": "object"
       },
-      "PathModel68053": {
+      "PathModela9aea": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -3968,11 +4414,13 @@
             "type": "string"
           }
         },
-        "required": ["uuid"],
-        "title": "PathModel68053",
+        "required": [
+          "uuid"
+        ],
+        "title": "PathModela9aea",
         "type": "object"
       },
-      "PathModelc340c": {
+      "PathModel5d46b": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -3980,8 +4428,10 @@
             "type": "string"
           }
         },
-        "required": ["uuid"],
-        "title": "PathModelc340c",
+        "required": [
+          "uuid"
+        ],
+        "title": "PathModel5d46b",
         "type": "object"
       },
       "CreateTask": {
@@ -4014,12 +4464,20 @@
             "default": "ultra_low"
           }
         },
-        "required": ["workspace_uuid"],
+        "required": [
+          "workspace_uuid"
+        ],
         "title": "CreateTask",
         "type": "object"
       },
       "ODMQualityOption": {
-        "enum": ["ultra_high", "high", "medium", "low", "ultra_low"],
+        "enum": [
+          "ultra_high",
+          "high",
+          "medium",
+          "low",
+          "ultra_low"
+        ],
         "title": "ODMQualityOption",
         "type": "string"
       },
@@ -4103,11 +4561,14 @@
             "type": "string"
           }
         },
-        "required": ["workspace_uuid", "result_type"],
+        "required": [
+          "workspace_uuid",
+          "result_type"
+        ],
         "title": "ResultResponse",
         "type": "object"
       },
-      "PathModel7a3f1": {
+      "PathModel58160": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -4115,11 +4576,13 @@
             "type": "string"
           }
         },
-        "required": ["uuid"],
-        "title": "PathModel7a3f1",
+        "required": [
+          "uuid"
+        ],
+        "title": "PathModel58160",
         "type": "object"
       },
-      "PathModel4df85": {
+      "PathModel71bb2": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -4127,8 +4590,10 @@
             "type": "string"
           }
         },
-        "required": ["uuid"],
-        "title": "PathModel4df85",
+        "required": [
+          "uuid"
+        ],
+        "title": "PathModel71bb2",
         "type": "object"
       },
       "ResultShareKeyResponse": {
@@ -4138,7 +4603,9 @@
             "type": "string"
           }
         },
-        "required": ["share_api_key"],
+        "required": [
+          "share_api_key"
+        ],
         "title": "ResultShareKeyResponse",
         "type": "object"
       },
@@ -4206,7 +4673,7 @@
         "title": "ImageFilterSchema",
         "type": "object"
       },
-      "PathModelc286a": {
+      "PathModel887c7": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -4214,11 +4681,13 @@
             "type": "string"
           }
         },
-        "required": ["uuid"],
-        "title": "PathModelc286a",
+        "required": [
+          "uuid"
+        ],
+        "title": "PathModel887c7",
         "type": "object"
       },
-      "PathModel616b2": {
+      "PathModeldc1e3": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -4226,8 +4695,10 @@
             "type": "string"
           }
         },
-        "required": ["uuid"],
-        "title": "PathModel616b2",
+        "required": [
+          "uuid"
+        ],
+        "title": "PathModeldc1e3",
         "type": "object"
       },
       "GCPFilterSchema": {
@@ -4356,7 +4827,12 @@
             "type": "string"
           }
         },
-        "required": ["image_uuid", "gcp_point", "image_point", "label"],
+        "required": [
+          "image_uuid",
+          "gcp_point",
+          "image_point",
+          "label"
+        ],
         "title": "GCPResponse",
         "type": "object",
         "example": {
@@ -4368,7 +4844,7 @@
           "created_at": "2026-01-15T10:30:00Z"
         }
       },
-      "PathModel52187": {
+      "PathModel3f0f9": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -4376,11 +4852,13 @@
             "type": "string"
           }
         },
-        "required": ["uuid"],
-        "title": "PathModel52187",
+        "required": [
+          "uuid"
+        ],
+        "title": "PathModel3f0f9",
         "type": "object"
       },
-      "PathModel545a8": {
+      "PathModel738cc": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -4388,8 +4866,10 @@
             "type": "string"
           }
         },
-        "required": ["uuid"],
-        "title": "PathModel545a8",
+        "required": [
+          "uuid"
+        ],
+        "title": "PathModel738cc",
         "type": "object"
       },
       "GCPUpdate": {
@@ -4454,7 +4934,7 @@
         "title": "GCPUpdate",
         "type": "object"
       },
-      "PathModelc9da5": {
+      "PathModeld622c": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -4462,8 +4942,10 @@
             "type": "string"
           }
         },
-        "required": ["uuid"],
-        "title": "PathModelc9da5",
+        "required": [
+          "uuid"
+        ],
+        "title": "PathModeld622c",
         "type": "object"
       },
       "FeatureCollection_Feature_Point__GCPProperties__": {
@@ -4533,7 +5015,10 @@
             "type": "array"
           }
         },
-        "required": ["type", "features"],
+        "required": [
+          "type",
+          "features"
+        ],
         "title": "FeatureCollection[Feature[Point, GCPProperties]]",
         "type": "object"
       },
@@ -4631,7 +5116,11 @@
             "title": "Id"
           }
         },
-        "required": ["type", "geometry", "properties"],
+        "required": [
+          "type",
+          "geometry",
+          "properties"
+        ],
         "title": "Feature[Point, GCPProperties]",
         "type": "object"
       },
@@ -4661,7 +5150,11 @@
             "type": "string"
           }
         },
-        "required": ["image_uuid", "image_point", "label"],
+        "required": [
+          "image_uuid",
+          "image_point",
+          "label"
+        ],
         "title": "GCPProperties",
         "type": "object"
       },
@@ -4737,7 +5230,10 @@
             "title": "Coordinates"
           }
         },
-        "required": ["type", "coordinates"],
+        "required": [
+          "type",
+          "coordinates"
+        ],
         "title": "Point",
         "type": "object"
       },
@@ -4818,8 +5314,83 @@
             "type": "string"
           }
         },
-        "required": ["image_uuid", "gcp_point", "image_point", "label"],
+        "required": [
+          "image_uuid",
+          "gcp_point",
+          "image_point",
+          "label"
+        ],
         "title": "GCPCreate",
+        "type": "object"
+      },
+      "GCPUpdateForBulk": {
+        "properties": {
+          "gcp_point": {
+            "anyOf": [
+              {
+                "maxItems": 3,
+                "minItems": 3,
+                "prefixItems": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ],
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Gcp Point"
+          },
+          "image_point": {
+            "anyOf": [
+              {
+                "maxItems": 2,
+                "minItems": 2,
+                "prefixItems": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ],
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Image Point"
+          },
+          "label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Label"
+          },
+          "uuid": {
+            "format": "uuid",
+            "title": "Uuid",
+            "type": "string"
+          }
+        },
+        "required": [
+          "uuid"
+        ],
+        "title": "GCPUpdateForBulk",
         "type": "object"
       }
     },

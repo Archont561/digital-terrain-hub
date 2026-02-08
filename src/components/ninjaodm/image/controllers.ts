@@ -34,7 +34,6 @@ export class TusImageUploaderManager extends AlpineController<
   }
 
   protected onInit() {
-    this.uploadUrl = this.ctx.$root.dataset.uploadUrl as string;
     this.ctx.$dispatch("starwind:init");
   }
 
@@ -70,21 +69,10 @@ export class TusImageUploaderManager extends AlpineController<
       return;
     }
 
+    this.uploadUrl = this.ctx.$root.dataset.uploadUrl as string;
     this.initializeUploadStates(files);
-    const uploadPromise = this.uploadAllFiles(files);
+    this.uploadAllFiles(files);
     this.ctx.$refs.progressTabTrigger.click();
-
-    toast.promise(uploadPromise, {
-      loading: `Uploading ${files.length} image${files.length > 1 ? "s" : ""}...`,
-      success: {
-        title: `Successfully uploaded ${files.length} image${files.length > 1 ? "s" : ""}`,
-        duration: 2000,
-      },
-      error: {
-        title: "Some uploads failed",
-        duration: 3000,
-      },
-    });
   }
 
   // ============================================
@@ -263,22 +251,53 @@ export class TusImageUploaderManager extends AlpineController<
     results: PromiseSettledResult<string>[],
     files: File[]
   ): void {
-    const successful = results.filter(
-      (r): r is PromiseFulfilledResult<string> => r.status === "fulfilled"
-    );
+    const report = results.map((result, index) => {
+      const file = files[index];
 
-    this.ctx.$dispatch("uploads-complete", {
-      total: files.length,
-      successful: successful.length,
-      failed: results.length - successful.length,
-      uploads: this.uploads
-        .filter((u) => u.status === "completed")
-        .map((u) => ({ name: u.fileName, url: u.url })),
+      if (result.status === 'fulfilled') {
+        return {
+          file,
+          status: 'success' as const,
+          url: result.value,
+        };
+      }
+
+      return {
+        file,
+        status: 'error' as const,
+        error: result.reason instanceof Error
+          ? result.reason.message
+          : String(result.reason),
+      };
     });
-
     const dropzoneFileList = this.ctx.$refs.dropzoneForm.querySelector(`[data-slot="dropzone-files-list"]`)!;
     dropzoneFileList.classList.add("invisible");
     dropzoneFileList.innerHTML = "";
+    this.handleUploadReport(report);
+  }
+
+  private handleUploadReport(
+    report: Array<
+      | { file: File; status: 'success'; url: string }
+      | { file: File; status: 'error'; error: string }
+    >
+  ): void {
+    const successCount = report.filter(r => r.status === 'success').length;
+    const errorCount = report.filter(r => r.status === 'error').length;
+
+    if (successCount > 0) {
+      toast.success(
+        `${successCount} file${successCount > 1 ? 's' : ''} uploaded successfully`,
+        { duration: 3000 }
+      );
+    }
+
+    if (errorCount > 0) {
+      toast.error(
+        `${errorCount} file${errorCount > 1 ? 's' : ''} failed to upload`,
+        { duration: 4000 }
+      );
+    }
   }
 
   // ============================================

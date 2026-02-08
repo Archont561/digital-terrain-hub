@@ -11,9 +11,10 @@ import UploadProgresList from "./UploadProgresList.astro";
 
 type Props = {
   uploadUrl: string;
+  tabsPosition?: "down" | "up";
 };
 
-const { uploadUrl } = Astro.props;
+const { uploadUrl, tabsPosition = "up", ...rest } = Astro.props;
 ---
 
 <style is:global>
@@ -29,8 +30,9 @@ const { uploadUrl } = Astro.props;
   data-ninjaodm-component="TusImageUploader"
   class="flex w-full max-w-100 flex-col gap-4"
   data-upload-url={uploadUrl}
+  {...rest}
 >
-  <TabsList x-show="uploads.length > 0" x-cloak>
+  <TabsList class="w-full mt-2" x-show="uploads.length > 0" x-cloak>
     <TabsTrigger value="dropzone">Dropzone</TabsTrigger>
     <TabsTrigger x-ref="progressTabTrigger" value="progress"
       >Progress</TabsTrigger
@@ -39,9 +41,8 @@ const { uploadUrl } = Astro.props;
   <TabsContent value="dropzone">
     <form
       x-show="!isUploading"
-      x-on:submit.prevent="handleFormSubmition()"
       x-ref="dropzoneForm"
-      class="space-y-4"
+      class="space-y-3"
     >
       <Dropzone
         accept="image/*"
@@ -49,11 +50,11 @@ const { uploadUrl } = Astro.props;
         multiple
         name="dropzone-files"
       />
-
-      <div class="flex gap-2">
-        <Button type="submit" class="flex-1"> Upload </Button>
+      <div class="flex">
+        <Button type="button" x-on:click="handleFormSubmition()" class="flex-1"> Upload </Button>
       </div>
     </form>
+
   </TabsContent>
   <TabsContent value="progress">
     <template x-if="uploads.length > 0">

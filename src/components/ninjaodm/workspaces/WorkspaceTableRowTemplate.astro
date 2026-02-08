@@ -5,6 +5,7 @@ import { Label } from "@/components/starwind/label";
 import { TableRow, TableCell } from "@/components/starwind/table";
 import DeleteIcon from "@tabler/icons/outline/trash.svg";
 import EditIcon from "@tabler/icons/outline/pencil.svg";
+import UploadIcon from "@tabler/icons/outline/upload.svg";
 ---
 
 <template x-for="(workspace, index) in workspaces" x-bind:key="index">
@@ -41,6 +42,12 @@ import EditIcon from "@tabler/icons/outline/pencil.svg";
     <!-- ACTIONS CELL -->
     <TableCell class="text-right">
       <div class="inline-flex gap-2">
+        <Button x-on:click="handleWorkspaceImagesUpload(workspace)" 
+          variant="ghost"
+          size="icon">
+          <UploadIcon class="size-10" />
+        </Button>
+
         <Button
           variant="ghost"
           size="icon"

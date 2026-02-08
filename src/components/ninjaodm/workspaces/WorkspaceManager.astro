@@ -9,17 +9,24 @@ import {
   TableRow,
   TableCell,
 } from "@/components/starwind/table";
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogFooter, DialogTitle, DialogDescription, DialogClose } from "@/components/starwind/dialog";
 import WorkspaceTableRowTemplate from "./WorkspaceTableRowTemplate.astro";
+import { TusImageUploader } from "../image";
 
 import type { WorkspaceManagerProps } from "./controllers";
-
 type Props = WorkspaceManagerProps;
 
 const headers = ["Name", "Created", "Actions"];
-const { workspaces = [], baseEditUrl } = Astro.props;
+const { workspaces = [], baseEditUrl, workspaceImageUploadUrlTemplate } = Astro.props;
 
 const ninjaId = "dummy-ninja-id";
 ---
+
+<style is:global>
+  [x-cloak] {
+    display: none;
+  }
+</style>
 
 <div
   x-ignore
@@ -60,7 +67,7 @@ const ninjaId = "dummy-ninja-id";
       <WorkspaceTableRowTemplate />
 
       <!-- Empty State -->
-      <TableRow x-show="isEmpty">
+      <TableRow x-show="isEmpty" x-cloak>
         <TableCell
           colspan={headers.length}
           class="text-center p-8 text-muted-foreground"
@@ -75,13 +82,24 @@ const ninjaId = "dummy-ninja-id";
       </TableRow>
     </TableBody>
   </Table>
+
+  <Dialog>
+    <DialogTrigger x-ref="workspaceImageUploadDialogTrigger" class="hidden" />
+    <DialogContent>
+      <DialogHeader class="text-left mb-2">
+        <DialogTitle>Upload Images</DialogTitle>
+      </DialogHeader>
+      <TusImageUploader x-ref="TusImageUploader" uploadUrl={workspaceImageUploadUrlTemplate} />
+    </DialogContent>
+  </Dialog>
 </div>
 
-<script define:vars={{ workspaces, baseEditUrl, ninjaId }} is:inline>
+<script define:vars={{ workspaces, baseEditUrl, workspaceImageUploadUrlTemplate, ninjaId }} is:inline>
   window.ninjaodmData = window.ninjaodmData || {};
   window.ninjaodmData[ninjaId] = {
     workspaces,
     baseEditUrl,
+    workspaceImageUploadUrlTemplate,
   };
 </script>
 

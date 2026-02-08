@@ -5,20 +5,24 @@ import { Workspace, type WorkspaceProps } from "./models";
 export type WorkspaceManagerProps = {
   workspaces?: WorkspaceProps[];
   baseEditUrl: string;
+  workspaceImageUploadUrlTemplate: string;
 };
 
 export class WorkspaceManager extends AlpineController<
   WorkspaceManager,
   {
-    deleteWorkspaceDialogTrigger: HTMLButtonElement;
+    workspaceImageUploadDialogTrigger: HTMLButtonElement;
+    tusImageUploader: HTMLDivElement;
   }
 > {
   private workspaces: Workspace[];
   private baseEditUrl = "";
+  private workspaceImageUploadUrlTemplate = "";
 
-  constructor({ workspaces = [], baseEditUrl }: WorkspaceManagerProps) {
+  constructor({ workspaces = [], baseEditUrl, workspaceImageUploadUrlTemplate }: WorkspaceManagerProps) {
     super();
     this.baseEditUrl = baseEditUrl;
+    this.workspaceImageUploadUrlTemplate = workspaceImageUploadUrlTemplate;
     this.workspaces = workspaces.map((data: any) =>
       this.createWorkspaceFromData(data),
     );
@@ -61,5 +65,10 @@ export class WorkspaceManager extends AlpineController<
 
     if (!deleted) return;
     this.removeWorkspace(workspace.uuid);
+  }
+
+  handleWorkspaceImagesUpload(workspace: Workspace) {
+    this.ctx.$refs.workspaceImageUploadDialogTrigger.click();
+    this.ctx.$refs.tusImageUploader.dataset.uploadUrl = this.workspaceImageUploadUrlTemplate.replace("uuid", workspace.uuid);    
   }
 }

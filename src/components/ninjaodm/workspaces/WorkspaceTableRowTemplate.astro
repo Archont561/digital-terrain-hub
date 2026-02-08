@@ -5,6 +5,7 @@ import { Label } from "@/components/starwind/label";
 import { TableRow, TableCell } from "@/components/starwind/table";
 import DeleteIcon from "@tabler/icons/outline/trash.svg";
 import EditIcon from "@tabler/icons/outline/pencil.svg";
+import StartTaskIcon from "@tabler/icons/outline/automation.svg";
 import UploadIcon from "@tabler/icons/outline/upload.svg";
 ---
 
@@ -56,7 +57,14 @@ import UploadIcon from "@tabler/icons/outline/upload.svg";
           x-bind:href="workspace.editUrl"
         >
           <EditIcon class="size-10" />
+      </Button>
+
+        <Button x-on:click="handleWorkspaceTaskCreation(workspace)" 
+          variant="ghost"
+          size="icon">
+          <StartTaskIcon class="size-10" />
         </Button>
+
         <Button
           variant="ghost"
           size="icon"

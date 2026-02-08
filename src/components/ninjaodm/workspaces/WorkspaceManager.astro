@@ -1,5 +1,7 @@
 ---
 import { Button } from "@/components/starwind/button";
+import { Input } from "@/components/starwind/input";
+import { Label } from "@/components/starwind/label";
 import PlusIcon from "@tabler/icons/outline/plus.svg";
 import {
   Table,
@@ -9,7 +11,27 @@ import {
   TableRow,
   TableCell,
 } from "@/components/starwind/table";
-import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogFooter, DialogTitle, DialogDescription, DialogClose } from "@/components/starwind/dialog";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogFooter,
+  DialogTitle,
+  DialogDescription,
+  DialogClose,
+} from "@/components/starwind/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectSeparator,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/starwind/select";
+
 import WorkspaceTableRowTemplate from "./WorkspaceTableRowTemplate.astro";
 import { TusImageUploader } from "../image";
 
@@ -17,7 +39,11 @@ import type { WorkspaceManagerProps } from "./controllers";
 type Props = WorkspaceManagerProps;
 
 const headers = ["Name", "Created", "Actions"];
-const { workspaces = [], baseEditUrl, workspaceImageUploadUrlTemplate } = Astro.props;
+const {
+  workspaces = [],
+  baseEditUrl,
+  workspaceImageUploadUrlTemplate,
+} = Astro.props;
 
 const ninjaId = "dummy-ninja-id";
 ---
@@ -86,15 +112,70 @@ const ninjaId = "dummy-ninja-id";
   <Dialog>
     <DialogTrigger x-ref="workspaceImageUploadDialogTrigger" class="hidden" />
     <DialogContent>
-      <DialogHeader class="text-left mb-2">
+      <DialogHeader class="text-left">
         <DialogTitle>Upload Images</DialogTitle>
       </DialogHeader>
-      <TusImageUploader x-ref="TusImageUploader" uploadUrl={workspaceImageUploadUrlTemplate} />
+      <TusImageUploader
+        x-ref="TusImageUploader"
+        uploadUrl={workspaceImageUploadUrlTemplate}
+      />
+    </DialogContent>
+  </Dialog>
+
+  <Dialog>
+    <DialogTrigger x-ref="workspaceTaskCreationDialogTrigger" class="hidden" />
+    <DialogContent class="sm:max-w-[450px]" animationDuration={200}>
+      <form
+        x-ref="taskCreationForm"
+        class="flex flex-col gap-4"
+      >
+        <DialogHeader class="text-left">
+          <DialogTitle>Create new Task</DialogTitle>
+          <DialogDescription>
+            Define processing task options. Click save when you're done.
+          </DialogDescription>
+        </DialogHeader>
+        <div class="grid gap-4 py-4">
+          <div class="grid grid-cols-4 items-center gap-4">
+            <Label class="text-right"> Name </Label>
+            <Input name="name" class="col-span-3" required/>
+          </div>
+          <div class="grid grid-cols-4 items-center gap-4">
+            <Label class="text-right"> Result quality </Label>
+            <Select name="quality" class="w-full" required>
+              <SelectTrigger class="w-[150px]">
+                <SelectValue placeholder="Select" />
+              </SelectTrigger>
+              <SelectContent side="top">
+                <SelectItem value="ultra_low">Ultra Low</SelectItem>
+                <SelectItem value="low">Low</SelectItem>
+                <SelectItem value="medium">Medium</SelectItem>
+                <SelectItem value="high">High</SelectItem>
+                <SelectItem value="ultra_high">Ultra high</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+        <DialogFooter>
+          <DialogClose asChild>
+            <Button x-ref="workspaceTaskCreationDialogCloseBtn" type="button" variant="outline">Cancel</Button>
+          </DialogClose>
+          <Button type="button" x-on:click="handleTaskCreationSubmit">Create</Button>
+        </DialogFooter>
+      </form>
     </DialogContent>
   </Dialog>
 </div>
 
-<script define:vars={{ workspaces, baseEditUrl, workspaceImageUploadUrlTemplate, ninjaId }} is:inline>
+<script
+  define:vars={{
+    workspaces,
+    baseEditUrl,
+    workspaceImageUploadUrlTemplate,
+    ninjaId,
+  }}
+  is:inline
+>
   window.ninjaodmData = window.ninjaodmData || {};
   window.ninjaodmData[ninjaId] = {
     workspaces,

@@ -14,7 +14,7 @@ import type { TaskManagerProps } from "./controllers";
 type Props = TaskManagerProps;
 
 const headers = ["Name", "Status", "Step", "Created", "Actions"];
-const { tasks = [], workspaceUuid } = Astro.props;
+const { tasks = [] } = Astro.props;
 
 const ninjaId = "dummy-ninja-id";
 ---
@@ -62,7 +62,7 @@ const ninjaId = "dummy-ninja-id";
   </Table>
 </div>
 
-<script define:vars={{ tasks, workspaceUuid, ninjaId }} is:inline>
+<script define:vars={{ tasks, ninjaId }} is:inline>
   window.ninjaodmData = window.ninjaodmData || {};
   window.ninjaodmData[ninjaId] = {
     tasks,

@@ -3,15 +3,13 @@ import { Task, type TaskProps } from "./models";
 
 export type TaskManagerProps = {
   tasks?: TaskProps[];
-  workspaceUuid?: string;
 };
 
 export class TaskManager extends AlpineController<TaskManager> {
   private tasks: Task[];
 
-  constructor({ tasks = [], workspaceUuid }: TaskManagerProps) {
+  constructor({ tasks = [] }: TaskManagerProps) {
     super();
-    this.workspaceUuid = workspaceUuid;
     this.tasks = tasks.map((data: TaskProps) => this.createTaskFromData(data));
   }
 

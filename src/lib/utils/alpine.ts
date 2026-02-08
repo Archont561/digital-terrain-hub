@@ -22,13 +22,25 @@ export abstract class AlpineController<
     this.onInit?.();
   }
 
-  private static isRegistered = false;
+  private static registeredControllers = new Set<string>();
 
-  static register(Alpine: any, name: string, afterRegister?: () => void) {
-    if (!AlpineController.isRegistered) {
-      Alpine.data(name, (props: any) => new (AlpineController as any)(props));
-      AlpineController.isRegistered = true;
-      afterRegister?.();
+  static register<T, Refs extends AlpineRefs = AlpineRefs>(
+    this: new (...args: any[]) => AlpineController<T, Refs>,
+    Alpine: any,
+    name: string,
+    afterRegister?: () => void
+  ) {
+    // Check if THIS specific controller is already registered
+    if (AlpineController.registeredControllers.has(name)) {
+      return;
     }
+
+    const Ctor = this; // `this` is GCPEditorManager, not AlpineController
+
+    //@ts-ignore
+    Alpine.data(name, (...args: any[]) => new Ctor(...args));
+
+    AlpineController.registeredControllers.add(name);
+    afterRegister?.();
   }
 }

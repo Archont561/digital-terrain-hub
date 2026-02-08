@@ -1,0 +1,34 @@
+---
+import { Progress } from "@/components/starwind/progress";
+import { Badge } from "@/components/starwind/badge";
+---
+
+<div class="
+    space-y-3 
+    max-h-72 
+    overflow-y-auto 
+    pr-2
+    [&::-webkit-scrollbar]:w-1.5
+    [&::-webkit-scrollbar-track]:bg-transparent
+    [&::-webkit-scrollbar-thumb]:bg-gray-300
+    [&::-webkit-scrollbar-thumb]:rounded-full
+    [scrollbar-width:thin]
+">
+  <template x-for="upload in uploads" :key="upload.id">
+    <div class="rounded-lg border p-3 space-y-2">
+      <div class="flex items-center justify-between">
+        <span class="truncate text-sm" x-text="upload.fileName"></span>
+        <Badge x-text="upload.status"></Badge>
+      </div>
+
+      <div class="w-full bg-gray-200 rounded-full h-1.5">
+        <Progress value={0} max={100} x-bind:data-value="upload.progress" />
+      </div>
+
+      <div class="flex justify-between text-xs text-gray-500">
+        <span x-text="`${upload.progress}%`"></span>
+        <span x-text="formatFileSize(upload.fileSize)"></span>
+      </div>
+    </div>
+  </template>
+</div>

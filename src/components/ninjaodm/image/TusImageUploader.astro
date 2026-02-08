@@ -1,0 +1,80 @@
+---
+import { Button } from "@/components/starwind/button";
+import { Dropzone } from "@/components/starwind/dropzone";
+import {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
+} from "@/components/starwind/tabs";
+import UploadProgresList from "./UploadProgresList.astro";
+
+type Props = {
+  uploadUrl: string;
+};
+
+const { uploadUrl } = Astro.props;
+---
+
+<style is:global>
+  [x-cloak] {
+    display: none;
+  }
+</style>
+
+<Tabs
+  defaultValue="dropzone"
+  x-ignore
+  x-data="TusImageUploaderManager"
+  data-ninjaodm-component="TusImageUploader"
+  class="flex w-full max-w-100 flex-col gap-4"
+  data-upload-url={uploadUrl}
+>
+  <TabsList x-show="uploads.length > 0" x-cloak>
+    <TabsTrigger value="dropzone">Dropzone</TabsTrigger>
+    <TabsTrigger x-ref="progressTabTrigger" value="progress"
+      >Progress</TabsTrigger
+    >
+  </TabsList>
+  <TabsContent value="dropzone">
+    <form
+      x-show="!isUploading"
+      x-on:submit.prevent="handleFormSubmition()"
+      x-ref="dropzoneForm"
+      class="space-y-4"
+    >
+      <Dropzone
+        accept="image/*"
+        x-ref="dropzone"
+        multiple
+        name="dropzone-files"
+      />
+
+      <div class="flex gap-2">
+        <Button type="submit" class="flex-1"> Upload </Button>
+      </div>
+    </form>
+  </TabsContent>
+  <TabsContent value="progress">
+    <template x-if="uploads.length > 0">
+      <UploadProgresList />
+    </template>
+  </TabsContent>
+</Tabs>
+
+<script>
+  import { TusImageUploaderManager } from "./controllers";
+  TusImageUploaderManager.register(
+    window.Alpine,
+    "TusImageUploaderManager",
+    () => {
+      document
+        .querySelectorAll('[data-ninjaodm-component="TusImageUploader"]')
+        .forEach((el) => {
+          el.removeAttribute("x-ignore");
+          delete (el as any)._x_ignore;
+          window.Alpine.initTree(el as any);
+        });
+    },
+  );
+</script>

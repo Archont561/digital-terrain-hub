@@ -3,6 +3,7 @@ import _ from "lodash";
 import { WorkspaceManager } from "@/components/ninjaodm/workspaces";
 import { ResultManager } from "@/components/ninjaodm/results";
 import { TaskManager } from "@/components/ninjaodm/tasks";
+import { TusImageUploader } from "@/components/ninjaodm/image";
 import { renderComponent } from "@/lib/server";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 
@@ -14,6 +15,7 @@ const COMPONENTS = [
   WorkspaceManager,
   ResultManager,
   TaskManager,
+  TusImageUploader,
 ];
 
 const paramName = _.toLower(Astro.params.name || "");

@@ -7,11 +7,11 @@ export const actions = {
   createWorkspace: defineAction({
     input: z.object({
       name: z.string().max(50).optional(),
-    }),
-    handler: async ({ name }, { locals }) => {
+    }).optional(),
+    handler: async (input, { locals }) => {
       const result = await serviceApiClient.createWorkspaceInternal({
         user_id: locals.currentUserId || "dummy-user-id",
-        name,
+        name: input?.name,
       });
       const { user_id, ...rest } = result;
       return rest;
@@ -43,6 +43,7 @@ export const actions = {
       uuid: z.string().uuid(),
     }),
     handler: async ({ uuid }) => {
+  console.log("deleteWorkspace called with", uuid);
       return await serviceApiClient.deleteWorkspace(undefined, {
         params: { uuid },
       });

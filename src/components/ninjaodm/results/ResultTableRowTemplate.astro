@@ -27,7 +27,7 @@ import DeleteIcon from "@tabler/icons/outline/trash.svg";
           variant="ghost"
           size="icon"
           x-bind:disabled="result.isMode('downloading')"
-          x-on:click="result.download()"
+          x-on:click="downloadResult(result)"
         >
           <DownloadIcon class="size-10" />
         </Button>

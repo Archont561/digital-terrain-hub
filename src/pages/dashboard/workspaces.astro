@@ -1,0 +1,19 @@
+---
+import DashboardLayout from "@/layouts/DashboardLayout.astro";
+import { WorkspaceManager } from "@/components/ninjaodm/workspaces";
+import { actions } from "astro:actions";
+
+let { data, error } = await Astro.callAction(actions.listWorkspaces, {});
+if (error) {
+  data = []
+}
+---
+
+<DashboardLayout title="Workspaces" headerTitle="Workspaces">
+  <WorkspaceManager
+    class="size-full p-4 max-w-2xl mx-auto"
+    workspaces={data}
+    baseGCPEditUrlTemplate="/workspaces/:uuid"
+    workspaceImageUploadUrlTemplate="https://tusd.tusdemo.net/files/"
+  />
+</DashboardLayout> 

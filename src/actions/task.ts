@@ -49,7 +49,7 @@ export const actions = {
       });
     },
   }),
-  listTask: defineAction({
+  listTasks: defineAction({
     input: z
       .object({
         step: schemas.ODMProcessingStage.optional(),
@@ -59,8 +59,13 @@ export const actions = {
         created_before: z.string().nullable().optional(),
       })
       .optional(),
-    handler: async (queries) => {
-      return await serviceApiClient.listTasksInternal({ queries });
+    handler: async (queries, { locals }) => {
+      return await serviceApiClient.listTasksInternal({
+        queries: {
+          user_id: locals.currentUserId!,
+          ...queries
+        }
+      });
     },
   }),
 } as const;

@@ -24,25 +24,23 @@ import {
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
-  SelectSeparator,
   SelectTrigger,
   SelectValue,
 } from "@/components/starwind/select";
-
 import WorkspaceTableRowTemplate from "./WorkspaceTableRowTemplate.astro";
 import { TusImageUploader } from "../image";
-
+import type { HTMLAttributes } from "astro/types";
 import type { WorkspaceManagerProps } from "./controllers";
-type Props = WorkspaceManagerProps;
+
+type Props = HTMLAttributes<"div"> & WorkspaceManagerProps;
 
 const headers = ["Name", "Created", "Actions"];
 const {
   workspaces = [],
-  baseEditUrl,
+  baseGCPEditUrlTemplate,
   workspaceImageUploadUrlTemplate,
+  ...rest
 } = Astro.props;
 
 const ninjaId = "dummy-ninja-id";
@@ -59,20 +57,20 @@ const ninjaId = "dummy-ninja-id";
   data-ninjaodm-component="WorkspaceManager"
   data-ninjaodm-id={ninjaId}
   x-data="WorkspaceManager(window.ninjaodmData[$el.dataset.ninjaodmId])"
-  class="max-w-lg mx-auto"
+  {...rest}
 >
   <!-- Toolbar -->
   <div class="flex items-center justify-between mb-4">
-    <h2 class="text-lg font-semibold">Workspaces</h2>
-
+    <h2 class="text-lg font-semibold">Workspace</h2>
     <Button
       size="sm"
       variant="outline"
       x-on:click="createWorkspace()"
       x-show="!isEmpty"
       class="rounded-full"
+      x-cloak
     >
-      <PlusIcon class="size-4" /> Create New
+      <PlusIcon class="size-4"/> Create New
     </Button>
   </div>
 
@@ -116,7 +114,7 @@ const ninjaId = "dummy-ninja-id";
         <DialogTitle>Upload Images</DialogTitle>
       </DialogHeader>
       <TusImageUploader
-        x-ref="TusImageUploader"
+        x-ref="tusImageUploader"
         uploadUrl={workspaceImageUploadUrlTemplate}
       />
     </DialogContent>
@@ -170,7 +168,7 @@ const ninjaId = "dummy-ninja-id";
 <script
   define:vars={{
     workspaces,
-    baseEditUrl,
+    baseGCPEditUrlTemplate,
     workspaceImageUploadUrlTemplate,
     ninjaId,
   }}
@@ -179,7 +177,7 @@ const ninjaId = "dummy-ninja-id";
   window.ninjaodmData = window.ninjaodmData || {};
   window.ninjaodmData[ninjaId] = {
     workspaces,
-    baseEditUrl,
+    baseGCPEditUrlTemplate,
     workspaceImageUploadUrlTemplate,
   };
 </script>

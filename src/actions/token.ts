@@ -7,19 +7,19 @@ const USER_NINJAODM_API_TOKEN_PAIR_SESSION = "userNinjaODMAPITokenPair";
 export const actions = {
   getUserTokenPair: defineAction({
     handler: async (_, { session, locals }) => {
-      let userNinjaODMAPITokenPair = await session?.get(
-        USER_NINJAODM_API_TOKEN_PAIR_SESSION,
-      );
+      // let userNinjaODMAPITokenPair = await session?.get(
+      //   USER_NINJAODM_API_TOKEN_PAIR_SESSION,
+      // );
 
-      if (!userNinjaODMAPITokenPair) {
-        userNinjaODMAPITokenPair = await serviceApiClient.getUserTokenPair({
-          user_id: locals.currentUserId! || "test-dummy-user-id",
+      // if (!userNinjaODMAPITokenPair) {
+      let userNinjaODMAPITokenPair = await serviceApiClient.getUserTokenPair({
+          user_id: locals.currentUserId!,
         });
-        session?.set(
-          USER_NINJAODM_API_TOKEN_PAIR_SESSION,
-          userNinjaODMAPITokenPair,
-        );
-      }
+        // session?.set(
+        //   USER_NINJAODM_API_TOKEN_PAIR_SESSION,
+        //   userNinjaODMAPITokenPair,
+        // );
+      // }
 
       return userNinjaODMAPITokenPair;
     },

@@ -43,7 +43,6 @@ export const actions = {
       uuid: z.string().uuid(),
     }),
     handler: async ({ uuid }) => {
-  console.log("deleteWorkspace called with", uuid);
       return await serviceApiClient.deleteWorkspace(undefined, {
         params: { uuid },
       });
@@ -57,8 +56,13 @@ export const actions = {
         created_before: z.string().nullable().optional(),
       })
       .optional(),
-    handler: async (queries) => {
-      return await serviceApiClient.listWorkspaces({ queries });
+    handler: async (queries, { locals }) => {
+      return await serviceApiClient.listWorkspacesInternal({
+        queries: {
+          user_id: locals.currentUserId!,
+          ...queries
+        }
+      });
     },
   }),
 };

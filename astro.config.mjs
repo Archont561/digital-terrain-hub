@@ -4,10 +4,6 @@ import clerk from "@clerk/astro";
 import runtimeLogger from "@inox-tools/runtime-logger";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
-import dotenv from "dotenv";
-
-const envFile = path.resolve(import.meta.dirname, ".env.local");
-dotenv.config({ path: envFile });
 
 // https://astro.build/config
 export default defineConfig({
@@ -17,4 +13,8 @@ export default defineConfig({
   },
   adapter: node({ mode: "standalone" }),
   output: "server",
+  server: {
+    host: true,
+    port: 4321,
+  }
 });

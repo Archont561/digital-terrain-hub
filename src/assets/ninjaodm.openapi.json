@@ -158,6 +158,38 @@
         ]
       }
     },
+    "/api/demo/create-demo-jwt": {
+      "get": {
+        "operationId": "createDemoJWT",
+        "summary": "Obtain Token",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "user_id",
+            "schema": {
+              "title": "User Id",
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenPairResponseInternal"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "demo"
+        ]
+      }
+    },
     "/api/internal/token/refresh": {
       "post": {
         "operationId": "refreshUserAccessToken",
@@ -1169,6 +1201,23 @@
               "title": "Workspace Uuid"
             },
             "required": false
+          },
+          {
+            "in": "query",
+            "name": "user_id",
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "User Id"
+            },
+            "required": false
           }
         ],
         "responses": {
@@ -1555,6 +1604,23 @@
                 }
               ],
               "title": "Workspace Uuid"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "user_id",
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "User Id"
             },
             "required": false
           }
@@ -1973,6 +2039,23 @@
               "title": "Workspace Uuid"
             },
             "required": false
+          },
+          {
+            "in": "query",
+            "name": "user_id",
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "User Id"
+            },
+            "required": false
           }
         ],
         "responses": {
@@ -2319,6 +2402,23 @@
                 }
               ],
               "title": "Workspace Uuid"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "user_id",
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "User Id"
             },
             "required": false
           }
@@ -3757,6 +3857,24 @@
         "title": "HealthSchema",
         "type": "object"
       },
+      "TokenPairResponseInternal": {
+        "properties": {
+          "refresh": {
+            "title": "Refresh",
+            "type": "string"
+          },
+          "access": {
+            "title": "Access",
+            "type": "string"
+          }
+        },
+        "required": [
+          "refresh",
+          "access"
+        ],
+        "title": "TokenPairResponseInternal",
+        "type": "object"
+      },
       "AccessTokenResponseInternal": {
         "properties": {
           "access": {
@@ -3781,24 +3899,6 @@
           "refresh"
         ],
         "title": "RefreshRequestInternal",
-        "type": "object"
-      },
-      "TokenPairResponseInternal": {
-        "properties": {
-          "refresh": {
-            "title": "Refresh",
-            "type": "string"
-          },
-          "access": {
-            "title": "Access",
-            "type": "string"
-          }
-        },
-        "required": [
-          "refresh",
-          "access"
-        ],
-        "title": "TokenPairResponseInternal",
         "type": "object"
       },
       "TokenRequestInternal": {
@@ -3934,7 +4034,7 @@
         "title": "WorkspaceFilterSchemaInternal",
         "type": "object"
       },
-      "PathModel90f51": {
+      "PathModel95792": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -3945,7 +4045,7 @@
         "required": [
           "uuid"
         ],
-        "title": "PathModel90f51",
+        "title": "PathModel95792",
         "type": "object"
       },
       "WorkspaceResponse": {
@@ -3976,7 +4076,7 @@
         "title": "WorkspaceResponse",
         "type": "object"
       },
-      "PathModel6b53e": {
+      "PathModel13041": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -3987,7 +4087,7 @@
         "required": [
           "uuid"
         ],
-        "title": "PathModel6b53e",
+        "title": "PathModel13041",
         "type": "object"
       },
       "UpdateWorkspace": {
@@ -4003,7 +4103,7 @@
         "title": "UpdateWorkspace",
         "type": "object"
       },
-      "PathModel45169": {
+      "PathModel8dcc5": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -4014,7 +4114,7 @@
         "required": [
           "uuid"
         ],
-        "title": "PathModel45169",
+        "title": "PathModel8dcc5",
         "type": "object"
       },
       "CreateWorkspace": {
@@ -4289,6 +4389,163 @@
         "title": "ODMTaskStatus",
         "type": "string"
       },
+      "TaskFilterSchemaInternal": {
+        "properties": {
+          "status": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ODMTaskStatus"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "step": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ODMProcessingStage"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "created_after": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Created After"
+          },
+          "created_before": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Created Before"
+          },
+          "workspace_uuid": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Workspace Uuid"
+          },
+          "user_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "User Id"
+          }
+        },
+        "title": "TaskFilterSchemaInternal",
+        "type": "object"
+      },
+      "TaskResponse": {
+        "properties": {
+          "workspace_uuid": {
+            "format": "uuid",
+            "title": "Workspace Uuid",
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ODMTaskStatus"
+          },
+          "step": {
+            "$ref": "#/components/schemas/ODMProcessingStage"
+          },
+          "uuid": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Uuid"
+          },
+          "options": {
+            "anyOf": [
+              {
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Options"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 50,
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "workspace_uuid",
+          "status",
+          "step"
+        ],
+        "title": "TaskResponse",
+        "type": "object"
+      },
+      "PathModel2738e": {
+        "properties": {
+          "uuid": {
+            "format": "uuid4",
+            "title": "Uuid",
+            "type": "string"
+          }
+        },
+        "required": [
+          "uuid"
+        ],
+        "title": "PathModel2738e",
+        "type": "object"
+      },
+      "PathModeld7cc0": {
+        "properties": {
+          "uuid": {
+            "format": "uuid4",
+            "title": "Uuid",
+            "type": "string"
+          }
+        },
+        "required": [
+          "uuid"
+        ],
+        "title": "PathModeld7cc0",
+        "type": "object"
+      },
       "TaskFilterSchema": {
         "properties": {
           "status": {
@@ -4351,89 +4608,6 @@
         "title": "TaskFilterSchema",
         "type": "object"
       },
-      "TaskResponse": {
-        "properties": {
-          "workspace_uuid": {
-            "format": "uuid",
-            "title": "Workspace Uuid",
-            "type": "string"
-          },
-          "status": {
-            "$ref": "#/components/schemas/ODMTaskStatus"
-          },
-          "step": {
-            "$ref": "#/components/schemas/ODMProcessingStage"
-          },
-          "uuid": {
-            "anyOf": [
-              {
-                "format": "uuid",
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Uuid"
-          },
-          "options": {
-            "anyOf": [
-              {
-                "type": "object"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Options"
-          },
-          "created_at": {
-            "format": "date-time",
-            "title": "Created At",
-            "type": "string"
-          },
-          "name": {
-            "maxLength": 50,
-            "title": "Name",
-            "type": "string"
-          }
-        },
-        "required": [
-          "workspace_uuid",
-          "status",
-          "step"
-        ],
-        "title": "TaskResponse",
-        "type": "object"
-      },
-      "PathModela9aea": {
-        "properties": {
-          "uuid": {
-            "format": "uuid4",
-            "title": "Uuid",
-            "type": "string"
-          }
-        },
-        "required": [
-          "uuid"
-        ],
-        "title": "PathModela9aea",
-        "type": "object"
-      },
-      "PathModel5d46b": {
-        "properties": {
-          "uuid": {
-            "format": "uuid4",
-            "title": "Uuid",
-            "type": "string"
-          }
-        },
-        "required": [
-          "uuid"
-        ],
-        "title": "PathModel5d46b",
-        "type": "object"
-      },
       "CreateTask": {
         "properties": {
           "workspace_uuid": {
@@ -4480,6 +4654,133 @@
         ],
         "title": "ODMQualityOption",
         "type": "string"
+      },
+      "ResultFilterSchemaInternal": {
+        "properties": {
+          "result_type": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ODMTaskResultType"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "created_after": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Created After"
+          },
+          "created_before": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Created Before"
+          },
+          "workspace_uuid": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Workspace Uuid"
+          },
+          "user_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "User Id"
+          }
+        },
+        "title": "ResultFilterSchemaInternal",
+        "type": "object"
+      },
+      "ResultResponse": {
+        "properties": {
+          "workspace_uuid": {
+            "format": "uuid",
+            "title": "Workspace Uuid",
+            "type": "string"
+          },
+          "result_type": {
+            "$ref": "#/components/schemas/ODMTaskResultType"
+          },
+          "uuid": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Uuid"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "workspace_uuid",
+          "result_type"
+        ],
+        "title": "ResultResponse",
+        "type": "object"
+      },
+      "PathModelef050": {
+        "properties": {
+          "uuid": {
+            "format": "uuid4",
+            "title": "Uuid",
+            "type": "string"
+          }
+        },
+        "required": [
+          "uuid"
+        ],
+        "title": "PathModelef050",
+        "type": "object"
+      },
+      "PathModelea55e": {
+        "properties": {
+          "uuid": {
+            "format": "uuid4",
+            "title": "Uuid",
+            "type": "string"
+          }
+        },
+        "required": [
+          "uuid"
+        ],
+        "title": "PathModelea55e",
+        "type": "object"
       },
       "ResultFilterSchema": {
         "properties": {
@@ -4533,69 +4834,6 @@
         "title": "ResultFilterSchema",
         "type": "object"
       },
-      "ResultResponse": {
-        "properties": {
-          "workspace_uuid": {
-            "format": "uuid",
-            "title": "Workspace Uuid",
-            "type": "string"
-          },
-          "result_type": {
-            "$ref": "#/components/schemas/ODMTaskResultType"
-          },
-          "uuid": {
-            "anyOf": [
-              {
-                "format": "uuid",
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Uuid"
-          },
-          "created_at": {
-            "format": "date-time",
-            "title": "Created At",
-            "type": "string"
-          }
-        },
-        "required": [
-          "workspace_uuid",
-          "result_type"
-        ],
-        "title": "ResultResponse",
-        "type": "object"
-      },
-      "PathModel58160": {
-        "properties": {
-          "uuid": {
-            "format": "uuid4",
-            "title": "Uuid",
-            "type": "string"
-          }
-        },
-        "required": [
-          "uuid"
-        ],
-        "title": "PathModel58160",
-        "type": "object"
-      },
-      "PathModel71bb2": {
-        "properties": {
-          "uuid": {
-            "format": "uuid4",
-            "title": "Uuid",
-            "type": "string"
-          }
-        },
-        "required": [
-          "uuid"
-        ],
-        "title": "PathModel71bb2",
-        "type": "object"
-      },
       "ResultShareKeyResponse": {
         "properties": {
           "share_api_key": {
@@ -4607,6 +4845,110 @@
           "share_api_key"
         ],
         "title": "ResultShareKeyResponse",
+        "type": "object"
+      },
+      "ImageFilterSchemaInternal": {
+        "properties": {
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "is_thumbnail": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Is Thumbnail"
+          },
+          "created_after": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Created After"
+          },
+          "created_before": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Created Before"
+          },
+          "workspace_uuid": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Workspace Uuid"
+          },
+          "user_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "User Id"
+          }
+        },
+        "title": "ImageFilterSchemaInternal",
+        "type": "object"
+      },
+      "PathModel853de": {
+        "properties": {
+          "uuid": {
+            "format": "uuid4",
+            "title": "Uuid",
+            "type": "string"
+          }
+        },
+        "required": [
+          "uuid"
+        ],
+        "title": "PathModel853de",
+        "type": "object"
+      },
+      "PathModeld96f9": {
+        "properties": {
+          "uuid": {
+            "format": "uuid4",
+            "title": "Uuid",
+            "type": "string"
+          }
+        },
+        "required": [
+          "uuid"
+        ],
+        "title": "PathModeld96f9",
         "type": "object"
       },
       "ImageFilterSchema": {
@@ -4673,35 +5015,7 @@
         "title": "ImageFilterSchema",
         "type": "object"
       },
-      "PathModel887c7": {
-        "properties": {
-          "uuid": {
-            "format": "uuid4",
-            "title": "Uuid",
-            "type": "string"
-          }
-        },
-        "required": [
-          "uuid"
-        ],
-        "title": "PathModel887c7",
-        "type": "object"
-      },
-      "PathModeldc1e3": {
-        "properties": {
-          "uuid": {
-            "format": "uuid4",
-            "title": "Uuid",
-            "type": "string"
-          }
-        },
-        "required": [
-          "uuid"
-        ],
-        "title": "PathModeldc1e3",
-        "type": "object"
-      },
-      "GCPFilterSchema": {
+      "GCPFilterSchemaInternal": {
         "properties": {
           "label": {
             "anyOf": [
@@ -4761,9 +5075,21 @@
               }
             ],
             "title": "Workspace Uuid"
+          },
+          "user_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "User Id"
           }
         },
-        "title": "GCPFilterSchema",
+        "title": "GCPFilterSchemaInternal",
         "type": "object"
       },
       "GCPResponse": {
@@ -4844,7 +5170,7 @@
           "created_at": "2026-01-15T10:30:00Z"
         }
       },
-      "PathModel3f0f9": {
+      "PathModel727a3": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -4855,10 +5181,10 @@
         "required": [
           "uuid"
         ],
-        "title": "PathModel3f0f9",
+        "title": "PathModel727a3",
         "type": "object"
       },
-      "PathModel738cc": {
+      "PathModel32aec": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -4869,7 +5195,7 @@
         "required": [
           "uuid"
         ],
-        "title": "PathModel738cc",
+        "title": "PathModel32aec",
         "type": "object"
       },
       "GCPUpdate": {
@@ -4934,7 +5260,7 @@
         "title": "GCPUpdate",
         "type": "object"
       },
-      "PathModeld622c": {
+      "PathModel0b377": {
         "properties": {
           "uuid": {
             "format": "uuid4",
@@ -4945,7 +5271,72 @@
         "required": [
           "uuid"
         ],
-        "title": "PathModeld622c",
+        "title": "PathModel0b377",
+        "type": "object"
+      },
+      "GCPFilterSchema": {
+        "properties": {
+          "label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Label"
+          },
+          "created_after": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Created After"
+          },
+          "created_before": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Created Before"
+          },
+          "image_uuid": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Image Uuid"
+          },
+          "workspace_uuid": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Workspace Uuid"
+          }
+        },
+        "title": "GCPFilterSchema",
         "type": "object"
       },
       "FeatureCollection_Feature_Point__GCPProperties__": {

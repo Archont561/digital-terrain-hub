@@ -1,0 +1,27 @@
+---
+import DashboardLayout from "@/layouts/DashboardLayout.astro";
+import { ResultManager } from "@/components/ninjaodm/results";
+import { actions } from "astro:actions";
+import { getNinjaODMUrl } from "@/lib/server";
+
+let { data: resultData, error: resultError } = await Astro.callAction(actions.listTaskResults);
+if (resultError) {
+  resultData = []
+}
+
+let { data: tokenData, error: tokenError } = await Astro.callAction(actions.getUserTokenPair);
+if (tokenError) {
+  tokenData = { access: "dummy_token", refresh: "none" }
+}
+
+---
+
+<DashboardLayout title="Results" headerTitle="Results">
+  <ResultManager
+    data-download-token={tokenData.access}
+    results={resultData}
+    downloadResultUrlTemplate={getNinjaODMUrl("api", "results", ":uuid", "download")}
+    shareResultUrlTemplate={getNinjaODMUrl("api", "results", ":uuid", "shared?api_key=:api_key")}
+    class="size-full p-4 max-w-2xl mx-auto"
+  />
+</DashboardLayout>

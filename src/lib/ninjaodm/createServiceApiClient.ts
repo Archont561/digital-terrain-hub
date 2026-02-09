@@ -10,6 +10,13 @@ interface ServiceClientConfig extends ClientConfig {
   hmacAuth: HMACAuthorization;
 }
 
+function resolveUrl(url: string, params?: Record<string, unknown>) {
+  if (!params) return url;
+  return Object.keys(params).reduce((acc, key) => {
+    return acc.replace(`:${key}`, String(params[key]));
+  }, url);
+}
+
 function createHMACPlugin(hmacAuth: HMACAuthorization): ZodiosPlugin {
   return {
     name: "hmac-auth",
@@ -22,7 +29,7 @@ function createHMACPlugin(hmacAuth: HMACAuthorization): ZodiosPlugin {
             "Bearer " +
             hmacAuth.createToken({
               method: config.method,
-              path: config.url,
+              path: resolveUrl(config.url, config.params),
             }),
         },
       };
@@ -33,7 +40,7 @@ function createHMACPlugin(hmacAuth: HMACAuthorization): ZodiosPlugin {
 export default function createServiceApiClient(config: ServiceClientConfig) {
   const { baseUrl, hmacAuth } = config;
 
-  const client = createApiClient(baseUrl);
+  const client = createApiClient(baseUrl, { validate: "request" });
   client.use(createHMACPlugin(hmacAuth));
   return client;
 }

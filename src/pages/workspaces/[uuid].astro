@@ -1,0 +1,51 @@
+---
+import _ from "lodash";
+import { GCPEditor } from "@/components/ninjaodm/gcps";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { actions } from "astro:actions";
+
+const workspaceUuid = Astro.params.uuid;
+
+let { data: workspaceData, error: workspaceError } = await Astro.callAction(actions.listGCPs, { workspace_uuid: workspaceUuid });
+if (workspaceError) {
+  console.log(workspaceError)
+  workspaceData = [];
+}
+
+let { data: gcpData, error: gcpError } = await Astro.callAction(actions.listGCPs, { workspace_uuid: workspaceUuid });
+if (gcpError) {
+  console.log(gcpError)
+  gcpData = [];
+}
+
+let { data: imageData, error: imageError } = await Astro.callAction(actions.listImages, { workspace_uuid: workspaceUuid });
+if (imageError) {
+  console.log(imageError)
+  imageError = []
+}
+
+function randomSeed(): number {
+  return Math.floor(Math.random() * 1000);
+}
+
+const thumbnails = _.map(imageData, (item) => {
+  const uuid = item.uuid ?? '';
+  const workspaceUuid = item.workspace_uuid;
+
+  return {
+    uuid,
+    originUuid: workspaceUuid,
+    name: item.name,
+    url: `https://picsum.photos/seed/${uuid}/200/200`,           // thumbnail
+    originUrl: `https://picsum.photos/seed/${randomSeed()}/1000/1400`, // random origin
+  };
+});
+---
+
+<BaseLayout title={"GCP editor"} class="flex justify-center items-center">
+  <GCPEditor 
+    gcps={gcpData} 
+    thumbnails={thumbnails} 
+    class="grid grid-rows-[auto_1fr] gap-4 p-4 max-w-lg md:max-w-6xl"
+  />
+</BaseLayout>

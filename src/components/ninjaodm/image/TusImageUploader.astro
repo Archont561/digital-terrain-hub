@@ -8,8 +8,9 @@ import {
   TabsContent,
 } from "@/components/starwind/tabs";
 import UploadProgresList from "./UploadProgresList.astro";
+import type { HTMLAttributes } from "astro/types";
 
-type Props = {
+type Props = HTMLAttributes<"div"> & {
   uploadUrl: string;
   tabsPosition?: "down" | "up";
 };

@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "bunx --bun astro dev --mode dev",
-    "build": "bun run generate-ninjaodm-client && bunx --bun astro build",
+    "build": "bunx --bun astro build",
     "preview": "astro preview",
-    "start": "bunx --bun ./dist/server/entry.mjs",
+    "start": "bun ./dist/server/entry.mjs",
     "astro": "astro",
     "format": "biome format --write",
     "lint": "biome lint",
@@ -16,8 +16,7 @@
     "test:integration": "bun test ./tests/integration --preload ./tests/integration/bun.setup.ts",
     "test:e2e": "playwright test --pass-with-no-tests",
     "generate-ninjaodm-client": "openapi-zod-client ./src/assets/ninjaodm.openapi.json -o ./src/lib/ninjaodm/generated-api.ts",
-    "start:backend-mock-server": "bunx prism mock ./src/assets/ninjaodm.openapi.json",
-    "prepare": "husky"
+    "start:backend-mock-server": "bunx prism mock ./src/assets/ninjaodm.openapi.json"
   },
   "dependencies": {
     "@astrojs/node": "^9.5.1",
@@ -25,6 +24,7 @@
     "@inox-tools/runtime-logger": "^0.7.0",
     "@tabler/icons": "^3",
     "@types/alpinejs": "^3.13.11",
+    "@zodios/core": "^10.9.6",
     "alpinejs": "^3.15.5",
     "astro": "^5.16.6",
     "dexie": "^4.3.0",

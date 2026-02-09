@@ -5,7 +5,7 @@ import { toast } from "@/components/starwind/toast";
 
 export type WorkspaceManagerProps = {
   workspaces?: WorkspaceProps[];
-  baseEditUrl: string;
+  baseGCPEditUrlTemplate: string;
   workspaceImageUploadUrlTemplate: string;
 };
 
@@ -20,13 +20,13 @@ export class WorkspaceManager extends AlpineController<
   }
 > {
   private workspaces: Workspace[];
-  private baseEditUrl = "";
+  private baseGCPEditUrlTemplate = "";
   private workspaceImageUploadUrlTemplate = "";
   private currentWorkspace: Workspace | null = null;
 
-  constructor({ workspaces = [], baseEditUrl, workspaceImageUploadUrlTemplate }: WorkspaceManagerProps) {
+  constructor({ workspaces = [], baseGCPEditUrlTemplate, workspaceImageUploadUrlTemplate }: WorkspaceManagerProps) {
     super();
-    this.baseEditUrl = baseEditUrl;
+    this.baseGCPEditUrlTemplate = baseGCPEditUrlTemplate;
     this.workspaceImageUploadUrlTemplate = workspaceImageUploadUrlTemplate;
     this.workspaces = workspaces.map((data: any) =>
       this.createWorkspaceFromData(data),
@@ -44,7 +44,7 @@ export class WorkspaceManager extends AlpineController<
   private createWorkspaceFromData(data: WorkspaceProps): Workspace {
     return new Workspace({
       data,
-      baseEditUrl: this.baseEditUrl,
+      baseGCPEditUrlTemplate: this.baseGCPEditUrlTemplate,
     });
   }
 
@@ -68,13 +68,16 @@ export class WorkspaceManager extends AlpineController<
   async deleteWorkspace(workspace: Workspace) {
     const deleted = await workspace.delete();
 
+    console.log("DELETED", deleted)
+
     if (!deleted) return;
     this.removeWorkspace(workspace.uuid);
   }
 
   handleWorkspaceImagesUpload(workspace: Workspace) {
     this.ctx.$refs.workspaceImageUploadDialogTrigger.click();
-    this.ctx.$refs.tusImageUploader.dataset.uploadUrl = this.workspaceImageUploadUrlTemplate.replace("uuid", workspace.uuid);
+    const imageUploader = document.querySelector(`[x-ref="tusImageUploader"]`) as HTMLElement;
+    imageUploader.dataset.uploadUrl = this.workspaceImageUploadUrlTemplate.replace("uuid", workspace.uuid);
   }
 
   handleWorkspaceTaskCreation(workspace: Workspace) {

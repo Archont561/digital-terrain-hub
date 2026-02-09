@@ -56,21 +56,21 @@ export class Result {
   }
 
   get downloadUrl() {
-    return this.downloadResultUrlTemplate.replace("{uuid}", this.uuid);
+    return `${this.downloadResultUrlTemplate.replace(":uuid", this.uuid)}`;
   }
 
   get shareUrl() {
     if (!this.sharedKey) return null;
     return this.shareResultUrlTemplate
-      .replace("{uuid}", this.uuid)
-      .replace("{api_key}", this.sharedKey);
+      .replace(":uuid", this.uuid)
+      .replace(":api_key", this.sharedKey);
   }
 
   isMode(mode: ResultMode) {
     return this.mode === mode;
   }
 
-  private setMode(mode: ResultMode) {
+  setMode(mode: ResultMode) {
     this.mode = mode;
   }
 
@@ -105,24 +105,6 @@ export class Result {
 
     window.navigator.clipboard.writeText(this.shareUrl);
     toast.success("Share link copied to clipboard", { duration: 2000 });
-  }
-
-  async download() {
-    this.setMode("downloading");
-
-    try {
-      const anchorElement = document.createElement("a");
-      anchorElement.href = this.downloadUrl;
-      anchorElement.click();
-
-      toast.success("Download started", { duration: 2000 });
-      this.setMode("view");
-      return true;
-    } catch (_error) {
-      toast.error("Failed to download result", { duration: 2000 });
-      this.setMode("view");
-      return false;
-    }
   }
 
   async delete() {

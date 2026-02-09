@@ -1,0 +1,13 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Navbar1 from "@/components/starwind-pro/Navbar1.astro";
+import Hero1 from "@/components/starwind-pro/Hero1.astro";
+import Footer1 from "@/components/starwind-pro/Footer1.astro";
+
+---
+
+<BaseLayout title="Home" class="flex flex-col overflow-x-clip" >
+  <Navbar1 siteName="Digital Terrain Hub" ctaHref="/dashboard/workspaces"/>
+  <Hero1 primaryButtonHref="/dashboard/workspaces"/>
+  <Footer1 />
+</BaseLayout>

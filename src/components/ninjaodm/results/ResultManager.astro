@@ -8,16 +8,17 @@ import {
   TableCell,
 } from "@/components/starwind/table";
 import ResultTableRowTemplate from "./ResultTableRowTemplate.astro";
-
+import type { HTMLAttributes } from "astro/types";
 import type { ResultManagerProps } from "./controllers";
 
-type Props = ResultManagerProps;
+type Props = HTMLAttributes<"div"> & ResultManagerProps;
 
 const headers = ["Type", "Created", "Actions"];
 const {
   results = [],
   downloadResultUrlTemplate,
   shareResultUrlTemplate,
+  ...rest
 } = Astro.props;
 
 const ninjaId = "dummy-ninja-id";
@@ -28,7 +29,7 @@ const ninjaId = "dummy-ninja-id";
   data-ninjaodm-component="ResultManager"
   data-ninjaodm-id={ninjaId}
   x-data="ResultManager(window.ninjaodmData[$el.dataset.ninjaodmId])"
-  class="max-w-lg mx-auto"
+  {...rest}
 >
   <!-- Toolbar -->
   <div class="flex items-center justify-between mb-4">

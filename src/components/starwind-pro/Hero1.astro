@@ -1,0 +1,57 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { tv } from "tailwind-variants";
+
+import { Button } from "@/components/starwind/button";
+
+interface Props extends HTMLAttributes<"section"> {
+  /** Main heading text */
+  heading?: string;
+  /** Description text */
+  description?: string;
+  /** Primary button text */
+  primaryButtonText?: string;
+  /** Primary button href */
+  primaryButtonHref?: string;
+  /** Secondary button text (optional - only renders if provided) */
+  secondaryButtonText?: string;
+  /** Secondary button href */
+  secondaryButtonHref?: string;
+}
+
+const hero1Styles = tv({
+  base: "@container mx-auto w-full px-4 py-24",
+});
+
+const {
+  heading = "Build Beautiful Websites with Starwind Pro",
+  description = "Create stunning, responsive websites with our modern component library. Get started in minutes and ship faster than ever before.",
+  primaryButtonText = "Get Started",
+  primaryButtonHref = "#",
+  secondaryButtonText,
+  secondaryButtonHref = "#",
+  class: className,
+  ...rest
+} = Astro.props;
+---
+
+<section class={hero1Styles({ class: className })} {...rest}>
+  <div class="mx-auto flex max-w-4xl flex-col items-center text-center">
+    <h1 class="font-heading text-4xl font-semibold tracking-tight @xl:text-5xl @3xl:text-6xl">
+      {heading}
+    </h1>
+    <p class="text-muted-foreground mt-6 max-w-2xl @xl:text-lg">
+      {description}
+    </p>
+    <div class="mt-8 flex flex-wrap gap-3">
+      <Button variant="primary" href={primaryButtonHref}>{primaryButtonText}</Button>
+      {
+        secondaryButtonText && (
+          <Button variant="outline" href={secondaryButtonHref}>
+            {secondaryButtonText}
+          </Button>
+        )
+      }
+    </div>
+  </div>
+</section>

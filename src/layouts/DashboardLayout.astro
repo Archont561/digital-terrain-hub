@@ -1,0 +1,187 @@
+---
+import HomeIcon from "@tabler/icons/outline/home.svg";
+import ListCheckIcon from "@tabler/icons/outline/list-check.svg";
+import Stack2Icon from "@tabler/icons/outline/stack-2.svg";
+import BrandMinecraftIcon from "@tabler/icons/outline/brand-minecraft.svg";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import BellIcon from "@tabler/icons/outline/bell.svg";
+import ChevronUpIcon from "@tabler/icons/outline/chevron-up.svg";
+import CodeIcon from "@tabler/icons/outline/code.svg";
+import LogoutIcon from "@tabler/icons/outline/logout.svg";
+import BadgeCheckIcon from "@tabler/icons/outline/rosette-discount-check.svg";
+import SparklesIcon from "@tabler/icons/outline/sparkles.svg";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/components/starwind/avatar";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
+  SidebarFooter,
+  SidebarTrigger,
+  SidebarRail,
+} from "@/components/starwind/sidebar";
+import {
+  Dropdown,
+  DropdownContent,
+  DropdownItem,
+  DropdownLabel,
+  DropdownSeparator,
+  DropdownTrigger,
+} from "@/components/starwind/dropdown";
+import { SignOutButton } from "@clerk/astro/components";
+
+import type { HTMLAttributes } from "astro/types";
+
+const items = [
+  { title: "Home", url: "#", icon: HomeIcon },
+  {
+    title: "Workspaces",
+    url: "/dashboard/workspaces",
+    icon: BrandMinecraftIcon,
+  },
+  { title: "Tasks", url: "/dashboard/tasks", icon: ListCheckIcon },
+  { title: "Results", url: "/dashboard/results", icon: Stack2Icon },
+];
+
+type Props = HTMLAttributes<"div"> & {
+  title: string;
+  headerTitle: string;
+};
+
+const { title, headerTitle, ...rest } = Astro.props;
+---
+
+<BaseLayout title={title} {...rest}>
+  <SidebarProvider>
+    <Sidebar collapsible="icon">
+      <SidebarHeader>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton size="lg">
+              <div
+                class="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-10 items-center justify-center rounded-lg"
+              >
+                <CodeIcon class="size-5" />
+              </div>
+              <div class="grid flex-1 text-left text-sm leading-tight">
+                <span class="truncate font-semibold">Digital Terrain Hub</span>
+                <span class="text-sidebar-foreground/70 truncate text-xs"
+                  >Demo</span
+                >
+              </div>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarHeader>
+
+      <SidebarContent>
+        <SidebarGroup>
+          <SidebarGroupLabel>Application</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {
+                items.map((item) => (
+                  <SidebarMenuItem>
+                    <SidebarMenuButton href={item.url}>
+                      <item.icon />
+                      <span>{item.title}</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))
+              }
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+
+      <SidebarFooter>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <Dropdown>
+              <DropdownTrigger asChild>
+                <SidebarMenuButton size="lg">
+                  <Avatar class="size-10 shrink-0 rounded-lg">
+                    <AvatarImage
+                      src="https://github.com/boston343.png"
+                      alt="boston343"
+                    />
+                    <AvatarFallback class="rounded-lg">B3</AvatarFallback>
+                  </Avatar>
+                  <div class="grid flex-1 text-left text-sm leading-tight">
+                    <span class="truncate font-semibold">Boston343</span>
+                    <span class="text-sidebar-foreground/70 truncate text-xs"
+                      >@boston343</span
+                    >
+                  </div>
+                  <ChevronUpIcon class="ml-auto size-4" />
+                </SidebarMenuButton>
+              </DropdownTrigger>
+              <DropdownContent class="w-full min-w-48 rounded-lg" side="top">
+                <DropdownLabel class="p-0 font-normal">
+                  <div
+                    class="flex items-center gap-2 px-1 py-1.5 text-left text-sm"
+                  >
+                    <Avatar class="size-8 rounded-lg">
+                      <AvatarImage
+                        src="https://github.com/boston343.png"
+                        alt="boston343"
+                      />
+                      <AvatarFallback class="rounded-lg">B3</AvatarFallback>
+                    </Avatar>
+                    <div class="grid flex-1 text-left text-sm leading-tight">
+                      <span class="truncate font-semibold">boston343</span>
+                      <span class="text-muted-foreground truncate text-xs"
+                        >@boston343</span
+                      >
+                    </div>
+                  </div>
+                </DropdownLabel>
+                <DropdownSeparator />
+                <DropdownItem as="a" href="#">
+                  <SparklesIcon class="mr-2 size-4" />
+                  Upgrade to Pro
+                </DropdownItem>
+                <DropdownSeparator />
+                <DropdownItem as="a" href="#">
+                  <BadgeCheckIcon class="mr-2 size-4" />
+                  Account
+                </DropdownItem>
+                <DropdownItem as="a" href="#">
+                  <BellIcon class="mr-2 size-4" />
+                  Notifications
+                </DropdownItem>
+                <DropdownSeparator />
+                <SignOutButton as="span">
+                  <DropdownItem as="a" href="#">
+                    <LogoutIcon class="mr-2 size-4" />
+                    Log out
+                  </DropdownItem>
+                </SignOutButton>
+              </DropdownContent>
+            </Dropdown>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
+
+      <SidebarRail />
+    </Sidebar>
+
+    <main class="bg-background flex flex-1 flex-col">
+      <header class="flex h-12 shrink-0 items-center gap-2 border-b px-4">
+        <SidebarTrigger />
+        <span class="text-muted-foreground text-sm">{headerTitle}</span>
+      </header>
+      <slot />
+    </main>
+  </SidebarProvider>
+</BaseLayout>

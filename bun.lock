@@ -9,6 +9,7 @@
         "@inox-tools/runtime-logger": "^0.7.0",
         "@tabler/icons": "^3",
         "@types/alpinejs": "^3.13.11",
+        "@zodios/core": "^10.9.6",
         "alpinejs": "^3.15.5",
         "astro": "^5.16.6",
         "dexie": "^4.3.0",

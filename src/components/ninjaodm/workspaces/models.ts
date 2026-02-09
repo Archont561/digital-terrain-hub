@@ -12,7 +12,7 @@ export type WorkspaceMode = "view" | "edit" | "delete";
 
 export type WorkspaceConfig = {
   data: WorkspaceProps;
-  baseEditUrl: string;
+  baseGCPEditUrlTemplate: string;
 };
 
 export class Workspace {
@@ -20,7 +20,7 @@ export class Workspace {
   name: string;
   createdAt: string;
 
-  private baseEditUrl: string;
+  private baseGCPEditUrlTemplate: string;
 
   // UI State
   private mode: WorkspaceMode = "view";
@@ -30,11 +30,11 @@ export class Workspace {
     this.uuid = config.data.uuid;
     this.name = config.data.name;
     this.createdAt = config.data.created_at;
-    this.baseEditUrl = config.baseEditUrl;
+    this.baseGCPEditUrlTemplate = config.baseGCPEditUrlTemplate;
   }
 
   get editUrl() {
-    return `${this.baseEditUrl}/${this.uuid}`;
+    return this.baseGCPEditUrlTemplate.replace(":uuid", this.uuid);
   }
 
   get inputId() {

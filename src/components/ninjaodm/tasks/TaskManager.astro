@@ -8,13 +8,14 @@ import {
   TableCell,
 } from "@/components/starwind/table";
 import TaskTableRowTemplate from "./TaskTableRowTemplate.astro";
-
+import type { HTMLAttributes } from "astro/types";
 import type { TaskManagerProps } from "./controllers";
 
-type Props = TaskManagerProps;
+type Props = HTMLAttributes<"div"> & TaskManagerProps;
+
 
 const headers = ["Name", "Status", "Step", "Created", "Actions"];
-const { tasks = [] } = Astro.props;
+const { tasks = [], ...rest } = Astro.props;
 
 const ninjaId = "dummy-ninja-id";
 ---
@@ -24,7 +25,7 @@ const ninjaId = "dummy-ninja-id";
   data-ninjaodm-component="TaskManager"
   data-ninjaodm-id={ninjaId}
   x-data="TaskManager(window.ninjaodmData[$el.dataset.ninjaodmId])"
-  class="max-w-6xl mx-auto"
+  {...rest}
 >
   <!-- Toolbar -->
   <div class="flex items-center justify-between mb-4">
@@ -66,7 +67,6 @@ const ninjaId = "dummy-ninja-id";
   window.ninjaodmData = window.ninjaodmData || {};
   window.ninjaodmData[ninjaId] = {
     tasks,
-    workspaceUuid,
   };
 </script>
 

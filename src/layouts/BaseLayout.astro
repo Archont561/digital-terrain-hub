@@ -1,6 +1,13 @@
 ---
 import "@/styles/starwind.css";
 import { Toaster } from "@/components/starwind/toast";
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"div"> & {
+	title: string;
+}
+
+const { title, ...rest } = Astro.props;
 ---
 
 <!doctype html>
@@ -49,10 +56,10 @@ import { Toaster } from "@/components/starwind/toast";
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>{Astro.props.title}</title>
+		<title>{title}</title>
 		<slot name="meta"></slot>
 	</head>
-	<body>
+	<body {...rest}>
 		<slot></slot>
     	<Toaster position="bottom-right" />
 	</body>
@@ -65,5 +72,6 @@ import { Toaster } from "@/components/starwind/toast";
 		padding: 0;
 		width: 100dvw;
 		height: 100dvh;
+		overflow-x: clip;
 	}
 </style>

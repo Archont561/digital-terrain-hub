@@ -60,8 +60,13 @@ export const actions = {
         created_before: z.string().nullable().optional(),
       })
       .optional(),
-    handler: async (queries) => {
-      return await serviceApiClient.listGCPsInternal({ queries });
+    handler: async (queries, { locals }) => {
+      return await serviceApiClient.listGCPsInternal({
+        queries: {
+          user_id: locals.currentUserId!,
+          ...queries
+        }
+      });
     },
   }),
 };

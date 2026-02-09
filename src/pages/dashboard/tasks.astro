@@ -1,0 +1,14 @@
+---
+import DashboardLayout from "@/layouts/DashboardLayout.astro";
+import { TaskManager } from "@/components/ninjaodm/tasks";
+import { actions } from "astro:actions";
+
+let { data, error } = await Astro.callAction(actions.listTasks, {});
+if (error) {
+  data = []
+}
+---
+
+<DashboardLayout title="Tasks" headerTitle="Tasks">
+  <TaskManager tasks={data} class="size-full p-4 max-w-2xl mx-auto"/>
+</DashboardLayout>

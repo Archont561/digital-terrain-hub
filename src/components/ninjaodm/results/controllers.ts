@@ -1,5 +1,6 @@
 import { AlpineController } from "@/lib/client";
 import { Result, type ResultProps } from "./models";
+import { toast } from "@/components/starwind/toast";
 
 export type ResultManagerProps = {
   results?: ResultProps[];
@@ -55,4 +56,32 @@ export class ResultManager extends AlpineController<ResultManager> {
     if (!deleted) return;
     this.removeResult(result.uuid);
   }
+
+  private async downloadResultInternal(result: Result) {
+      const token = this.ctx.$root.dataset.downloadToken;
+      const anchorElement = document.createElement("a");
+      anchorElement.href = `${result.downloadUrl}?jwt=${token}`;
+      anchorElement.download = "";
+      anchorElement.style.display = "none";
+      document.body.appendChild(anchorElement);
+      anchorElement.click();
+      anchorElement.remove();
+    }
+    
+  
+    async downloadResult(result: Result) {
+      result.setMode("downloading");
+  
+      try {
+        await this.downloadResultInternal(result);
+  
+        toast.success("Download started", { duration: 2000 });
+        result.setMode("view");
+        return true;
+      } catch (_error) {
+        toast.error("Failed to download result", { duration: 2000 });
+        result.setMode("view");
+        return false;
+      }
+    }
 }

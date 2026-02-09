@@ -1,0 +1,295 @@
+---
+import "leaflet/dist/leaflet.css";
+import type { GCPProps, ThumbnailProps } from "./models";
+import { randomUUID } from "node:crypto";
+
+import { Button } from "@/components/starwind/button";
+import { Label } from "@/components/starwind/label";
+import { ButtonGroup } from "@/components/starwind/button-group";
+import {
+  Dropdown,
+  DropdownContent,
+  DropdownItem,
+  DropdownTrigger,
+} from "@/components/starwind/dropdown";
+import ChevronDownIcon from "@tabler/icons/outline/chevron-down.svg";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/starwind/sheet";
+import { TabsList, TabsTrigger } from "@/components/starwind/tabs";
+
+type Props = {
+  gcps?: GCPProps[];
+  thumbnails?: ThumbnailProps[];
+};
+
+const { gcps = [], thumbnails = [] } = Astro.props;
+
+const ninjaId = `gcp-${randomUUID().slice(0, 8)}`;
+---
+
+<style is:global>
+  html.dark {
+    .leaflet-layer,
+    .leaflet-control-zoom-in,
+    .leaflet-control-zoom-out,
+    .leaflet-control-attribution {
+      filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
+    }
+    .leaflet-container {
+      background: var(--background);
+    }
+  }
+  [x-cloak] {
+    display: none;
+  }
+
+  /* Custom marker styles */
+  .custom-marker {
+    background: transparent !important;
+    border: none !important;
+  }
+</style>
+
+<Sheet
+  class="grid grid-rows-[auto_1fr] gap-4 p-4 max-w-lg md:max-w-5xl"
+  x-ignore
+  x-data="GCPEditorManager(window.ninjaodmData[$el.dataset.ninjaodmId])"
+  data-ninjaodm-id={ninjaId}
+  data-ninjaodm-component="GCPEditorManager"
+>
+  <SheetTrigger x-ref="imageViewerSheetTrigger" class="hidden" />
+  <SheetContent class="w-[220px]">
+    <SheetHeader>
+      <SheetTitle>Images</SheetTitle>
+      <SheetDescription> Click image to load its gcps! </SheetDescription>
+    </SheetHeader>
+    <div
+      x-ref="imageThumbnailViewer"
+      class="pr-2
+            [&::-webkit-scrollbar]:w-1.5
+            [&::-webkit-scrollbar-track]:bg-transparent
+            [&::-webkit-scrollbar-thumb]:bg-gray-300
+            [&::-webkit-scrollbar-thumb]:rounded-full
+            [scrollbar-width:thin] p-4 max-h-90vh overflow-y-auto grid gap-1 grid-cols-[1fr]"
+    >
+      {
+        thumbnails.map((thumbnail) => (
+          <image
+            x-on:click="selectImage($el)"
+            {...{ src: thumbnail.url, alt: thumbnail.name }}
+            data-origin-url={thumbnail.originUrl}
+            data-origin-uuid={thumbnail.originUuid}
+          />
+        ))
+      }
+    </div>
+  </SheetContent>
+
+  <!-- Toolbar -->
+  <div class="flex gap-2 flex-row justify-between items-center z-2">
+    <Label class="text-lg md:text-base">
+      Workspace GCP Editor
+      <span
+        x-show="hasUnsavedChanges"
+        x-cloak
+        class="text-orange-500 text-sm ml-2">(unsaved changes)</span
+      >
+    </Label>
+
+    <div class="flex-wrap gap-1 md:gap-2 hidden md:flex">
+      <ButtonGroup class="flex flex-wrap">
+        <Button
+          size="sm"
+          variant="outline"
+          x-on:click="addGCPMarkerOnCenter"
+          title="Add GCP marker on map center"
+        >
+          Add GCP
+        </Button>
+        <Button
+          size="sm"
+          variant="outline"
+          x-on:click="addImageMarkerOnCenter"
+          x-bind:disabled="!currentImageUuid"
+          title="Add image marker on image center"
+        >
+          Add Image Point
+        </Button>
+        <Button
+          size="sm"
+          variant="outline"
+          x-on:click="bindMarkers"
+          x-bind:disabled="!selectedGCPMarker || !selectedImageMarker || selectedGCPMarker?.isBound() || selectedImageMarker?.isBound()"
+          title="Bind selected GCP and image markers"
+        >
+          Bind Markers
+        </Button>
+        <Button
+          size="sm"
+          variant="outline"
+          x-on:click="deleteSelectedMarker"
+          x-bind:disabled="!selectedGCPMarker && !selectedImageMarker"
+          title="Delete selected marker"
+        >
+          Delete
+        </Button>
+        <Button
+          size="sm"
+          variant="outline"
+          x-on:click="saveChanges"
+          x-bind:disabled="!hasUnsavedChanges"
+        >
+          Save Changes
+        </Button>
+        <Button
+          size="sm"
+          variant="primary"
+          x-on:click="$refs.imageViewerSheetTrigger.click()"
+        >
+          Select image
+        </Button>
+      </ButtonGroup>
+    </div>
+
+    <!-- Dropdown (mobile only) -->
+    <ButtonGroup class="md:hidden">
+      <Button
+        size="sm"
+        variant="primary"
+        x-on:click="$refs.imageViewerSheetTrigger.click()"
+      >
+        Select image
+      </Button>
+      <Dropdown>
+        <DropdownTrigger asChild>
+          <Button variant="primary" size="icon-sm">
+            <ChevronDownIcon />
+          </Button>
+        </DropdownTrigger>
+        <DropdownContent align="end" class="min-w-[150px]">
+          <DropdownItem
+            as="button"
+            class="w-full"
+            x-on:click="addGCPMarkerOnCenter">Add GCP</DropdownItem
+          >
+          <DropdownItem
+            as="button"
+            class="w-full"
+            x-on:click="addImageMarkerOnCenter"
+            x-bind:disabled="!currentImageUuid">Add Image Point</DropdownItem
+          >
+          <DropdownItem as="button" class="w-full" x-on:click="bindMarkers"
+            >Bind Markers</DropdownItem
+          >
+          <DropdownItem
+            as="button"
+            class="w-full"
+            x-on:click="deleteSelectedMarker">Delete Selected</DropdownItem
+          >
+          <DropdownItem as="button" class="w-full" x-on:click="saveChanges"
+            >Save Changes</DropdownItem
+          >
+        </DropdownContent>
+      </Dropdown>
+    </ButtonGroup>
+  </div>
+
+  <!-- Selection status -->
+  <div class="text-sm text-muted-foreground flex gap-4">
+    <span>
+      GCP: <span
+        x-text="selectedGCPMarker ? (selectedGCPMarker.label || selectedGCPMarker.id) : 'none'"
+        class="font-medium"></span>
+      <span x-show="selectedGCPMarker?.isBound()" x-cloak class="text-green-500"
+        >(bound)</span
+      >
+    </span>
+    <span>
+      Image: <span
+        x-text="selectedImageMarker ? selectedImageMarker.id : 'none'"
+        class="font-medium"></span>
+      <span
+        x-show="selectedImageMarker?.isBound()"
+        x-cloak
+        class="text-green-500">(bound)</span
+      >
+    </span>
+  </div>
+
+  <div class="flex flex-col md:flex-row gap-3 items-center">
+    <!-- Tabs (mobile only) -->
+    <TabsList class="mb-3 md:hidden w-full">
+      <TabsTrigger
+        value="gcp"
+        :class="{ 'bg-accent text-primary': isActiveTab('gcp') }"
+        @click="activeTab = 'gcp'"
+      >
+        GCP Map
+      </TabsTrigger>
+      <TabsTrigger
+        value="image"
+        :class="{ 'bg-accent text-primary': isActiveTab('image') }"
+        @click="activeTab = 'image'"
+      >
+        Image Map
+      </TabsTrigger>
+    </TabsList>
+
+    <!-- Maps -->
+    <div
+      class="flex flex-col md:flex-row gap-3 w-full justify-center items-center isolate z-0"
+    >
+      <!-- GCP Map -->
+      <template x-if="isActiveTab('gcp') || isViewport('desktop')">
+        <div class="aspect-square w-full md:w-1/2 ring-1 ring-accent">
+          <leaflet-gcp-map x-ref="gcpMap"></leaflet-gcp-map>
+        </div>
+      </template>
+
+      <div
+        class="aspect-square w-full md:w-1/2 ring-1 ring-accent flex items-center justify-center"
+        x-show="!currentImageUuid && (isActiveTab('image') || isViewport('desktop'))"
+        x-cloak
+      >
+        <span class="text-3xl font-bold transform -rotate-45">Select Image</span
+        >
+      </div>
+
+      <!-- Image Map -->
+      <div
+        x-cloak
+        x-show="currentImageUuid && (isActiveTab('image') || isViewport('desktop'))"
+        class="aspect-square w-full md:w-1/2 ring-1 ring-accent"
+      >
+        <leaflet-image-map x-ref="imageMap"></leaflet-image-map>
+      </div>
+    </div>
+  </div>
+</Sheet>
+
+<script define:vars={{ gcps, ninjaId }} is:inline>
+  window.ninjaodmData = window.ninjaodmData || {};
+  window.ninjaodmData[ninjaId] = { gcps };
+</script>
+
+<script>
+  import { GCPEditorManager } from "./controllers";
+  import { HTMLGCPLeafletMap, HTMLImageLeafletMap } from "./leaflet/leaflet-map";
+  customElements.define("leaflet-gcp-map", HTMLGCPLeafletMap);
+  customElements.define("leaflet-image-map", HTMLImageLeafletMap);
+  GCPEditorManager.register(window.Alpine, "GCPEditorManager", () => {
+    document
+      .querySelectorAll('[data-ninjaodm-component="GCPEditorManager"]')
+      .forEach((el) => {
+        el.removeAttribute("x-ignore");
+        delete (el as any)._x_ignore;
+        window.Alpine.initTree(el as any);
+      });
+  });
+</script>
